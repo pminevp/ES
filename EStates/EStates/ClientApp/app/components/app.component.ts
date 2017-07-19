@@ -1,4 +1,4 @@
-// ======================================
+﻿// ======================================
 // Author: Ebenezer Monney
 // Email:  info@ebenmonney.com
 // Copyright (c) 2017 www.ebenmonney.com
@@ -38,8 +38,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     shouldShowLoginModal: boolean;
     removePrebootScreen: boolean;
     newNotificationCount = 0;
-    appTitle = "EStates";
-    appLogo = require("../assets/images/logo.png");
+    appTitle = "Наш Дом";
+    appLogo = require("../assets/images/home3.png");
 
     stickyToasties: number[] = [];
 
