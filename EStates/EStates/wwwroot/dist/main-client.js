@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ba2ece871106a9878757"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "73922050abf7fcbb340f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -830,7 +830,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(13);
+var http_1 = __webpack_require__(14);
 var Utilities = (function () {
     var Utilities = Utilities_1 = function Utilities() {
     };
@@ -1165,7 +1165,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(13);
+var http_1 = __webpack_require__(14);
 var Subject_1 = __webpack_require__(15);
 var utilities_1 = __webpack_require__(4);
 var AlertService = (function () {
@@ -1370,8 +1370,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(14);
-var http_1 = __webpack_require__(13);
+var router_1 = __webpack_require__(12);
+var http_1 = __webpack_require__(14);
 var Observable_1 = __webpack_require__(2);
 var Subject_1 = __webpack_require__(15);
 __webpack_require__(153);
@@ -1675,7 +1675,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(14);
+var router_1 = __webpack_require__(12);
 var Subject_1 = __webpack_require__(15);
 __webpack_require__(11);
 var local_store_manager_service_1 = __webpack_require__(17);
@@ -2190,6 +2190,12 @@ Observable_1.Observable.prototype.map = map_1.map;
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = (__webpack_require__(1))(192);
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 // ======================================
@@ -2217,16 +2223,10 @@ exports.flyInOut = flyInOut;
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(1))(190);
-
-/***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(1))(192);
+module.exports = (__webpack_require__(1))(190);
 
 /***/ }),
 /* 15 */
@@ -3589,7 +3589,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(13);
+var http_1 = __webpack_require__(14);
 var Observable_1 = __webpack_require__(2);
 var Subject_1 = __webpack_require__(15);
 __webpack_require__(155);
@@ -4381,7 +4381,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var animations_1 = __webpack_require__(12);
+var animations_1 = __webpack_require__(13);
 var AboutComponent = (function () {
     function AboutComponent() {
     }
@@ -4935,7 +4935,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var animations_1 = __webpack_require__(12);
+var animations_1 = __webpack_require__(13);
 var CustomersComponent = (function () {
     function CustomersComponent() {
     }
@@ -4976,7 +4976,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var animations_1 = __webpack_require__(12);
+var animations_1 = __webpack_require__(13);
 var configuration_service_1 = __webpack_require__(10);
 var HomeComponent = (function () {
     function HomeComponent(configurations) {
@@ -5017,7 +5017,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var animations_1 = __webpack_require__(12);
+var animations_1 = __webpack_require__(13);
 var NotFoundComponent = (function () {
     function NotFoundComponent() {
     }
@@ -5055,7 +5055,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var animations_1 = __webpack_require__(12);
+var animations_1 = __webpack_require__(13);
 var OrdersComponent = (function () {
     function OrdersComponent() {
     }
@@ -5093,7 +5093,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var animations_1 = __webpack_require__(12);
+var animations_1 = __webpack_require__(13);
 var ProductsComponent = (function () {
     function ProductsComponent() {
     }
@@ -5134,9 +5134,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(14);
+var router_1 = __webpack_require__(12);
 __webpack_require__(55);
-var animations_1 = __webpack_require__(12);
+var animations_1 = __webpack_require__(13);
 var bootstrap_tab_directive_1 = __webpack_require__(48);
 var app_translation_service_1 = __webpack_require__(7);
 var account_service_1 = __webpack_require__(6);
@@ -5466,7 +5466,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(13);
+var http_1 = __webpack_require__(14);
 __webpack_require__(11);
 var endpoint_factory_service_1 = __webpack_require__(28);
 var configuration_service_1 = __webpack_require__(10);
@@ -5750,7 +5750,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(14);
+var router_1 = __webpack_require__(12);
 var platform_browser_1 = __webpack_require__(22);
 __webpack_require__(11);
 __webpack_require__(54);
@@ -5861,7 +5861,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(13);
+var http_1 = __webpack_require__(14);
 var Observable_1 = __webpack_require__(2);
 __webpack_require__(31);
 __webpack_require__(11);
@@ -23622,7 +23622,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(14);
+var router_1 = __webpack_require__(12);
 var login_component_1 = __webpack_require__(26);
 var home_component_1 = __webpack_require__(42);
 var customers_component_1 = __webpack_require__(41);
@@ -23688,7 +23688,7 @@ var core_1 = __webpack_require__(0);
 var forms_1 = __webpack_require__(59);
 var platform_browser_1 = __webpack_require__(22);
 var animations_1 = __webpack_require__(73);
-var http_1 = __webpack_require__(13);
+var http_1 = __webpack_require__(14);
 __webpack_require__(220);
 var core_2 = __webpack_require__(34);
 var ngx_datatable_1 = __webpack_require__(74);
@@ -23835,7 +23835,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(14);
+var router_1 = __webpack_require__(12);
 var ng2_toasty_1 = __webpack_require__(60);
 var alert_service_1 = __webpack_require__(5);
 var notification_service_1 = __webpack_require__(29);
@@ -25356,7 +25356,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var auth_service_1 = __webpack_require__(8);
-var router_1 = __webpack_require__(14);
+var router_1 = __webpack_require__(12);
 var NavigationComponent = (function () {
     function NavigationComponent(router, authService) {
         this.router = router;
@@ -25972,7 +25972,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(14);
+var router_1 = __webpack_require__(12);
 var auth_service_1 = __webpack_require__(8);
 var AuthGuard = (function () {
     function AuthGuard(authService, router) {
@@ -28883,7 +28883,7 @@ module.exports = "<div class=\"container\">\r\n    <header class=\"pageHeader\">
 /* 142 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <header class=\"pageHeader\">\r\n        <h3><i class=\"fa fa-tachometer fa-lg page-caption\" aria-hidden=\"true\"></i> {{'pageHeader.Dashboard' | translate}}</h3>\r\n    </header>\r\n\r\n    <div [@fadeInOut]>\r\n        <div *ngIf=\"!configurations.showDashboardStatistics && !configurations.showDashboardNotifications && !configurations.showDashboardTodo && !configurations.showDashboardBanner\" class=\"well well-lg\">\r\n            <h4 class=\"text-muted text-center\">\r\n                {{'home.NoWidgets1' | translate}} <a routerLink=\"/settings\" fragment=\"preferences\"><i class=\"fa fa-sliders\"></i> {{'settings.tab.Preferences' | translate}}</a>\r\n                {{'home.NoWidgets2' | translate}}\r\n            </h4>\r\n        </div>\r\n\r\n        <div *ngIf=\"configurations.showDashboardStatistics\" class=\"row bottom-space well well-sm\">\r\n            <h4 class=\"text-muted inline-block\">{{'home.StatisticsTitle' | translate}}</h4>\r\n            <button type=\"button\" class=\"close pull-right statistics-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardStatistics = false\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n            <div class=\"clearfix\"></div>\r\n            <statistics-demo></statistics-demo>\r\n        </div>\r\n\r\n        <div *ngIf=\"configurations.showDashboardNotifications\" class=\"row bottom-space\">\r\n            <button type=\"button\" class=\"close pull-right todo-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardNotifications = false\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n            <div class=\"clearfix\"></div>\r\n            <notifications-viewer></notifications-viewer>\r\n        </div>\r\n\r\n        <div *ngIf=\"configurations.showDashboardTodo\" class=\"row bottom-space\">\r\n            <button type=\"button\" class=\"close pull-right todo-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardTodo = false\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n            <div class=\"clearfix\"></div>\r\n            <todo-demo></todo-demo>\r\n        </div>\r\n\r\n        <div *ngIf=\"configurations.showDashboardBanner\" class=\"row no-bottom-space\">\r\n            <button type=\"button\" class=\"close pull-right banner-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardBanner = false\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n            <div class=\"clearfix\"></div>\r\n            <banner-demo></banner-demo>\r\n        </div>\r\n    </div>\r\n</div>\r\n";
+module.exports = "<div class=\"container\">\r\n    <div [@fadeInOut]>\r\n        <div *ngIf=\"!configurations.showDashboardStatistics && !configurations.showDashboardNotifications && !configurations.showDashboardTodo && !configurations.showDashboardBanner\" class=\"well well-lg\">\r\n            <h4 class=\"text-muted text-center\">\r\n                {{'home.NoWidgets1' | translate}} <a routerLink=\"/settings\" fragment=\"preferences\"><i class=\"fa fa-sliders\"></i> {{'settings.tab.Preferences' | translate}}</a>\r\n                {{'home.NoWidgets2' | translate}}\r\n            </h4>\r\n        </div>\r\n        <div id=\"carousel-example-generic\" class=\"carousel slide\" data-ride=\"carousel\">\r\n            <!-- Indicators -->\r\n            <ol class=\"carousel-indicators\">\r\n                <li data-target=\"#carousel-example-generic\" data-slide-to=\"0\" class=\"active\"></li>\r\n                <li data-target=\"#carousel-example-generic\" data-slide-to=\"1\"></li>\r\n                <li data-target=\"#carousel-example-generic\" data-slide-to=\"2\"></li>\r\n            </ol>\r\n            <!-- Wrapper for slides -->\r\n            <div class=\"carousel-inner\"  role=\"listbox\">\r\n                <div class=\"item active\">\r\n                    <img style=\"width:900px; height:500px;\" src=\"https://www.startpackingidaho.com/images/house_double_story43_500_01.jpg\" alt=\"\">\r\n                    <div class=\"carousel-caption\">\r\n                        <h1>Управление на Сгради</h1>\r\n                        <h3>Чрез нашата система Вашите Домоуправители  могат да управялват една или повече сгради.</h3>\r\n                    </div>\r\n                </div>\r\n                <div class=\"item\">\r\n                    <img style=\"width:900px; height:500px;\" src=\"http://www.goodtherapy.org/blog/blog/wp-content/uploads/2013/05/mother-daughter-with-therapist.jpg\" alt=\"\">\r\n                    <div class=\"carousel-caption\">\r\n                        <h1>Прозрачност към собствениците</h1>\r\n                        <h3>Пълна прозрачност, към всички сметки, събрания и други за вас като собственик елемента.</h3>\r\n                    </div>\r\n                </div>\r\n                <div class=\"item\">\r\n                    <img style=\"width:900px; height:500px;\" src=\"https://07f138315bb5e97f9e43-31068357019044cca7c8e84d92de0d99.ssl.cf3.rackcdn.com/220x165/56587_11491_001.jpg\" alt=\"\">\r\n                    <div class=\"carousel-caption\">\r\n                        <h1>Управление на апартаменти</h1>\r\n                        <h3>Като собственик ще имате достъп до всички ваши апартаменти от едно централизирано място! Менежирайте ги без излишно загубено време.</h3>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <!-- Controls -->\r\n            <a class=\"left carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"prev\">\r\n                <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Previous</span>\r\n            </a>\r\n            <a class=\"right carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"next\">\r\n                <span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Next</span>\r\n            </a>\r\n        </div>\r\n        <br />\r\n        <div class=\"panel panel-default\">\r\n            <div class=\"panel-heading\">Събития</div>\r\n            <div class=\"panel-body\">\r\n                <div *ngIf=\"configurations.showDashboardNotifications\" class=\"row bottom-space\">\r\n                    <button type=\"button\" class=\"close pull-right todo-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardNotifications = false\">\r\n                        <span aria-hidden=\"true\">&times;</span>\r\n                    </button>\r\n                    <div class=\"clearfix\"></div>\r\n                    <notifications-viewer></notifications-viewer>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div id=\"MediaContent\" class=\"well\">\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Навигация</h4>\r\n                    Системата вече предлага на своите клиенти добра навигация, която да навигира лесно между менютата\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n        </div>\r\n      \r\n\r\n\r\n        <div *ngIf=\"configurations.showDashboardTodo\" class=\"row bottom-space\">\r\n            <button type=\"button\" class=\"close pull-right todo-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardTodo = false\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n            <div class=\"clearfix\"></div>\r\n            <todo-demo></todo-demo>\r\n        </div>\r\n\r\n    </div>\r\n</div>\r\n";
 
 /***/ }),
 /* 143 */

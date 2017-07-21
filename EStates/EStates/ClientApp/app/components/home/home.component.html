@@ -1,8 +1,4 @@
-<div class="container">
-    <header class="pageHeader">
-        <h3><i class="fa fa-tachometer fa-lg page-caption" aria-hidden="true"></i> {{'pageHeader.Dashboard' | translate}}</h3>
-    </header>
-
+﻿<div class="container">
     <div [@fadeInOut]>
         <div *ngIf="!configurations.showDashboardStatistics && !configurations.showDashboardNotifications && !configurations.showDashboardTodo && !configurations.showDashboardBanner" class="well well-lg">
             <h4 class="text-muted text-center">
@@ -10,23 +6,122 @@
                 {{'home.NoWidgets2' | translate}}
             </h4>
         </div>
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner"  role="listbox">
+                <div class="item active">
+                    <img style="width:900px; height:500px;" src="https://www.startpackingidaho.com/images/house_double_story43_500_01.jpg" alt="">
+                    <div class="carousel-caption">
+                        <h1>Управление на Сгради</h1>
+                        <h3>Чрез нашата система Вашите Домоуправители  могат да управялват една или повече сгради.</h3>
+                    </div>
+                </div>
+                <div class="item">
+                    <img style="width:900px; height:500px;" src="http://www.goodtherapy.org/blog/blog/wp-content/uploads/2013/05/mother-daughter-with-therapist.jpg" alt="">
+                    <div class="carousel-caption">
+                        <h1>Прозрачност към собствениците</h1>
+                        <h3>Пълна прозрачност, към всички сметки, събрания и други за вас като собственик елемента.</h3>
+                    </div>
+                </div>
+                <div class="item">
+                    <img style="width:900px; height:500px;" src="https://07f138315bb5e97f9e43-31068357019044cca7c8e84d92de0d99.ssl.cf3.rackcdn.com/220x165/56587_11491_001.jpg" alt="">
+                    <div class="carousel-caption">
+                        <h1>Управление на апартаменти</h1>
+                        <h3>Като собственик ще имате достъп до всички ваши апартаменти от едно централизирано място! Менежирайте ги без излишно загубено време.</h3>
+                    </div>
+                </div>
+            </div>
 
-        <div *ngIf="configurations.showDashboardStatistics" class="row bottom-space well well-sm">
-            <h4 class="text-muted inline-block">{{'home.StatisticsTitle' | translate}}</h4>
-            <button type="button" class="close pull-right statistics-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardStatistics = false">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="clearfix"></div>
-            <statistics-demo></statistics-demo>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">Събития</div>
+            <div class="panel-body">
+                <div *ngIf="configurations.showDashboardNotifications" class="row bottom-space">
+                    <button type="button" class="close pull-right todo-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardNotifications = false">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="clearfix"></div>
+                    <notifications-viewer></notifications-viewer>
+                </div>
+            </div>
         </div>
 
-        <div *ngIf="configurations.showDashboardNotifications" class="row bottom-space">
-            <button type="button" class="close pull-right todo-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardNotifications = false">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="clearfix"></div>
-            <notifications-viewer></notifications-viewer>
+        <div id="MediaContent" class="well">
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="#." alt="">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">2017-01-01 Нова Функционалност! Навигация</h4>
+                    Системата вече предлага на своите клиенти добра навигация, която да навигира лесно между менютата
+                </div>
+            </div>
+
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="#." alt="">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">2017-01-01 Нова Функционалност! Права</h4>
+                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="#." alt="">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">2017-01-01 Нова Функционалност! Права</h4>
+                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="#." alt="">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">2017-01-01 Нова Функционалност! Права</h4>
+                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="#." alt="">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">2017-01-01 Нова Функционалност! Права</h4>
+                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!
+                </div>
+            </div>
         </div>
+      
+
 
         <div *ngIf="configurations.showDashboardTodo" class="row bottom-space">
             <button type="button" class="close pull-right todo-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardTodo = false">
@@ -36,12 +131,5 @@
             <todo-demo></todo-demo>
         </div>
 
-        <div *ngIf="configurations.showDashboardBanner" class="row no-bottom-space">
-            <button type="button" class="close pull-right banner-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardBanner = false">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="clearfix"></div>
-            <banner-demo></banner-demo>
-        </div>
     </div>
 </div>

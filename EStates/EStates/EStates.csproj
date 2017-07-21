@@ -82,6 +82,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\home\bld01.jpg" />
     <None Include="wwwroot\styles.css" />
   </ItemGroup>
 
