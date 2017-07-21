@@ -82,6 +82,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\ES.Core.Commons\ES.Core.Commons.csproj" />
     <ProjectReference Include="..\..\ES.Core.Managers\ES.Core.Handlers.csproj" />
   </ItemGroup>
