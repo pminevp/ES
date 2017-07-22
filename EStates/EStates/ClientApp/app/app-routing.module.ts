@@ -19,6 +19,7 @@ import { AboutComponent } from "./components/about/about.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
+import { BuildingsComponent } from "./components/buildings/buildings.component";
 
 
 
@@ -33,6 +34,7 @@ import { AuthGuard } from './services/auth-guard.service';
             { path: "settings", component: SettingsComponent, canActivate: [AuthGuard], data: { title: "Settings" } },
             { path: "about", component: AboutComponent, data: { title: "About Us" } },
             { path: "home", redirectTo: "/", pathMatch: "full" },
+            { path: "buildings", component: BuildingsComponent},
             { path: "**", component: NotFoundComponent, data: { title: "Page Not Found" } },
         ])
     ],

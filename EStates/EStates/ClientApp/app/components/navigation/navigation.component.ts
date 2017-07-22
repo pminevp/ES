@@ -40,7 +40,7 @@ export class NavigationComponent implements OnInit{
         this.navigations = new Array<NavigationLink>();
         this.navigations.push({ text: "Начало", route: "/" });
         this.navigations.push({ text: "Наши Клиенти", route: "/" });
-        this.navigations.push({ text: "Сгради", route: "/" });
+        this.navigations.push({ text: "Сгради", route: "/buildings" });
         this.navigations.push({ text: "Апартаменти", route: "/" });
         this.navigations.push({ text: "За Нас", route: "/" });
     }

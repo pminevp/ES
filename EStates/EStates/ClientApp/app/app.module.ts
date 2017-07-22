@@ -67,6 +67,7 @@ import { UsersManagementComponent } from "./components/controls/users-management
 import { RolesManagementComponent } from "./components/controls/roles-management.component";
 import { RoleEditorComponent } from "./components/controls/role-editor.component";
 import { NavigationComponent } from "./components/navigation/navigation.component";
+import { BuildingsComponent } from "./components/buildings/buildings.component";
 
 
 
@@ -116,7 +117,8 @@ import { NavigationComponent } from "./components/navigation/navigation.componen
         BootstrapSelectDirective,
         BootstrapDatepickerDirective,
         GroupByPipe,
-        NavigationComponent
+        NavigationComponent,
+        BuildingsComponent
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler },
