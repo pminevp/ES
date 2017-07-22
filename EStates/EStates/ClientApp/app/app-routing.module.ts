@@ -34,7 +34,8 @@ import { BuildingsComponent } from "./components/buildings/buildings.component";
             { path: "settings", component: SettingsComponent, canActivate: [AuthGuard], data: { title: "Settings" } },
             { path: "about", component: AboutComponent, data: { title: "About Us" } },
             { path: "home", redirectTo: "/", pathMatch: "full" },
-            { path: "buildings", component: BuildingsComponent},
+            { path: "buildings/:id", component: BuildingsComponent },
+            { path: "buildings", component: BuildingsComponent },
             { path: "**", component: NotFoundComponent, data: { title: "Page Not Found" } },
         ])
     ],
