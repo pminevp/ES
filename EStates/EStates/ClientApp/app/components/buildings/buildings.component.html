@@ -1,11 +1,47 @@
 ﻿<div class="container">
     <div class="page-header">
         <h1>Сградни устройства <small>добавяне, управление и премахване на сгради</small></h1>
+        <!--add new Building-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Добави сграда</button>
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="gridSystemModalLabel">Добавяне на сграда</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="building-name" class="control-label">Наименование:</label>
+                                <input type="text" class="form-control" id="building-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="building-description" class="control-label">Описание:</label>
+                                <textarea class="form-control" id="Building-description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="building-address" class="control-label">Адрес:</label>
+                                <input type="text" class="form-control" id="building-address">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
+                                <button type="button" class="btn btn-primary">Запази</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--add new Building-->
+
+        <!--- Manage Buildigns assigned to  Home manager -->
         <div id="ManagedBuildings">
+            <small>Вашите сгради</small>
             <div class="row">
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <img src="#" alt="...">
+                        <img [src]="building1" style="width:350px; height:262px;" alt="...">
                         <div class="caption">
                             <h3>Сграда 1</h3>
                             <p>малка сграда в центъра на софия</p>
@@ -15,7 +51,7 @@
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <img src="#" alt="...">
+                        <img [src]="building2" style="width:350px; height:262px;" alt="...">
                         <div class="caption">
                             <h3>Сграда 2</h3>
                             <p>блок 214 гоце делчев</p>
@@ -25,7 +61,7 @@
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <img src="#" alt="...">
+                        <img [src]="building3" style="width:350px; height:262px;" alt="...">
                         <div class="caption">
                             <h3>К-с Фонаните</h3>
                             <p>Комплексът без край/p>
@@ -35,5 +71,6 @@
                 </div>
             </div>
         </div>
+        <!--- Manage Buildigns assigned to  Home manager -->
     </div>
 </div>
