@@ -68,6 +68,9 @@ import { RolesManagementComponent } from "./components/controls/roles-management
 import { RoleEditorComponent } from "./components/controls/role-editor.component";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { BuildingsComponent } from "./components/buildings/buildings.component";
+import { BuildingsEndpointService } from "./services/buildings-endpoint.service";
+import { BuildingDetailsComponent } from "./components/building-details/building-details.component";
+
 
 
 
@@ -118,7 +121,8 @@ import { BuildingsComponent } from "./components/buildings/buildings.component";
         BootstrapDatepickerDirective,
         GroupByPipe,
         NavigationComponent,
-        BuildingsComponent
+        BuildingsComponent,
+        BuildingDetailsComponent
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler },
@@ -131,7 +135,8 @@ import { BuildingsComponent } from "./components/buildings/buildings.component";
         AccountService,
         AccountEndpoint,
         LocalStoreManager,
-        EndpointFactory
+        EndpointFactory,
+        BuildingsEndpointService
     ],
     bootstrap: [AppComponent]
 })

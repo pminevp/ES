@@ -20,6 +20,7 @@ import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { BuildingsComponent } from "./components/buildings/buildings.component";
+import { BuildingDetailsComponent } from "./components/building-details/building-details.component";
 
 
 
@@ -36,6 +37,7 @@ import { BuildingsComponent } from "./components/buildings/buildings.component";
             { path: "home", redirectTo: "/", pathMatch: "full" },
             { path: "buildings/:id", component: BuildingsComponent },
             { path: "buildings", component: BuildingsComponent },
+            { path: "building-details/:id", component: BuildingDetailsComponent},
             { path: "**", component: NotFoundComponent, data: { title: "Page Not Found" } },
         ])
     ],

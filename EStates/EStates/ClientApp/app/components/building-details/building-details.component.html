@@ -10,9 +10,9 @@
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading">Name</h4>
+                <h4 class="media-heading">{{selectedBuilding.name}}</h4>
                 <div>
-                    text text
+                   {{selectedBuilding.description}}
                 </div>
             </div>
         </div>
@@ -22,18 +22,46 @@
     <!-- Added apartaments-->
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">Въведени Апартаменти</div>
+        <div class="panel-heading">Въведени Апартаменти <a data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-folder-open"></span> Добави</a></div>
         <div class="panel-body">
             <p>това са всички апартаменти в сградата</p>
         </div>
         <!-- List group -->
-        <ul class="list-group">
-            <li class="list-group-item">ап 1 ет 1 сем Иванови <span class="label label-danger">неплатени сметки</span></li>
-            <li class="list-group-item">ап 2 ет 1 сем Петкови <span class="label label-success">редовни</span> </li>
-            <li class="list-group-item">ап 3 ет 1 сем Лозеви <span class="label label-info">запитване</span></li>
-            <li class="list-group-item">ап 4 ет 2 сем Тодорови <span class="label label-danger">Важно!</span></li>
-            <li class="list-group-item">ап 5 ет 2 сем Кисьови <span class="label label-success">редовни</span></li>
-        </ul>
+        <div  class="list-group" *ngFor="let apartament of selectedApartaments">
+            <a href="#" class="list-group-item">{{apartament.name}} - {{apartament.owners}} <span class="label label-{{apartament.status}}">{{apartament.status}}</span> </a>
+        </div>
     </div>
     <!-- Added apartaments-->
 </div>
+
+
+<!-- Modal fo add apartament-->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Добавяне на Апартамент</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="building-name" class="control-label">Наименование:</label>
+                    <input type="text" class="form-control" [(ngModel)]="newApartament.name"  >
+                </div>
+                <div class="form-group">
+                    <label for="building-description" class="control-label">Собственици:</label>
+                    <textarea class="form-control" [(ngModel)]="newApartament.owners" [ngModelOptions]="{standalone: true}"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="building-description" class="control-label">Описание:</label>
+                    <textarea class="form-control" [(ngModel)]="newApartament.description" [ngModelOptions]="{standalone: true}" ></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="Save()" >Запази</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal fo add apartament-->
