@@ -1,0 +1,62 @@
+﻿<div class="container">
+
+    <h1> Обработка на Апартамент</h1>
+    <!-- image + text for intro -->
+    <div class="row">
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="#" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{selectedApartament.name}}</h4>
+                <div>
+                    {{selectedApartament.description}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- image + text for intro -->
+    <!-- Added apartaments-->
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Жители на Апартамента <a data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-folder-open"></span> Добави</a></div>
+       
+            <!-- List group -->
+            <div class="list-group" *ngFor="let own of owners">
+                <a href="#" class="list-group-item">{{own.fullName}}</a>
+            </div>
+       
+       
+    </div>
+    <!-- Added apartaments-->
+</div>
+
+
+<!-- Modal fo add apartament-->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Добавяне на Жител</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="building-name" class="control-label">Потребителско Име:</label>
+                    <input type="text" class="form-control" [(ngModel)]="newUser.userName">
+                </div>
+                <div class="form-group">
+                    <label for="building-description" class="control-label">Пълно Име:</label>
+                    <textarea class="form-control" [(ngModel)]="newUser.fullName" [ngModelOptions]="{standalone: true}"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="Save()">Запази</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal fo add apartament-->
