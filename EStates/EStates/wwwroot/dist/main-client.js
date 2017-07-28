@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e085801136f8b1796e19"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "51045da22d61d0b39000"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -3540,7 +3540,8 @@ var LoginComponent = (function () {
         else {
             this.loginStatusSubscription = this.authService.getLoginStatusEvent().subscribe(function (isLoggedIn) {
                 if (_this.getShouldRedirect()) {
-                    _this.authService.redirectLoginUser();
+                    window.location.reload();
+                    //this.authService.redirectLoginUser();
                 }
             });
         }
@@ -3579,6 +3580,7 @@ var LoginComponent = (function () {
                         _this.alertService.showStickyMessage("Session Restored", "Please try your last operation again", alert_service_1.MessageSeverity.default);
                     }, 500);
                     _this.closeModal();
+                    sessionStorage.setItem('loged', 'loged');
                 }
             }, 500);
         }, function (error) {
@@ -6189,24 +6191,24 @@ var NotificationEndpoint = (function () {
         this.demoNotifications = [
             {
                 "id": 1,
-                "header": "20 New Products were added to your inventory by \"administrator\"",
-                "body": "20 new \"BMW M6\" were added to your stock by \"administrator\" on 5/28/2017 4:54:13 PM",
+                "header": "Среща на Блока организирана от Домо оправител \"administrator\"",
+                "body": "Среща на всички живущи на бл. \"241 вх А\" задействана от домооправител \"administrator\" на 5/28/2017 от 4:54:13 PM часа",
                 "isRead": true,
                 "isPinned": true,
                 "date": "2017-05-28T16:29:13.5877958"
             },
             {
                 "id": 2,
-                "header": "1 Product running low",
-                "body": "You are running low on \"Nissan Patrol\". 2 Items remaining",
+                "header": "Събиране на Такса вход",
+                "body": "Домооправителя ще започне събирането на такси за входа.",
                 "isRead": false,
                 "isPinned": false,
                 "date": "2017-05-28T19:54:42.4144502"
             },
             {
                 "id": 3,
-                "header": "Tomorrow is half day",
-                "body": "Guys, tomorrow we close by midday. Please check in your sales before noon. Thanx. Alex.",
+                "header": "Избор на домооправител",
+                "body": "Избираме нов домоуправител утре, моля всеки да подготви своя кандидат.",
                 "isRead": false,
                 "isPinned": false,
                 "date": "2017-05-30T11:13:42.4144502"
@@ -24571,8 +24573,8 @@ var NotificationsViewerComponent = (function () {
             var gT = function (key) { return _this.translationService.getTranslation(key); };
             this.columns = [
                 { prop: "", name: '', width: 10, headerTemplate: this.statusHeaderTemplate, cellTemplate: this.statusTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false },
-                { prop: 'date', name: gT('notifications.Date'), cellTemplate: this.dateTemplate, width: 30 },
-                { prop: 'body', name: gT('notifications.Notification'), cellTemplate: this.contenBodytTemplate, width: 500 },
+                { prop: 'date', name: 'Дата', cellTemplate: this.dateTemplate, width: 30 },
+                { prop: 'body', name: 'Съобщение', cellTemplate: this.contenBodytTemplate, width: 500 },
                 { name: '', width: 80, cellTemplate: this.actionsTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false }
             ];
         }
@@ -25718,7 +25720,11 @@ var NavigationComponent = (function () {
             }
         });
     };
+    NavigationComponent.prototype.RefreashMenu = function () {
+        this.loadAuthenticatedMenuItems();
+    };
     NavigationComponent.prototype.loadAuthenticatedMenuItems = function () {
+        this.navigations = new Array();
         var allnavigations = this.loadMenuItems();
         var acc = this.accountService.currentUser;
         console.log(acc);
@@ -29338,7 +29344,7 @@ module.exports = "<div class=\"vertical-center-flex\">\r\n    <div class=\"login
 /* 157 */
 /***/ (function(module, exports) {
 
-module.exports = "<nav id=\"header\" class=\"app-component navbar navbar-inner navbar-fixed-top\">\r\n    <nav class=\"container\">\r\n        <div class=\"navbar-header\">\r\n            <button type=\"button\" class=\"app-component navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\".menuItemsContainer.app-component\" aria-expanded=\"false\">\r\n                <span class=\"sr-only\">Toggle navigation</span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n            </button>\r\n            <a class=\"app-component navbar-brand\" routerLink=\"/\">\r\n                <img [src]=\"appLogo\" alt=\"logo\">\r\n                <span class=\"app-component appTitle\">{{appTitle}}</span>\r\n            </a>\r\n        </div> \r\n        <div  class=\"app-component collapse navbar-collapse menuItemsContainer\">\r\n            <ul class=\"app-component nav navbar-nav nav-pills navBarPadding\" *ngFor=\"let nav of navigations\">        \r\n                <li><a routerLink=\"{{nav.route}}\">{{nav.text}}</a></li>                    \r\n            </ul>\r\n            <p class=\"app-component navbar-text navbar-right notifications-popup\">\r\n                {{'app.Welcome' | translate}}\r\n                <a class=\"app-component navbar-link user-name\" [popover]=\"popTemplate\" (onHidden)=\"markNotificationsAsRead()\" placement=\"bottom\" [popoverTitle]=\"notificationsTitle\" href=\"javascript:;\" triggers=\"focus\">\r\n                    {{userName}}\r\n                    <span *ngIf=\"newNotificationCount > 0\" class=\"badge\">{{newNotificationCount}}</span>\r\n                </a>,\r\n            </p>\r\n            <ng-template #popTemplate>\r\n                <notifications-viewer [isViewOnly]=\"true\"></notifications-viewer>\r\n            </ng-template>\r\n            <div  class=\"app-component collapse navbar-collapse menuItemsContainer\">\r\n                <ul class=\"app-component nav navbar-nav nav-pills navBarPadding navbar-right\">\r\n                    <li routerLinkActive=\"active\"><a routerLink=\"/settings\"><span class=\"glyphicon glyphicon-cog\"></span></a></li>\r\n                    <li ><a routerLink=\"/about\"><span class=\"glyphicon glyphicon-info-sign\"></span></a></li>\r\n                    <li *ngIf=\"isUserLoggedIn\" (click)=\"logout()\"><a href=\"javascript:;\"><span class=\"glyphicon glyphicon-log-out\"></span> {{'mainMenu.Logout' | translate}}</a></li>\r\n                    <li *ngIf=\"!isUserLoggedIn\" routerLinkActive=\"active\"><a routerLink=\"/login\"><span class=\"glyphicon glyphicon-log-in\"></span></a></li>\r\n                </ul>\r\n            </div>\r\n\r\n        </div>\r\n       \r\n     \r\n    </nav>\r\n</nav>";
+module.exports = "<nav id=\"header\" class=\"app-component navbar navbar-inner navbar-fixed-top\">\r\n    <nav class=\"container\">\r\n        <div class=\"navbar-header\">\r\n            <button type=\"button\" class=\"app-component navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\".menuItemsContainer.app-component\" aria-expanded=\"false\">\r\n                <span class=\"sr-only\">Toggle navigation</span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n            </button>\r\n            <a class=\"app-component navbar-brand\" routerLink=\"/\">\r\n                <img [src]=\"appLogo\" alt=\"logo\">\r\n                <span class=\"app-component appTitle\">{{appTitle}}</span>\r\n            </a>\r\n        </div> \r\n        <div  class=\"app-component collapse navbar-collapse menuItemsContainer\">\r\n            <ul class=\"app-component nav navbar-nav nav-pills navBarPadding\" *ngFor=\"let nav of navigations\">        \r\n                <li><a routerLink=\"{{nav.route}}\">{{nav.text}}</a></li>                    \r\n            </ul>\r\n            <p *ngIf=\"isUserLoggedIn\" class=\"app-component navbar-text navbar-right notifications-popup\">\r\n                {{'app.Welcome' | translate}}\r\n                <a class=\"app-component navbar-link user-name\" [popover]=\"popTemplate\" (onHidden)=\"markNotificationsAsRead()\" placement=\"bottom\" [popoverTitle]=\"notificationsTitle\" href=\"javascript:;\" triggers=\"focus\">\r\n                    {{userName}}\r\n                    <span *ngIf=\"newNotificationCount > 0\" class=\"badge\">{{newNotificationCount}}</span>\r\n                </a>,\r\n            </p>\r\n            <ng-template #popTemplate>\r\n                <notifications-viewer [isViewOnly]=\"true\"></notifications-viewer>\r\n            </ng-template>\r\n            <div  class=\"app-component collapse navbar-collapse menuItemsContainer\">\r\n                <ul class=\"app-component nav navbar-nav nav-pills navBarPadding navbar-right\">\r\n                    <li routerLinkActive=\"active\"><a routerLink=\"/settings\"><span class=\"glyphicon glyphicon-cog\"></span></a></li>\r\n                    <li ><a routerLink=\"/about\"><span class=\"glyphicon glyphicon-info-sign\"></span></a></li>\r\n                    <li *ngIf=\"isUserLoggedIn\" (click)=\"logout()\"><a href=\"javascript:;\"><span class=\"glyphicon glyphicon-log-out\"></span> {{'mainMenu.Logout' | translate}}</a></li>\r\n                    <li *ngIf=\"!isUserLoggedIn\" routerLinkActive=\"active\"><a routerLink=\"/login\"><span class=\"glyphicon glyphicon-log-in\"></span></a></li>\r\n                </ul>\r\n            </div>\r\n\r\n        </div>\r\n       \r\n     \r\n    </nav>\r\n</nav>";
 
 /***/ }),
 /* 158 */
