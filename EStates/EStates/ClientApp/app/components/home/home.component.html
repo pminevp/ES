@@ -49,7 +49,7 @@
             </a>
         </div>
         <br />
-        <div class="panel panel-default">
+        <div *ngIf="isUserLoggedIn" class="panel panel-default">
             <div class="panel-heading">Събития</div>
             <div class="panel-body">
                 <div *ngIf="configurations.showDashboardNotifications" class="row bottom-space">

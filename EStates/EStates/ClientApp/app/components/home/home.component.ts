@@ -9,6 +9,7 @@
 import { Component } from '@angular/core';
 import { fadeInOut } from '../../services/animations';
 import { ConfigurationService } from '../../services/configuration.service';
+import { AuthService } from "../../services/auth.service";
 
 
 @Component({
@@ -18,6 +19,10 @@ import { ConfigurationService } from '../../services/configuration.service';
     animations: [fadeInOut]
 })
 export class HomeComponent {
-    constructor(private configurations: ConfigurationService) {
+
+    isUserLoggedIn: boolean;
+
+    constructor(private configurations: ConfigurationService, private authService: AuthService) {
+        this.isUserLoggedIn = this.authService.isLoggedIn;
     }
 }
