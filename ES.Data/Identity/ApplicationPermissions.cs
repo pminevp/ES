@@ -20,7 +20,15 @@ namespace ES.Data.Identity
         public static ApplicationPermission ManageRoles = new ApplicationPermission("Manage Roles", "roles.manage", RolesPermissionGroupName, "Permission to create, delete and modify roles");
         public static ApplicationPermission AssignRoles = new ApplicationPermission("Assign Roles", "roles.assign", RolesPermissionGroupName, "Permission to assign roles to users");
 
+        public const string BuildingPermissionGroupName = "Building Permissions";
+        public static ApplicationPermission ViewBuildings = new ApplicationPermission("View Buildings", "buildings.view", BuildingPermissionGroupName, "Permission to view all buildings in the system.");
+        public static ApplicationPermission ManageBuildings = new ApplicationPermission("Manage Buildings", "buildings.manage", BuildingPermissionGroupName, "Permission to create, delete and modify Buildings");
+        public static ApplicationPermission AssignBuildings = new ApplicationPermission("Assign Buildings", "buildings.assign", BuildingPermissionGroupName, "Permission to assign apartaments to buildings");
 
+        public const string ApartamentPermissionGroupName = "Apartament Permissions";
+        public static ApplicationPermission ViewApartaments = new ApplicationPermission("View Apartaments", "apartaments.view", ApartamentPermissionGroupName, "Permission to view all apartaments in the system.");
+        public static ApplicationPermission ManageApartaments = new ApplicationPermission("Manage Apartaments", "apartaments.manage", ApartamentPermissionGroupName, "Permission to create, delete and modify apartaments");
+        public static ApplicationPermission AssignApartaments = new ApplicationPermission("Assign Apartaments", "apartaments.assign", ApartamentPermissionGroupName, "Permission to assign users to apartaments");
 
 
         static ApplicationPermissions()
@@ -32,7 +40,13 @@ namespace ES.Data.Identity
 
                 ViewRoles,
                 ManageRoles,
-                AssignRoles
+                AssignRoles,
+                ViewBuildings,
+                ManageBuildings,
+                AssignBuildings,
+                ViewApartaments,
+                ManageApartaments,
+                AssignApartaments
             };
 
             AllPermissions = allPermissions.AsReadOnly();

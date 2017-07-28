@@ -73,8 +73,8 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
 
             this.columns = [
                 { prop: "", name: '', width: 10, headerTemplate: this.statusHeaderTemplate, cellTemplate: this.statusTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false },
-                { prop: 'date', name: gT('notifications.Date'), cellTemplate: this.dateTemplate, width: 30 },
-                { prop: 'body', name: gT('notifications.Notification'), cellTemplate: this.contenBodytTemplate, width: 500 },
+                { prop: 'date', name: 'Дата', cellTemplate: this.dateTemplate, width: 30 },
+                { prop: 'body', name: 'Съобщение', cellTemplate: this.contenBodytTemplate, width: 500 },
                 { name: '', width: 80, cellTemplate: this.actionsTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false }
             ];
         }

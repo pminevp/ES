@@ -32,14 +32,19 @@ namespace ES.Data
 
             if (!await _context.Users.AnyAsync())
             {
+                const string buildingManagerRoleName = "buildingManager";
                 const string adminRoleName = "administrator";
                 const string userRoleName = "user";
 
                 await ensureRoleAsync(adminRoleName, "Default administrator", ApplicationPermissions.GetAllPermissionValues());
                 await ensureRoleAsync(userRoleName, "Default user", new string[] { });
+                await ensureRoleAsync(buildingManagerRoleName, "Building Manager", new string[] { ApplicationPermissions.ManageUsers, ApplicationPermissions.ViewUsers });
 
-                await createUserAsync("admin", "tempP@ss123", "Inbuilt Administrator", "admin@ebenmonney.com", "+1 (123) 000-0000", new string[] { adminRoleName });
-                await createUserAsync("user", "tempP@ss123", "Inbuilt Standard User", "user@ebenmonney.com", "+1 (123) 000-0001", new string[] { userRoleName });
+
+                await createUserAsync("admin", "Admin@123", "Global Administrator", "admin@ebenmonney.com", "+1 (123) 000-0000", new string[] { adminRoleName });
+                await createUserAsync("user", "User@123", "Standard User", "user@ebenmonney.com", "+1 (123) 000-0001", new string[] { userRoleName });
+                await createUserAsync("manager", "Manager@123", "mr Manager", "manager@abv.bg", "+359 954", new string[] { buildingManagerRoleName });
+
             }
 
 

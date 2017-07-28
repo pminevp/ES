@@ -11,37 +11,32 @@
                 <img [src]="appLogo" alt="logo">
                 <span class="app-component appTitle">{{appTitle}}</span>
             </a>
-        </div>
+        </div> 
         <div  class="app-component collapse navbar-collapse menuItemsContainer">
-            <ul class="app-component nav navbar-nav nav-pills navBarPadding" *ngFor="let nav of navigations">
-                <li><a routerLink="{{nav.route}}">{{nav.text}}</a></li>
+            <ul class="app-component nav navbar-nav nav-pills navBarPadding" *ngFor="let nav of navigations">        
+                <li><a routerLink="{{nav.route}}">{{nav.text}}</a></li>                    
             </ul>
-            <!--<ul class="app-component nav navbar-nav nav-pills navBarPadding navbar-right">
-                <li (click)="logout()"><a href="javascript:;"><span class="glyphicon glyphicon-log-out"></span> {{'mainMenu.Logout' | translate}}</a></li>
-            </ul>-->
-            <!--<p class="app-component navbar-text navbar-right notifications-popup">
+            <p *ngIf="isUserLoggedIn" class="app-component navbar-text navbar-right notifications-popup">
                 {{'app.Welcome' | translate}}
                 <a class="app-component navbar-link user-name" [popover]="popTemplate" (onHidden)="markNotificationsAsRead()" placement="bottom" [popoverTitle]="notificationsTitle" href="javascript:;" triggers="focus">
                     {{userName}}
                     <span *ngIf="newNotificationCount > 0" class="badge">{{newNotificationCount}}</span>
                 </a>,
-            </p>-->
+            </p>
             <ng-template #popTemplate>
                 <notifications-viewer [isViewOnly]="true"></notifications-viewer>
             </ng-template>
-            <ul class="app-component nav navbar-nav nav-pills navBarPadding navbar-right">
-                <li routerLinkActive="active"><a routerLink="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
-            </ul>
+            <div  class="app-component collapse navbar-collapse menuItemsContainer">
+                <ul class="app-component nav navbar-nav nav-pills navBarPadding navbar-right">
+                    <li routerLinkActive="active"><a routerLink="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
+                    <li ><a routerLink="/about"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+                    <li *ngIf="isUserLoggedIn" (click)="logout()"><a href="javascript:;"><span class="glyphicon glyphicon-log-out"></span> {{'mainMenu.Logout' | translate}}</a></li>
+                    <li *ngIf="!isUserLoggedIn" routerLinkActive="active"><a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span></a></li>
+                </ul>
+            </div>
+
         </div>
-        <!--<div *ngIf="!isUserLoggedIn && router.isActive('/about')" class="app-component collapse navbar-collapse menuItemsContainer">
-            <ul class="app-component nav navbar-nav nav-pills navBarPadding navbar-right">
-                <li routerLinkActive="active"><a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span></a></li>
-            </ul>
-        </div>-->
-        <!--<div *ngIf="!isUserLoggedIn && router.isActive('/login') || false" class="app-component collapse navbar-collapse menuItemsContainer">
-            <ul class="app-component nav navbar-nav nav-pills navBarPadding navbar-right">
-                <li routerLinkActive="active"><a routerLink="/about"><span class="glyphicon glyphicon-info-sign"></span></a></li>
-            </ul>
-        </div>-->
+       
+     
     </nav>
 </nav>

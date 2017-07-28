@@ -28,7 +28,7 @@
         </div>
         <!-- List group -->
         <div  class="list-group" *ngFor="let apartament of selectedApartaments">
-            <a href="#" class="list-group-item">{{apartament.name}} - {{apartament.owners}} <span class="label label-{{apartament.status}}">{{apartament.status}}</span> </a>
+            <a href="/building-apartaments/{{apartament.id}}" class="list-group-item">{{apartament.name}} - {{apartament.owners}} <span class="label label-{{apartament.status}}">{{apartament.status}}</span> </a>
         </div>
     </div>
     <!-- Added apartaments-->

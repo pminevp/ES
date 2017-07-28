@@ -335,6 +335,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
 
+    canViewModule(): boolean {
+
+        console.log('can view module');
+        return true;
+    }
+
     get userName(): string {
         return this.authService.currentUser ? this.authService.currentUser.userName : "";
     }
@@ -357,4 +363,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     get canViewOrders() {
         return true; //eg. viewOrdersPermission
     }
+
+ 
+
 }

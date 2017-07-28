@@ -70,6 +70,7 @@ import { NavigationComponent } from "./components/navigation/navigation.componen
 import { BuildingsComponent } from "./components/buildings/buildings.component";
 import { BuildingsEndpointService } from "./services/buildings-endpoint.service";
 import { BuildingDetailsComponent } from "./components/building-details/building-details.component";
+import { ApartamentComponent } from "./components/apartament/apartament.component";
 
 
 
@@ -122,7 +123,8 @@ import { BuildingDetailsComponent } from "./components/building-details/building
         GroupByPipe,
         NavigationComponent,
         BuildingsComponent,
-        BuildingDetailsComponent
+        BuildingDetailsComponent,
+        ApartamentComponent
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler },

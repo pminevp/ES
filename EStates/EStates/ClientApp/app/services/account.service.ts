@@ -135,6 +135,20 @@ export class AccountService {
     }
 
 
+    GetUsersPermissionValuesByRole(Role: PermissionValues): string {
+
+        for (var i = 0; i < this.permissions.length; i++) {        
+
+            if (this.permissions[i] == Role)
+            {
+                console.log(this.permissions[i]);
+                return this.permissions[i];
+            }          
+        }
+
+        return null;
+    }
+
     refreshLoggedInUser() {
         return this.authService.refreshLogin();
     }
@@ -201,7 +215,7 @@ export class AccountService {
         }
     }
 
-    getPermissions() {
+    public getPermissions() {
 
         return this.accountEndpoint.getPermissionsEndpoint()
             .map((response: Response) => <Permission[]>response.json());

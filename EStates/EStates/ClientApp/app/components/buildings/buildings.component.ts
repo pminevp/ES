@@ -11,7 +11,9 @@ import { BuildingsEndpointService } from "../../services/buildings-endpoint.serv
 })
 
 export class BuildingsComponent {
-       
+
+    
+    images: Array<any>;
      buildings: Array<Building>;
      newBuilding: Building = new Building();
     selectedBuildingId:number
@@ -24,6 +26,8 @@ export class BuildingsComponent {
         //    { image: require("../../assets/images/Buildings/sgrada3.jpg"), name: 'К-с Фонаните', description: 'Комплексът без край', id:2 }
         //);
 
+        
+        this.images = new Array<any>();
         this.buildings = buildingsEndpoint.GetAllBuildings().map(function (x) {
 
             
@@ -38,7 +42,10 @@ export class BuildingsComponent {
         else
         {
             this.selectedBuildingId = id;
-        }
+        } 
+
+        this.LoadImages() 
+        
      }
 
     public Save(){
@@ -55,6 +62,7 @@ export class BuildingsComponent {
         else
             return this.buildings.find(x => x.id === this.selectedBuildingId);
     }
+ 
 
     private AddId(id: number) : Promise<number>
     {
@@ -62,4 +70,19 @@ export class BuildingsComponent {
         this.selectedBuildingId = id;
         return new Promise<number>(x => this.selectedBuildingId);
     }
+
+
+    private LoadImages() {
+
+        var t = "../../assets/images/Buildings/GotseDelchev-214.jpg";
+
+        var s = require.resolve("../../assets/images/Buildings/GotseDelchev-214.jpg");
+
+        //var im = require.resolve(this.buildings[0].image);
+        //var im = require(t.toString());
+        console.log(s);
+    }
+
 }
+
+ 

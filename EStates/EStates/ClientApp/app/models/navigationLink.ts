@@ -2,6 +2,8 @@
 
 export class NavigationLink {
 
+    id: number;
+    name: string;
     text: string;
     route: string;
 

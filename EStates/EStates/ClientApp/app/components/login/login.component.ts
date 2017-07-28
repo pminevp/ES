@@ -46,8 +46,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
         else {
             this.loginStatusSubscription = this.authService.getLoginStatusEvent().subscribe(isLoggedIn => {
-                if (this.getShouldRedirect()) {
-                    this.authService.redirectLoginUser();
+                if (this.getShouldRedirect()) {                 
+                    window.location.reload();
+                    //this.authService.redirectLoginUser();
                 }
             });
         }
@@ -98,6 +99,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                         }, 500);
 
                         this.closeModal();
+
+                        sessionStorage.setItem('loged', 'loged');
                     }
                 }, 500);
             },

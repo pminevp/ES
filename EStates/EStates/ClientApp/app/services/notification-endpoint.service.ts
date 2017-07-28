@@ -1,4 +1,4 @@
-// ======================================
+﻿// ======================================
 // Author: Ebenezer Monney
 // Email:  info@ebenmonney.com
 // Copyright (c) 2017 www.ebenmonney.com
@@ -19,24 +19,24 @@ export class NotificationEndpoint {
     private demoNotifications = [
         {
             "id": 1,
-            "header": "20 New Products were added to your inventory by \"administrator\"",
-            "body": "20 new \"BMW M6\" were added to your stock by \"administrator\" on 5/28/2017 4:54:13 PM",
+            "header": "Среща на Блока организирана от Домо оправител \"administrator\"",
+            "body": "Среща на всички живущи на бл. \"241 вх А\" задействана от домооправител \"administrator\" на 5/28/2017 от 4:54:13 PM часа",
             "isRead": true,
             "isPinned": true,
             "date": "2017-05-28T16:29:13.5877958"
         },
         {
             "id": 2,
-            "header": "1 Product running low",
-            "body": "You are running low on \"Nissan Patrol\". 2 Items remaining",
+            "header": "Събиране на Такса вход",
+            "body": "Домооправителя ще започне събирането на такси за входа.",
             "isRead": false,
             "isPinned": false,
             "date": "2017-05-28T19:54:42.4144502"
         },
         {
             "id": 3,
-            "header": "Tomorrow is half day",
-            "body": "Guys, tomorrow we close by midday. Please check in your sales before noon. Thanx. Alex.",
+            "header": "Избор на домооправител",
+            "body": "Избираме нов домоуправител утре, моля всеки да подготви своя кандидат.",
             "isRead": false,
             "isPinned": false,
             "date": "2017-05-30T11:13:42.4144502"
