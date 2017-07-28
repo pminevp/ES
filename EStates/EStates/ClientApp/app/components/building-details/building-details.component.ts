@@ -40,4 +40,5 @@ export class BuildingDetailsComponent {
         console.log(this.newApartament);
         this.selectedBuilding.apartaments.push(this.newApartament);
     }
+ 
 }

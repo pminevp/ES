@@ -11,7 +11,7 @@ export class BuildingsEndpointService {
         return this.GetStoredBuildings();
     }
 
-    public GetSelectedBuilding(id: number) {
+    public GetSelectedBuilding(id: number) : Building {
         var loadedBuildings = this.GetStoredBuildings();
 
         var localBuilding;

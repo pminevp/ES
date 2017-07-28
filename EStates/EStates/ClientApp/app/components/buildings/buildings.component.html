@@ -32,14 +32,14 @@
             </div>
         </div>
         <!--add new Building-->
-
+        <img [src]="img1" style="width:350px; height:262px;" alt="...">
         <!--- Manage Buildigns assigned to  Home manager -->
         <div id="ManagedBuildings">
             <small>Вашите сгради</small>
             <div class="row">
                 <div class="col-sm-6 col-md-4" *ngFor="let building of buildings">
                     <div class="thumbnail">
-                        <img [src]="building.image" style="width:350px; height:262px;" alt="...">
+                        <img [src]="building.image" style="width:350px; height:262px;" alt="...">                       
                         <div class="caption">
                             <h3>{{building.name}}</h3>
                             <p>{{building.description}}</p>
