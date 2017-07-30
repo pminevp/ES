@@ -11,6 +11,10 @@ namespace ES.Core.Handlers
         IProductRepository Products { get; }
         IOrdersRepository Orders { get; }
 
+        IApartamentRepository Apartaments { get; }
+
+        IBuildingRepository Buildings { get; }
+
 
         int SaveChanges();
     }

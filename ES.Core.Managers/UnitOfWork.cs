@@ -1,9 +1,6 @@
 ﻿using ES.Data;
 using ES.Data.Repositories;
 using ES.Data.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ES.Core.Handlers
 {
@@ -14,8 +11,8 @@ namespace ES.Core.Handlers
         ICustomerRepository _customers;
         IProductRepository _products;
         IOrdersRepository _orders;
-
-
+        IApartamentRepository _apartament;
+        private IBuildingRepository _building;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -61,8 +58,27 @@ namespace ES.Core.Handlers
             }
         }
 
+        public IApartamentRepository Apartaments
+        {
+            get
+            {
+                if (_apartament == null)
+                    _apartament = new ApartamentRepository(_context);
 
+                return _apartament;
+            }
+        }
 
+        public IBuildingRepository Buildings
+        {
+            get
+            {
+                if (_building == null)
+                    _building = new BuildingRepository(_context);
+
+                return _building;
+            }
+        }
 
         public int SaveChanges()
         {

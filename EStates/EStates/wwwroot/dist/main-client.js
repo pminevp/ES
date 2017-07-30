@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4f8ad07c5763ae19a466"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ac21904bb5dc164225dd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1384,7 +1384,7 @@ __webpack_require__(166);
 __webpack_require__(171);
 __webpack_require__(12);
 var account_endpoint_service_1 = __webpack_require__(55);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var AccountService = (function () {
     var AccountService = AccountService_1 = function AccountService(router, http, authService, accountEndpoint) {
         this.router = router;
@@ -1558,116 +1558,6 @@ exports.AccountService = AccountService;
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var core_2 = __webpack_require__(35);
-var Observable_1 = __webpack_require__(2);
-var Subject_1 = __webpack_require__(16);
-__webpack_require__(32);
-var AppTranslationService = (function () {
-    function AppTranslationService(translate) {
-        this.translate = translate;
-        this._languageChanged = new Subject_1.Subject();
-        this.defaultLanguage = "en";
-        this.setDefaultLanguage(this.defaultLanguage);
-    }
-    AppTranslationService.prototype.addLanguages = function (lang) {
-        this.translate.addLangs(lang);
-    };
-    AppTranslationService.prototype.setDefaultLanguage = function (lang) {
-        this.translate.setDefaultLang(lang);
-    };
-    AppTranslationService.prototype.getDefaultLanguage = function () {
-        return this.translate.defaultLang;
-    };
-    AppTranslationService.prototype.getBrowserLanguage = function () {
-        return this.translate.getBrowserLang();
-    };
-    AppTranslationService.prototype.useBrowserLanguage = function () {
-        var browserLang = this.getBrowserLanguage();
-        if (browserLang.match(/en|fr|ar|ko/)) {
-            this.changeLanguage(browserLang);
-            return browserLang;
-        }
-    };
-    AppTranslationService.prototype.changeLanguage = function (language) {
-        var _this = this;
-        if (language === void 0) { language = "en"; }
-        if (!language)
-            language = this.translate.defaultLang;
-        if (language != this.translate.currentLang) {
-            setTimeout(function () {
-                _this.translate.use(language);
-                _this._languageChanged.next(language);
-            });
-        }
-        return language;
-    };
-    AppTranslationService.prototype.getTranslation = function (key, interpolateParams) {
-        return this.translate.instant(key, interpolateParams);
-    };
-    AppTranslationService.prototype.getTranslationAsync = function (key, interpolateParams) {
-        return this.translate.get(key, interpolateParams);
-    };
-    AppTranslationService.prototype.languageChangedEvent = function () {
-        return this._languageChanged.asObservable();
-    };
-    AppTranslationService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [core_2.TranslateService])
-    ], AppTranslationService);
-    return AppTranslationService;
-}());
-exports.AppTranslationService = AppTranslationService;
-var TranslateLanguageLoader = (function () {
-    function TranslateLanguageLoader() {
-    }
-    /**
-     * Gets the translations from webpack
-     * @param lang
-     * @returns {any}
-     */
-    TranslateLanguageLoader.prototype.getTranslation = function (lang) {
-        //Note Dynamic require(variable) will not work. Require is always at compile time
-        switch (lang) {
-            case "en":
-                return Observable_1.Observable.of(__webpack_require__(74));
-            case "fr":
-                return Observable_1.Observable.of(__webpack_require__(75));
-            case "ar":
-                return Observable_1.Observable.of(__webpack_require__(73));
-            case "ko":
-                return Observable_1.Observable.of(__webpack_require__(76));
-            default:
-        }
-    };
-    return TranslateLanguageLoader;
-}());
-exports.TranslateLanguageLoader = TranslateLanguageLoader;
-
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1920,6 +1810,116 @@ exports.AuthService = AuthService;
 
 
 /***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// ======================================
+// Author: Ebenezer Monney
+// Email:  info@ebenmonney.com
+// Copyright (c) 2017 www.ebenmonney.com
+// 
+// ==> Gun4Hire: contact@ebenmonney.com
+// ======================================
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var core_2 = __webpack_require__(35);
+var Observable_1 = __webpack_require__(2);
+var Subject_1 = __webpack_require__(16);
+__webpack_require__(32);
+var AppTranslationService = (function () {
+    function AppTranslationService(translate) {
+        this.translate = translate;
+        this._languageChanged = new Subject_1.Subject();
+        this.defaultLanguage = "en";
+        this.setDefaultLanguage(this.defaultLanguage);
+    }
+    AppTranslationService.prototype.addLanguages = function (lang) {
+        this.translate.addLangs(lang);
+    };
+    AppTranslationService.prototype.setDefaultLanguage = function (lang) {
+        this.translate.setDefaultLang(lang);
+    };
+    AppTranslationService.prototype.getDefaultLanguage = function () {
+        return this.translate.defaultLang;
+    };
+    AppTranslationService.prototype.getBrowserLanguage = function () {
+        return this.translate.getBrowserLang();
+    };
+    AppTranslationService.prototype.useBrowserLanguage = function () {
+        var browserLang = this.getBrowserLanguage();
+        if (browserLang.match(/en|fr|ar|ko/)) {
+            this.changeLanguage(browserLang);
+            return browserLang;
+        }
+    };
+    AppTranslationService.prototype.changeLanguage = function (language) {
+        var _this = this;
+        if (language === void 0) { language = "en"; }
+        if (!language)
+            language = this.translate.defaultLang;
+        if (language != this.translate.currentLang) {
+            setTimeout(function () {
+                _this.translate.use(language);
+                _this._languageChanged.next(language);
+            });
+        }
+        return language;
+    };
+    AppTranslationService.prototype.getTranslation = function (key, interpolateParams) {
+        return this.translate.instant(key, interpolateParams);
+    };
+    AppTranslationService.prototype.getTranslationAsync = function (key, interpolateParams) {
+        return this.translate.get(key, interpolateParams);
+    };
+    AppTranslationService.prototype.languageChangedEvent = function () {
+        return this._languageChanged.asObservable();
+    };
+    AppTranslationService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [core_2.TranslateService])
+    ], AppTranslationService);
+    return AppTranslationService;
+}());
+exports.AppTranslationService = AppTranslationService;
+var TranslateLanguageLoader = (function () {
+    function TranslateLanguageLoader() {
+    }
+    /**
+     * Gets the translations from webpack
+     * @param lang
+     * @returns {any}
+     */
+    TranslateLanguageLoader.prototype.getTranslation = function (lang) {
+        //Note Dynamic require(variable) will not work. Require is always at compile time
+        switch (lang) {
+            case "en":
+                return Observable_1.Observable.of(__webpack_require__(74));
+            case "fr":
+                return Observable_1.Observable.of(__webpack_require__(75));
+            case "ar":
+                return Observable_1.Observable.of(__webpack_require__(73));
+            case "ko":
+                return Observable_1.Observable.of(__webpack_require__(76));
+            default:
+        }
+    };
+    return TranslateLanguageLoader;
+}());
+exports.TranslateLanguageLoader = TranslateLanguageLoader;
+
+
+/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1975,7 +1975,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var app_translation_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(9);
 var local_store_manager_service_1 = __webpack_require__(18);
 var db_Keys_1 = __webpack_require__(57);
 var utilities_1 = __webpack_require__(4);
@@ -3517,7 +3517,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var alert_service_1 = __webpack_require__(5);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var configuration_service_1 = __webpack_require__(11);
 var utilities_1 = __webpack_require__(4);
 var user_login_model_1 = __webpack_require__(104);
@@ -3691,7 +3691,7 @@ __webpack_require__(168);
 __webpack_require__(12);
 __webpack_require__(60);
 __webpack_require__(169);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var configuration_service_1 = __webpack_require__(11);
 var EndpointFactory = (function () {
     var EndpointFactory = EndpointFactory_1 = function EndpointFactory(http, configurations, injector) {
@@ -3840,7 +3840,7 @@ var Observable_1 = __webpack_require__(2);
 __webpack_require__(167);
 __webpack_require__(174);
 __webpack_require__(12);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var notification_endpoint_service_1 = __webpack_require__(58);
 var notification_model_1 = __webpack_require__(102);
 var NotificationService = (function () {
@@ -5265,7 +5265,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var animations_1 = __webpack_require__(13);
 var configuration_service_1 = __webpack_require__(11);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var HomeComponent = (function () {
     function HomeComponent(configurations, authService) {
         this.configurations = configurations;
@@ -5428,7 +5428,7 @@ var router_1 = __webpack_require__(6);
 __webpack_require__(61);
 var animations_1 = __webpack_require__(13);
 var bootstrap_tab_directive_1 = __webpack_require__(52);
-var app_translation_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(9);
 var account_service_1 = __webpack_require__(7);
 var permission_model_1 = __webpack_require__(10);
 var SettingsComponent = (function () {
@@ -23955,7 +23955,7 @@ var orders_component_1 = __webpack_require__(48);
 var settings_component_1 = __webpack_require__(50);
 var about_component_1 = __webpack_require__(39);
 var not_found_component_1 = __webpack_require__(47);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var auth_guard_service_1 = __webpack_require__(106);
 var buildings_component_1 = __webpack_require__(42);
 var building_details_component_1 = __webpack_require__(41);
@@ -24033,7 +24033,7 @@ var ng2_charts_1 = __webpack_require__(239);
 var app_routing_module_1 = __webpack_require__(84);
 var app_error_handler_1 = __webpack_require__(83);
 var app_title_service_1 = __webpack_require__(56);
-var app_translation_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(9);
 var configuration_service_1 = __webpack_require__(11);
 var alert_service_1 = __webpack_require__(5);
 var local_store_manager_service_1 = __webpack_require__(18);
@@ -24178,11 +24178,11 @@ var router_1 = __webpack_require__(6);
 var ng2_toasty_1 = __webpack_require__(66);
 var alert_service_1 = __webpack_require__(5);
 var notification_service_1 = __webpack_require__(30);
-var app_translation_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(9);
 var account_service_1 = __webpack_require__(7);
 var local_store_manager_service_1 = __webpack_require__(18);
 var app_title_service_1 = __webpack_require__(56);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var configuration_service_1 = __webpack_require__(11);
 var permission_model_1 = __webpack_require__(10);
 var login_component_1 = __webpack_require__(27);
@@ -24548,7 +24548,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var alert_service_1 = __webpack_require__(5);
-var app_translation_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(9);
 var notification_service_1 = __webpack_require__(30);
 var account_service_1 = __webpack_require__(7);
 var permission_model_1 = __webpack_require__(10);
@@ -24741,7 +24741,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(22);
 var alert_service_1 = __webpack_require__(5);
-var app_translation_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(9);
 var account_service_1 = __webpack_require__(7);
 var utilities_1 = __webpack_require__(4);
 var role_model_1 = __webpack_require__(28);
@@ -25129,9 +25129,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(22);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var alert_service_1 = __webpack_require__(5);
-var app_translation_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(9);
 var local_store_manager_service_1 = __webpack_require__(18);
 var TodoDemoComponent = (function () {
     var TodoDemoComponent = TodoDemoComponent_1 = function TodoDemoComponent(alertService, translationService, localStorage, authService) {
@@ -25343,7 +25343,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var alert_service_1 = __webpack_require__(5);
 var configuration_service_1 = __webpack_require__(11);
-var app_translation_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(9);
 var bootstrap_select_directive_1 = __webpack_require__(51);
 var account_service_1 = __webpack_require__(7);
 var utilities_1 = __webpack_require__(4);
@@ -25484,7 +25484,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(22);
 var alert_service_1 = __webpack_require__(5);
-var app_translation_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(9);
 var account_service_1 = __webpack_require__(7);
 var utilities_1 = __webpack_require__(4);
 var user_model_1 = __webpack_require__(15);
@@ -25698,7 +25698,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var router_1 = __webpack_require__(6);
 var account_service_1 = __webpack_require__(7);
 var NavigationComponent = (function () {
@@ -26365,7 +26365,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var router_1 = __webpack_require__(6);
-var auth_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(8);
 var AuthGuard = (function () {
     function AuthGuard(authService, router) {
         this.authService = authService;
