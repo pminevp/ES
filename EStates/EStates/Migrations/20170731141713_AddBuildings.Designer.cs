@@ -9,9 +9,10 @@ using ES.Core.Commons.Enums;
 namespace EStates.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170731141713_AddBuildings")]
+    partial class AddBuildings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -28,17 +29,13 @@ namespace EStates.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("ParentFloorid");
-
                     b.Property<string>("Status");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BuildingId");
 
-                    b.HasIndex("ParentFloorid");
-
-                    b.ToTable("AppApartament");
+                    b.ToTable("Apartament");
                 });
 
             modelBuilder.Entity("ES.Data.Models.ApplicationRole", b =>
@@ -142,22 +139,6 @@ namespace EStates.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppBuilding");
-                });
-
-            modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("CurrentBuildingId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("CurrentBuildingId");
-
-                    b.ToTable("AppBuildingFloor");
                 });
 
             modelBuilder.Entity("ES.Data.Models.Customer", b =>
@@ -479,10 +460,6 @@ namespace EStates.Migrations
                     b.HasOne("ES.Data.Models.Building")
                         .WithMany("Apartaments")
                         .HasForeignKey("BuildingId");
-
-                    b.HasOne("ES.Data.Models.BuildingFloor", "ParentFloor")
-                        .WithMany("Apartaments")
-                        .HasForeignKey("ParentFloorid");
                 });
 
             modelBuilder.Entity("ES.Data.Models.ApplicationUser", b =>
@@ -490,13 +467,6 @@ namespace EStates.Migrations
                     b.HasOne("ES.Data.Models.Apartament")
                         .WithMany("Owners")
                         .HasForeignKey("ApartamentId");
-                });
-
-            modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>
-                {
-                    b.HasOne("ES.Data.Models.Building", "CurrentBuilding")
-                        .WithMany()
-                        .HasForeignKey("CurrentBuildingId");
                 });
 
             modelBuilder.Entity("ES.Data.Models.Order", b =>

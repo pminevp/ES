@@ -9,9 +9,10 @@ using ES.Core.Commons.Enums;
 namespace EStates.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170731142609_AddBuildingFloor")]
+    partial class AddBuildingFloor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -38,7 +39,7 @@ namespace EStates.Migrations
 
                     b.HasIndex("ParentFloorid");
 
-                    b.ToTable("AppApartament");
+                    b.ToTable("Apartament");
                 });
 
             modelBuilder.Entity("ES.Data.Models.ApplicationRole", b =>

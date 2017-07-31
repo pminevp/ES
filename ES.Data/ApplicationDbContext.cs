@@ -12,6 +12,9 @@ namespace ES.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Building> Building { get; set; }
+        public DbSet<BuildingFloor> BuildingFloor { get; set; }
+        public DbSet<Apartament> Apartament { get; set; }
 
 
 
@@ -45,6 +48,11 @@ namespace ES.Data
             builder.Entity<Order>().ToTable($"App{nameof(this.Orders)}");
 
             builder.Entity<OrderDetail>().ToTable($"App{nameof(this.OrderDetails)}");
+
+            builder.Entity<Building>().ToTable($"App{nameof(this.Building)}");
+            builder.Entity<BuildingFloor>().ToTable($"App{nameof(this.BuildingFloor)}");
+            builder.Entity<Apartament>().ToTable($"App{nameof(this.Apartament)}");
+
         }
     }
 }

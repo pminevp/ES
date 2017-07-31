@@ -11,8 +11,10 @@ namespace ES.Core.Handlers
         ICustomerRepository _customers;
         IProductRepository _products;
         IOrdersRepository _orders;
+        IFloorRepository _floor;
         IApartamentRepository _apartament;
-        private IBuildingRepository _building;
+        IBuildingRepository _building;
+
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -55,6 +57,17 @@ namespace ES.Core.Handlers
                     _orders = new OrdersRepository(_context);
 
                 return _orders;
+            }
+        }
+
+        public IFloorRepository BuildingFloor
+        {
+            get
+            {
+                if (_floor == null)
+                    _floor = new FloorRepository(_context);
+
+                return _floor;
             }
         }
 

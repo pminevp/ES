@@ -13,5 +13,7 @@ namespace ES.Data.Models
         public string Status { get; set; }
 
         public List<ApplicationUser> Owners { get; set; }
+
+        public BuildingFloor ParentFloor { get; set; }
     }
 }
