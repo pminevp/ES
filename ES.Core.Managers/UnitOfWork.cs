@@ -1,6 +1,7 @@
 ﻿using ES.Data;
 using ES.Data.Repositories;
 using ES.Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ES.Core.Handlers
 {
@@ -17,7 +18,7 @@ namespace ES.Core.Handlers
 
 
         public UnitOfWork(ApplicationDbContext context)
-        {
+        {       
             _context = context;
         }
 

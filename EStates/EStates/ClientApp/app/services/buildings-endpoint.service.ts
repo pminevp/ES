@@ -1,11 +1,19 @@
 ﻿import { Injectable } from "@angular/core";
+import { Http, Response, Headers } from '@angular/http';
 import { Building } from "../models/building";
 import { Apartament } from "../models/apartament";
 import { ApartamentStatuses } from "../models/apartamentStatuses";
 import { User } from "../models/user.model";
+import { Resources } from "../../ServiceResources";
 
 @Injectable()
 export class BuildingsEndpointService {
+
+
+    constructor(private _http: Http)
+    {
+
+    }
 
     public GetAllBuildings() {
         return this.GetStoredBuildings();
@@ -45,11 +53,19 @@ export class BuildingsEndpointService {
 
     private GetStoredBuildings() {
         var buildings = new Array<Building>();
+
+        this.GetAllBuildingsService();
         buildings.push(
-            { image: "../../assets/images/Buildings/GotseDelchev-214.jpg", name: 'Сграда 1', description: 'малка сграда в центъра на софия', id: 0, apartaments: new Array<Apartament>() },
-            { image: "../../assets/images/Buildings/sgrada2.jpg", name: 'Сграда 2', description: 'блок 214 гоце делчев', id: 1, apartaments: new Array<Apartament>() },
-            { image: "../../assets/images/Buildings/sgrada3.jpg", name: 'К-с Фонаните', description: 'Комплексът без край', id: 2, apartaments: new Array<Apartament>() }
+            { image: "../../assets/images/Buildings/GotseDelchev-214.jpg", name: 'Сграда 1', description: 'малка сграда в центъра на софия', id: 0},
+            { image: "../../assets/images/Buildings/sgrada2.jpg", name: 'Сграда 2', description: 'блок 214 гоце делчев', id: 1 },
+            { image: "../../assets/images/Buildings/sgrada3.jpg", name: 'К-с Фонаните', description: 'Комплексът без край', id: 2 }
         );
+
+        //buildings.push(
+        //    { image: "../../assets/images/Buildings/GotseDelchev-214.jpg", name: 'Сграда 1', description: 'малка сграда в центъра на софия', id: 0, apartaments: new Array<Apartament>() },
+        //    { image: "../../assets/images/Buildings/sgrada2.jpg", name: 'Сграда 2', description: 'блок 214 гоце делчев', id: 1, apartaments: new Array<Apartament>() },
+        //    { image: "../../assets/images/Buildings/sgrada3.jpg", name: 'К-с Фонаните', description: 'Комплексът без край', id: 2, apartaments: new Array<Apartament>() }
+        //);
 
 
         for (var i = 0; i < buildings.length; i++) {
@@ -64,13 +80,13 @@ export class BuildingsEndpointService {
 
     private PopulateApartaments(building: Building) {
         var apartStatuses = new ApartamentStatuses();
-        building.apartaments.push(
-            { id: 0, name: 'Ап 1 ет 1', description: 'апартамент на сем. Иванови', owners: 'сем. Иванови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
-            { id: 1, name: 'Ап 2 ет 1', description: 'апартамент на сем. Тодорови', owners: 'сем. Тодорови', status: apartStatuses.UnpaidBills, owner: this.GetApartamentOwners() },
-            { id: 2, name: 'Ап 3 ет 1', description: 'апартамент на сем. Кирови', owners: 'сем. Кирови', status: apartStatuses.Question, owner: this.GetApartamentOwners() },
-            { id: 3, name: 'Ап 4 ет 2', description: 'апартамент на сем. Симеонови', owners: 'сем. Симеонови', status: apartStatuses.Important, owner: this.GetApartamentOwners() },
-            { id: 4, name: 'Ап 5 ет 2', description: 'апартамент на сем. Кичукови', owners: 'сем. Кичукови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
-        );
+        //building.apartaments.push(
+        //    { id: 0, name: 'Ап 1 ет 1', description: 'апартамент на сем. Иванови', owners: 'сем. Иванови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
+        //    { id: 1, name: 'Ап 2 ет 1', description: 'апартамент на сем. Тодорови', owners: 'сем. Тодорови', status: apartStatuses.UnpaidBills, owner: this.GetApartamentOwners() },
+        //    { id: 2, name: 'Ап 3 ет 1', description: 'апартамент на сем. Кирови', owners: 'сем. Кирови', status: apartStatuses.Question, owner: this.GetApartamentOwners() },
+        //    { id: 3, name: 'Ап 4 ет 2', description: 'апартамент на сем. Симеонови', owners: 'сем. Симеонови', status: apartStatuses.Important, owner: this.GetApartamentOwners() },
+        //    { id: 4, name: 'Ап 5 ет 2', description: 'апартамент на сем. Кичукови', owners: 'сем. Кичукови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
+        //);
         return building;
     }
 
@@ -98,5 +114,22 @@ export class BuildingsEndpointService {
         usrs.push(usr3);
 
         return usrs;
+    }
+
+
+    private GetAllBuildingsService()
+    {
+        console.log('start service');
+        var buildingURL = Resources.BuildingPath;
+
+        var result = '';
+
+        var t = this._http.get(buildingURL);
+        //$.getJSON(buildingURL,
+        //    function (data) {
+        //        result = data;
+        //    });
+
+        console.log(t);
     }
 }

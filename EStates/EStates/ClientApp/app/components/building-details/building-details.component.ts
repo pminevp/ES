@@ -27,9 +27,9 @@ export class BuildingDetailsComponent {
         else { 
             this.selectedBuildingId = id;
             this.selectedBuilding = buildingsEndpoint.GetSelectedBuilding(id);
-            this.selectedApartaments = this.selectedBuilding.apartaments;
+            //this.selectedApartaments = this.selectedBuilding.apartaments;
 
-            console.log(this.selectedApartaments);
+            //console.log(this.selectedApartaments);
         }
     }
 
@@ -38,7 +38,7 @@ export class BuildingDetailsComponent {
         var apartStat = new ApartamentStatuses();
         this.newApartament.status = apartStat.Normal;
         console.log(this.newApartament);
-        this.selectedBuilding.apartaments.push(this.newApartament);
+        //this.selectedBuilding.apartaments.push(this.newApartament);
     }
  
 }

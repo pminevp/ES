@@ -22,6 +22,7 @@ namespace ES.Data
         { }
 
 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
