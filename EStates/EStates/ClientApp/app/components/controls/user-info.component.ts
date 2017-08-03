@@ -82,7 +82,8 @@ export class UserInfoComponent implements OnInit {
 
     ngOnInit() {
         if (!this.isGeneralEditor) {
-            this.loadCurrentUserData();
+           console.log(' user Info')
+           this.loadCurrentUserData();
         }
     }
 

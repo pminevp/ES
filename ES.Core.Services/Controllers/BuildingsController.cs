@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using ES.Core.Handlers;
 using ES.Data.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace ES.Core.Services.Controllers
 {
+    [EnableCors("test")]
     [Route("api/[controller]")]
     public class BuildingsController : Controller
     {

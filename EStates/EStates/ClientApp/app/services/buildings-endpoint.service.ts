@@ -1,25 +1,52 @@
-﻿import { Injectable } from "@angular/core";
-import { Http, Response, Headers } from '@angular/http';
+﻿import { Injectable, OnInit } from "@angular/core";
+import { Http, Response, Headers, ResponseOptions } from '@angular/http';
 import { Building } from "../models/building";
 import { Apartament } from "../models/apartament";
 import { ApartamentStatuses } from "../models/apartamentStatuses";
 import { User } from "../models/user.model";
 import { Resources } from "../../ServiceResources";
+import { Observable } from 'rxjs/Rx';
+import { Subject } from "rxjs/Subject";
 
 @Injectable()
-export class BuildingsEndpointService {
+export class BuildingsEndpointService implements OnInit {
 
 
-    constructor(private _http: Http)
-    {
+    buildServices: BuildingService;
 
+    constructor(private _http: Http) {
+        console.log('dsa');
+        let endpointUrl = Resources.BuildingPath;
+
+        this._http.get(endpointUrl)
+            .map((response: Response) => {
+                return response;
+            }).map((response: Response) => <Building>response.json()).subscribe(user => this.onCurrentBuildingsLoadSuccessful(user));
+
+  
     }
+
+
+    ngOnInit() {
+
+        console.log('dsa');
+        let endpointUrl = Resources.BuildingPath;
+
+        this._http.get(endpointUrl)
+            .map((response: Response) => {
+                return response;
+            }).map((response: Response) => <Building>response.json()).subscribe(user => this.onCurrentBuildingsLoadSuccessful(user));
+
+       //this.buildServices = new BuildingService(this._http);
+       // this.buildServices.getAllTest2().subscribe(user => this.onCurrentBuildingsLoadSuccessful(user));
+    }
+
 
     public GetAllBuildings() {
         return this.GetStoredBuildings();
     }
 
-    public GetSelectedBuilding(id: number) : Building {
+    public GetSelectedBuilding(id: number): Building {
         var loadedBuildings = this.GetStoredBuildings();
 
         var localBuilding;
@@ -56,7 +83,7 @@ export class BuildingsEndpointService {
 
         this.GetAllBuildingsService();
         buildings.push(
-            { image: "../../assets/images/Buildings/GotseDelchev-214.jpg", name: 'Сграда 1', description: 'малка сграда в центъра на софия', id: 0},
+            { image: "../../assets/images/Buildings/GotseDelchev-214.jpg", name: 'Сграда 1', description: 'малка сграда в центъра на софия', id: 0 },
             { image: "../../assets/images/Buildings/sgrada2.jpg", name: 'Сграда 2', description: 'блок 214 гоце делчев', id: 1 },
             { image: "../../assets/images/Buildings/sgrada3.jpg", name: 'К-с Фонаните', description: 'Комплексът без край', id: 2 }
         );
@@ -116,20 +143,125 @@ export class BuildingsEndpointService {
         return usrs;
     }
 
+    buildings: Building;
 
-    private GetAllBuildingsService()
-    {
-        console.log('start service');
-        var buildingURL = Resources.BuildingPath;
 
-        var result = '';
+    private GetAllBuildingsService() {
 
-        var t = this._http.get(buildingURL);
-        //$.getJSON(buildingURL,
-        //    function (data) {
-        //        result = data;
-        //    });
+        console.log('t');
+        console.log(this.buildings);
 
-        console.log(t);
+        //var t = this.$http.get(buildingURL).subscribe(x=>this.GetData(x));
     }
+
+    public test: any;
+
+    private GetData(response: any) {
+        console.log(' the response');
+        console.log(response._body);
+
+        let bld: Building = JSON.parse(response._body);
+
+
+    }
+
+    getDataObservable(url: string) {
+        return this._http.get(url)
+            .map(data => {
+                data.json();
+                return data.json();
+            });
+    }
+
+    private onCurrentBuildingsLoadSuccessful(building: Building) {
+
+
+        console.log('starting');
+
+        this.buildings = building;     
+
+        console.log(this.buildings);
+    }
+
+}
+
+
+class BuildingService {
+
+    constructor(private _http: Http) {
+
+    }
+
+    getAllTest2() {
+
+        return this.GetAllTest().map((response: Response) => <Building>response.json());
+    }
+
+    GetAllTest(): Observable<Response> {
+        let endpointUrl = Resources.BuildingPath;
+
+        return this._http.get(endpointUrl)
+            .map((response: Response) => {
+                return response;
+            })
+    }
+
+
+    //public GetAllTest(): Observable<any>
+    //{
+    //    return this._http.get(Resources.BuildingPath)
+    //        .map((res: Response) => res.json())
+    //        .catch((error: any) => Observable.throw(error.json()));
+    //}
+
+    public GetAll(): any {
+        var response = this.GetData(Resources.BuildingPath);
+        //  let bld = JSON.parse(response._body); 
+
+
+
+        return response;
+    }
+
+    public GetById(id: number): any {
+
+        var properUrl = Resources.BuildingPath + id;
+
+        //var response = this.GetData(properUrl);
+        //  let bld: Building = JSON.parse(response._body);
+    }
+
+
+    private GetData(url: string): any {
+        var resp: any;
+        console.log('GetData');
+        //var a =   this._http.get(url).subscribe(result =>this.ConsumeResponse(result));
+
+        //this._http.get(url).subscribe((result: any) => {
+
+        //    console.log('With Subscripbe');
+        //    var resultSet = result._body;
+
+        //    console.log(resultSet);
+        //});
+
+
+        var s: any;
+        var obs = this._http.get(url).map(x => {
+
+            s = x;
+
+            return x;
+        });
+
+
+        console.log(obs.take(0));
+        console.log(s);
+
+
+        return resp;
+    }
+
+
+
 }

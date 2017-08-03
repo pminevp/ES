@@ -1,7 +1,7 @@
 ﻿
 export class Resources {
 
-    static RootPath: string = "http://localhost:64376/app/";
+    static RootPath: string = "http://localhost:54779/api/";
 
-    static BuildingPath: string = Resources.RootPath + "Buildings/";
+    static BuildingPath: string = Resources.RootPath + "Building/";
 }

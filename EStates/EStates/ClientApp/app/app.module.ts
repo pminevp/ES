@@ -71,6 +71,8 @@ import { BuildingsComponent } from "./components/buildings/buildings.component";
 import { BuildingsEndpointService } from "./services/buildings-endpoint.service";
 import { BuildingDetailsComponent } from "./components/building-details/building-details.component";
 import { ApartamentComponent } from "./components/apartament/apartament.component";
+import { BuildingEndpoint } from "./services/building-endpoint";
+import { BuildingService } from "./services/BuildingService";
 
 
 
@@ -138,7 +140,9 @@ import { ApartamentComponent } from "./components/apartament/apartament.componen
         AccountEndpoint,
         LocalStoreManager,
         EndpointFactory,
-        BuildingsEndpointService
+        BuildingsEndpointService,
+        BuildingService,
+        BuildingEndpoint
     ],
     bootstrap: [AppComponent]
 })

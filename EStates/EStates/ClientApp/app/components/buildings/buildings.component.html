@@ -10,23 +10,23 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="gridSystemModalLabel">Добавяне на сграда</h4>
                     </div>
-                    <div class="modal-body">                      
-                            <div class="form-group">
-                                <label for="building-name" class="control-label">Наименование:</label>
-                                <input type="text" class="form-control" [(ngModel)]="newBuilding.name" [ngModelOptions]="{standalone: true}" >
-                            </div>
-                            <div class="form-group">
-                                <label for="building-description" class="control-label">Описание:</label>
-                                <textarea class="form-control" [(ngModel)]="newBuilding.description" [ngModelOptions]="{standalone: true}" ></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="building-address" class="control-label">Адрес:</label>
-                                <input type="text" class="form-control" id="building-address">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
-                                <button type="button" class="btn btn-primary" (click)="Save()" data-dismiss="modal" >Запази</button>
-                            </div>                    
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="building-name" class="control-label">Наименование:</label>
+                            <input type="text" class="form-control" [(ngModel)]="newBuilding.name" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="form-group">
+                            <label for="building-description" class="control-label">Описание:</label>
+                            <textarea class="form-control" [(ngModel)]="newBuilding.description" [ngModelOptions]="{standalone: true}"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="building-address" class="control-label">Адрес:</label>
+                            <input type="text" class="form-control" id="building-address">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
+                            <button type="button" class="btn btn-primary" (click)="Save()" data-dismiss="modal">Запази</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-sm-6 col-md-4" *ngFor="let building of buildings">
                     <div class="thumbnail">
-                        <img [src]="building.image" style="width:350px; height:262px;" alt="...">                       
+                        <!--<img [src]="building.image" style="width:350px; height:262px;" alt="...">-->
                         <div class="caption">
                             <h3>{{building.name}}</h3>
                             <p>{{building.description}}</p>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-            </div>           
+            </div>
         </div>
         <!--- Manage Buildigns assigned to  Home manager -->
     </div>

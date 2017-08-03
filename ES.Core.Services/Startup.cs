@@ -35,6 +35,8 @@ namespace ES.Core.Services
             {
                 options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"], b => b.MigrationsAssembly("EStates"));
             });
+
+            services.AddCors();
             services.AddMvc();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -45,7 +47,8 @@ namespace ES.Core.Services
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            
+
+            app.UseCors("test");
             app.UseMvc();
         }
     }
