@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ES.Core.Handlers.Services;
 using ES.Core.Handlers;
-using ES.Data.Models;
-using System.Linq;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using ES.Data.Models; 
 
 namespace EStates.Controllers
 {
@@ -33,7 +29,11 @@ namespace EStates.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Building value) => _buildingServices.Add(value);
+        public Building Post([FromBody] Building building)
+        {          
+           _buildingServices.Add(building);
+            return building;
+        }
    
 
         // PUT api/values/5

@@ -31,9 +31,15 @@ namespace ES.Core.Handlers.Services
 
         public Building GetById(int id) => _unitOfWork.Buildings.Get(id);
 
-        public void Add(Building building) => _unitOfWork.Buildings.Add(building);
-
-        public void Update(Building building) => _unitOfWork.Buildings.Update(building);
-
+        public void Add(Building building)
+        {
+            _unitOfWork.Buildings.Add(building);
+            _unitOfWork.SaveChanges();
+        }
+        public void Update(Building building)
+        {
+            _unitOfWork.Buildings.Update(building);
+            _unitOfWork.SaveChanges();
+        }
     }
 }
