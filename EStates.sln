@@ -22,8 +22,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ES.Core.Handlers", "ES.Core.Managers\ES.Core.Handlers.csproj", "{AEAFD6E9-E580-41F3-82B2-AC079E7FA901}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{0755ED23-2C91-473D-AEA7-D29B88504A6A}"
+	ProjectSection(SolutionItems) = preProject
+		ES.Core.Services\Program.cs = ES.Core.Services\Program.cs
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Core.Services", "ES.Core.Services\ES.Core.Services.csproj", "{7BD3643D-226A-4CAC-A94E-0CE3A49C1DD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ES.Core.Services", "ES.Core.Services\ES.Core.Services.csproj", "{7BD3643D-226A-4CAC-A94E-0CE3A49C1DD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -25,9 +25,19 @@ export class BuildingService
         return this.buildingEndpoint.GetAllBuildings().map((response: Response) => <Building[]>response.json());
     }
 
+    public GetBuilding(id: number)
+    {
+        return this.buildingEndpoint.GetBuilding(id).map((response: Response) => <Building>response.json());
+    }
+
     public AddBuilding(building: Building)
     {
       return  this.buildingEndpoint.AddBuilding(building).map((response: Response) => <Building[]>response.json());
+    }
+
+    public UploadBuildingDocument(formData: FormData)
+    {
+        return this.buildingEndpoint.UploadBuildingDocument(formData).map((response: Response) => response);
     }
 
 }

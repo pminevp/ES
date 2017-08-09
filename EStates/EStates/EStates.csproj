@@ -90,4 +90,8 @@
     <ProjectReference Include="..\..\ES.Core.Commons\ES.Core.Commons.csproj" />
     <ProjectReference Include="..\..\ES.Core.Managers\ES.Core.Handlers.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
 </Project>

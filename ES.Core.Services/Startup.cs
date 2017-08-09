@@ -36,6 +36,8 @@ namespace ES.Core.Services
                 options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"], b => b.MigrationsAssembly("EStates"));
             });
 
+   
+
             services.AddCors();
             services.AddMvc();
 
@@ -48,7 +50,7 @@ namespace ES.Core.Services
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseCors("test");
+            app.UseCors(builder => builder.WithOrigins("http://localhost:64376/"));
             app.UseMvc();
         }
     }

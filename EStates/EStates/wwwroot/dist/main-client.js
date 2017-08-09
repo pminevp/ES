@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d54fcbb726cf34ae5262"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7dc61e73f4c1504391ad"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -830,7 +830,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(10);
+var http_1 = __webpack_require__(6);
 var Subject_1 = __webpack_require__(16);
 var utilities_1 = __webpack_require__(5);
 var AlertService = (function () {
@@ -1032,7 +1032,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(10);
+var http_1 = __webpack_require__(6);
 var Utilities = (function () {
     var Utilities = Utilities_1 = function Utilities() {
     };
@@ -1350,10 +1350,16 @@ exports.Utilities = Utilities;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(1))(192);
+module.exports = (__webpack_require__(1))(190);
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(1))(192);
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1376,15 +1382,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
-var http_1 = __webpack_require__(10);
+var router_1 = __webpack_require__(7);
+var http_1 = __webpack_require__(6);
 var Observable_1 = __webpack_require__(2);
 var Subject_1 = __webpack_require__(16);
 __webpack_require__(63);
 __webpack_require__(64);
-__webpack_require__(9);
-var account_endpoint_service_1 = __webpack_require__(57);
-var auth_service_1 = __webpack_require__(8);
+__webpack_require__(10);
+var account_endpoint_service_1 = __webpack_require__(56);
+var auth_service_1 = __webpack_require__(9);
 var AccountService = (function () {
     var AccountService = AccountService_1 = function AccountService(router, http, authService, accountEndpoint) {
         this.router = router;
@@ -1557,7 +1563,7 @@ exports.AccountService = AccountService;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1580,9 +1586,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
+var router_1 = __webpack_require__(7);
 var Subject_1 = __webpack_require__(16);
-__webpack_require__(9);
+__webpack_require__(10);
 var local_store_manager_service_1 = __webpack_require__(18);
 var endpoint_factory_service_1 = __webpack_require__(21);
 var configuration_service_1 = __webpack_require__(12);
@@ -1810,7 +1816,7 @@ exports.AuthService = AuthService;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1819,12 +1825,6 @@ var Observable_1 = __webpack_require__(2);
 var map_1 = __webpack_require__(231);
 Observable_1.Observable.prototype.map = map_1.map;
 //# sourceMappingURL=map.js.map
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(1))(190);
 
 /***/ }),
 /* 11 */
@@ -2300,7 +2300,7 @@ module.exports = (__webpack_require__(1))(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_concat___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_concat__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_share__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_share___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_share__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_merge__ = __webpack_require__(175);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_merge___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_merge__);
@@ -3266,14 +3266,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(10);
+var http_1 = __webpack_require__(6);
 var Observable_1 = __webpack_require__(2);
 var Subject_1 = __webpack_require__(16);
 __webpack_require__(172);
-__webpack_require__(9);
+__webpack_require__(10);
 __webpack_require__(65);
 __webpack_require__(173);
-var auth_service_1 = __webpack_require__(8);
+var auth_service_1 = __webpack_require__(9);
 var configuration_service_1 = __webpack_require__(12);
 var EndpointFactory = (function () {
     var EndpointFactory = EndpointFactory_1 = function EndpointFactory(http, configurations, injector) {
@@ -3586,7 +3586,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var alert_service_1 = __webpack_require__(4);
-var auth_service_1 = __webpack_require__(8);
+var auth_service_1 = __webpack_require__(9);
 var configuration_service_1 = __webpack_require__(12);
 var utilities_1 = __webpack_require__(5);
 var user_login_model_1 = __webpack_require__(109);
@@ -3746,179 +3746,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(10);
-var apartament_1 = __webpack_require__(54);
-var apartamentStatuses_1 = __webpack_require__(55);
-var user_model_1 = __webpack_require__(15);
-var ServiceResources_1 = __webpack_require__(39);
-var BuildingsEndpointService = (function () {
-    function BuildingsEndpointService(_http) {
-        var _this = this;
-        this._http = _http;
-        console.log('dsa');
-        var endpointUrl = ServiceResources_1.Resources.BuildingPath;
-        this._http.get(endpointUrl)
-            .map(function (response) {
-            return response;
-        }).map(function (response) { return response.json(); }).subscribe(function (user) { return _this.onCurrentBuildingsLoadSuccessful(user); });
-    }
-    BuildingsEndpointService.prototype.ngOnInit = function () {
-        var _this = this;
-        console.log('dsa');
-        var endpointUrl = ServiceResources_1.Resources.BuildingPath;
-        this._http.get(endpointUrl)
-            .map(function (response) {
-            return response;
-        }).map(function (response) { return response.json(); }).subscribe(function (user) { return _this.onCurrentBuildingsLoadSuccessful(user); });
-        //this.buildServices = new BuildingService(this._http);
-        // this.buildServices.getAllTest2().subscribe(user => this.onCurrentBuildingsLoadSuccessful(user));
-    };
-    BuildingsEndpointService.prototype.GetAllBuildings = function () {
-        return this.GetStoredBuildings();
-    };
-    BuildingsEndpointService.prototype.GetSelectedBuilding = function (id) {
-        var loadedBuildings = this.GetStoredBuildings();
-        var localBuilding;
-        for (var i = 0; i < loadedBuildings.length; i++) {
-            if (loadedBuildings[i].id == id) {
-                localBuilding = loadedBuildings[i];
-                break;
-            }
-        }
-        return localBuilding;
-    };
-    BuildingsEndpointService.prototype.GetSelectedApartament = function (id) {
-        var selectedApart = new apartament_1.Apartament();
-        var arr = this.GetApartaments();
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].id == id) {
-                selectedApart = arr[i];
-                break;
-            }
-        }
-        return selectedApart;
-    };
-    BuildingsEndpointService.prototype.GetStoredBuildings = function () {
-        var buildings = new Array();
-        this.GetAllBuildingsService();
-        buildings.push({ image: "../../assets/images/Buildings/GotseDelchev-214.jpg", name: 'Сграда 1', description: 'малка сграда в центъра на софия', id: 0 }, { image: "../../assets/images/Buildings/sgrada2.jpg", name: 'Сграда 2', description: 'блок 214 гоце делчев', id: 1 }, { image: "../../assets/images/Buildings/sgrada3.jpg", name: 'К-с Фонаните', description: 'Комплексът без край', id: 2 });
-        //buildings.push(
-        //    { image: "../../assets/images/Buildings/GotseDelchev-214.jpg", name: 'Сграда 1', description: 'малка сграда в центъра на софия', id: 0, apartaments: new Array<Apartament>() },
-        //    { image: "../../assets/images/Buildings/sgrada2.jpg", name: 'Сграда 2', description: 'блок 214 гоце делчев', id: 1, apartaments: new Array<Apartament>() },
-        //    { image: "../../assets/images/Buildings/sgrada3.jpg", name: 'К-с Фонаните', description: 'Комплексът без край', id: 2, apartaments: new Array<Apartament>() }
-        //);
-        for (var i = 0; i < buildings.length; i++) {
-            var building = buildings[i];
-            building = this.PopulateApartaments(building);
-        }
-        return buildings;
-    };
-    BuildingsEndpointService.prototype.PopulateApartaments = function (building) {
-        var apartStatuses = new apartamentStatuses_1.ApartamentStatuses();
-        //building.apartaments.push(
-        //    { id: 0, name: 'Ап 1 ет 1', description: 'апартамент на сем. Иванови', owners: 'сем. Иванови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
-        //    { id: 1, name: 'Ап 2 ет 1', description: 'апартамент на сем. Тодорови', owners: 'сем. Тодорови', status: apartStatuses.UnpaidBills, owner: this.GetApartamentOwners() },
-        //    { id: 2, name: 'Ап 3 ет 1', description: 'апартамент на сем. Кирови', owners: 'сем. Кирови', status: apartStatuses.Question, owner: this.GetApartamentOwners() },
-        //    { id: 3, name: 'Ап 4 ет 2', description: 'апартамент на сем. Симеонови', owners: 'сем. Симеонови', status: apartStatuses.Important, owner: this.GetApartamentOwners() },
-        //    { id: 4, name: 'Ап 5 ет 2', description: 'апартамент на сем. Кичукови', owners: 'сем. Кичукови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
-        //);
-        return building;
-    };
-    BuildingsEndpointService.prototype.GetApartaments = function () {
-        var apartStatuses = new apartamentStatuses_1.ApartamentStatuses();
-        var aarr = new Array();
-        aarr.push({ id: 0, name: 'Ап 1 ет 1', description: 'апартамент на сем. Иванови', owners: 'сем. Иванови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() }, { id: 1, name: 'Ап 2 ет 1', description: 'апартамент на сем. Тодорови', owners: 'сем. Тодорови', status: apartStatuses.UnpaidBills, owner: this.GetApartamentOwners() }, { id: 2, name: 'Ап 3 ет 1', description: 'апартамент на сем. Кирови', owners: 'сем. Кирови', status: apartStatuses.Question, owner: this.GetApartamentOwners() }, { id: 3, name: 'Ап 4 ет 2', description: 'апартамент на сем. Симеонови', owners: 'сем. Симеонови', status: apartStatuses.Important, owner: this.GetApartamentOwners() }, { id: 4, name: 'Ап 5 ет 2', description: 'апартамент на сем. Кичукови', owners: 'сем. Кичукови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() });
-        return aarr;
-    };
-    BuildingsEndpointService.prototype.GetApartamentOwners = function () {
-        var usr1 = new user_model_1.User('1', 'usr1', 'name', 'usr@abv.bg', 'jbTits', '111');
-        var usr2 = new user_model_1.User('2', 'usr2', 'aa', 'usr@abv.bg', 'jbTits', '111');
-        var usr3 = new user_model_1.User('3', 'usr3', 'nzaaa', 'usr@abv.bg', 'jbTits', '111');
-        var usrs = new Array();
-        usrs.push(usr1);
-        usrs.push(usr2);
-        usrs.push(usr3);
-        return usrs;
-    };
-    BuildingsEndpointService.prototype.GetAllBuildingsService = function () {
-        console.log('t');
-        console.log(this.buildings);
-        //var t = this.$http.get(buildingURL).subscribe(x=>this.GetData(x));
-    };
-    BuildingsEndpointService.prototype.GetData = function (response) {
-        console.log(' the response');
-        console.log(response._body);
-        var bld = JSON.parse(response._body);
-    };
-    BuildingsEndpointService.prototype.getDataObservable = function (url) {
-        return this._http.get(url)
-            .map(function (data) {
-            data.json();
-            return data.json();
-        });
-    };
-    BuildingsEndpointService.prototype.onCurrentBuildingsLoadSuccessful = function (building) {
-        console.log('starting');
-        this.buildings = building;
-        console.log(this.buildings);
-    };
-    BuildingsEndpointService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http])
-    ], BuildingsEndpointService);
-    return BuildingsEndpointService;
-}());
-exports.BuildingsEndpointService = BuildingsEndpointService;
+var router_1 = __webpack_require__(7);
+var http_1 = __webpack_require__(6);
+__webpack_require__(63);
+__webpack_require__(64);
+__webpack_require__(10);
+var building_endpoint_1 = __webpack_require__(58);
 var BuildingService = (function () {
-    function BuildingService(_http) {
-        this._http = _http;
+    function BuildingService(router, http, buildingEndpoint) {
+        this.router = router;
+        this.http = http;
+        this.buildingEndpoint = buildingEndpoint;
     }
-    BuildingService.prototype.getAllTest2 = function () {
-        return this.GetAllTest().map(function (response) { return response.json(); });
+    BuildingService.prototype.GetAllBuildings = function () {
+        return this.buildingEndpoint.GetAllBuildings().map(function (response) { return response.json(); });
     };
-    BuildingService.prototype.GetAllTest = function () {
-        var endpointUrl = ServiceResources_1.Resources.BuildingPath;
-        return this._http.get(endpointUrl)
-            .map(function (response) {
-            return response;
-        });
+    BuildingService.prototype.GetBuilding = function (id) {
+        return this.buildingEndpoint.GetBuilding(id).map(function (response) { return response.json(); });
     };
-    //public GetAllTest(): Observable<any>
-    //{
-    //    return this._http.get(Resources.BuildingPath)
-    //        .map((res: Response) => res.json())
-    //        .catch((error: any) => Observable.throw(error.json()));
-    //}
-    BuildingService.prototype.GetAll = function () {
-        var response = this.GetData(ServiceResources_1.Resources.BuildingPath);
-        //  let bld = JSON.parse(response._body); 
-        return response;
+    BuildingService.prototype.AddBuilding = function (building) {
+        return this.buildingEndpoint.AddBuilding(building).map(function (response) { return response.json(); });
     };
-    BuildingService.prototype.GetById = function (id) {
-        var properUrl = ServiceResources_1.Resources.BuildingPath + id;
-        //var response = this.GetData(properUrl);
-        //  let bld: Building = JSON.parse(response._body);
+    BuildingService.prototype.UploadBuildingDocument = function (formData) {
+        return this.buildingEndpoint.UploadBuildingDocument(formData).map(function (response) { return response; });
     };
-    BuildingService.prototype.GetData = function (url) {
-        var resp;
-        console.log('GetData');
-        //var a =   this._http.get(url).subscribe(result =>this.ConsumeResponse(result));
-        //this._http.get(url).subscribe((result: any) => {
-        //    console.log('With Subscripbe');
-        //    var resultSet = result._body;
-        //    console.log(resultSet);
-        //});
-        var s;
-        var obs = this._http.get(url).map(function (x) {
-            s = x;
-            return x;
-        });
-        console.log(obs.take(0));
-        console.log(s);
-        return resp;
-    };
+    BuildingService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [router_1.Router, http_1.Http, building_endpoint_1.BuildingEndpoint])
+    ], BuildingService);
     return BuildingService;
 }());
+exports.BuildingService = BuildingService;
 
 
 /***/ }),
@@ -3948,8 +3806,8 @@ var core_1 = __webpack_require__(0);
 var Observable_1 = __webpack_require__(2);
 __webpack_require__(171);
 __webpack_require__(177);
-__webpack_require__(9);
-var auth_service_1 = __webpack_require__(8);
+__webpack_require__(10);
+var auth_service_1 = __webpack_require__(9);
 var notification_endpoint_service_1 = __webpack_require__(61);
 var notification_model_1 = __webpack_require__(107);
 var NotificationService = (function () {
@@ -4636,8 +4494,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
-var buildings_endpoint_service_1 = __webpack_require__(29);
+var router_1 = __webpack_require__(7);
+var buildings_endpoint_service_1 = __webpack_require__(59);
 var user_model_1 = __webpack_require__(15);
 var ApartamentComponent = (function () {
     function ApartamentComponent(route, buildingsEndpoint) {
@@ -4692,29 +4550,52 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
-var buildings_endpoint_service_1 = __webpack_require__(29);
+var router_1 = __webpack_require__(7);
 var apartament_1 = __webpack_require__(54);
 var apartamentStatuses_1 = __webpack_require__(55);
+var BuildingService_1 = __webpack_require__(29);
+var http_1 = __webpack_require__(6);
 var BuildingDetailsComponent = (function () {
-    function BuildingDetailsComponent(route, buildingsEndpoint) {
+    function BuildingDetailsComponent(route, buildingsEndpoint, http) {
+        var _this = this;
         this.buildingsEndpoint = buildingsEndpoint;
-        this.newApartament = new apartament_1.Apartament();
+        this.http = http;
+        this.newFloor = new apartament_1.Apartament();
         var id = route.snapshot.params['id'];
         if (id === undefined) {
         }
         else {
             this.selectedBuildingId = id;
-            this.selectedBuilding = buildingsEndpoint.GetSelectedBuilding(id);
-            //this.selectedApartaments = this.selectedBuilding.apartaments;
-            //console.log(this.selectedApartaments);
+            buildingsEndpoint.GetBuilding(id).subscribe(function (bld) { return _this.selectedBuilding = bld; });
         }
     }
     BuildingDetailsComponent.prototype.Save = function () {
         var apartStat = new apartamentStatuses_1.ApartamentStatuses();
-        this.newApartament.status = apartStat.Normal;
-        console.log(this.newApartament);
-        //this.selectedBuilding.apartaments.push(this.newApartament);
+        console.log(this.newFloor);
+    };
+    BuildingDetailsComponent.prototype.fileChange = function (event) {
+        var fileList = event.target.files;
+        if (fileList.length > 0) {
+            var file = fileList[0];
+            var formData = new FormData();
+            formData.append('uploadFile', file, file.name);
+            formData.append('test', 'bigTest');
+            var headers = new http_1.Headers();
+            /** No need to include Content-Type in Angular 4 */
+            //headers.append('Content-Type', 'multipart/form-data');
+            //headers.append('Content-Type', 'multipart/form-data; boundary=----WebKitFormBoundaryzuW5nPZQFQCwQtg4');
+            headers.append('Accept', 'application/json');
+            console.log(formData);
+            //Resources.RootPath + "UploadImage/
+            //this.http.post("http://localhost:54779/api/Building/Documents/", formData, { headers: headers})
+            //    .map(res => res)
+            //    .catch(error => Observable.throw(error))
+            //    .subscribe(
+            //    data => console.log('success'),
+            //    error => console.log(error)
+            //    )
+            this.buildingsEndpoint.UploadBuildingDocument(formData).subscribe(function (data) { return console.log("yeei"); }, function (error) { return console.log(error); });
+        }
     };
     BuildingDetailsComponent = __decorate([
         core_1.Component({
@@ -4722,7 +4603,7 @@ var BuildingDetailsComponent = (function () {
             template: __webpack_require__(147),
             styles: [__webpack_require__(201)]
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, buildings_endpoint_service_1.BuildingsEndpointService])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, BuildingService_1.BuildingService, http_1.Http])
     ], BuildingDetailsComponent);
     return BuildingDetailsComponent;
 }());
@@ -4747,7 +4628,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var building_1 = __webpack_require__(106);
-var BuildingService_1 = __webpack_require__(56);
+var BuildingService_1 = __webpack_require__(29);
 var alert_service_1 = __webpack_require__(4);
 var BuildingsComponent = (function () {
     function BuildingsComponent(buildingService, alertService) {
@@ -4814,7 +4695,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var alert_service_1 = __webpack_require__(4);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var role_model_1 = __webpack_require__(28);
 var permission_model_1 = __webpack_require__(13);
 var RoleEditorComponent = (function () {
@@ -4997,7 +4878,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var alert_service_1 = __webpack_require__(4);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var utilities_1 = __webpack_require__(5);
 var user_model_1 = __webpack_require__(15);
 var user_edit_model_1 = __webpack_require__(108);
@@ -5370,7 +5251,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var animations_1 = __webpack_require__(14);
 var configuration_service_1 = __webpack_require__(12);
-var auth_service_1 = __webpack_require__(8);
+var auth_service_1 = __webpack_require__(9);
 var HomeComponent = (function () {
     function HomeComponent(configurations, authService) {
         this.configurations = configurations;
@@ -5529,12 +5410,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
+var router_1 = __webpack_require__(7);
 __webpack_require__(66);
 var animations_1 = __webpack_require__(14);
 var bootstrap_tab_directive_1 = __webpack_require__(53);
 var app_translation_service_1 = __webpack_require__(11);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var permission_model_1 = __webpack_require__(13);
 var SettingsComponent = (function () {
     function SettingsComponent(route, translationService, accountService) {
@@ -5867,50 +5748,6 @@ exports.ApartamentStatuses = ApartamentStatuses;
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
-var http_1 = __webpack_require__(10);
-__webpack_require__(63);
-__webpack_require__(64);
-__webpack_require__(9);
-var building_endpoint_1 = __webpack_require__(59);
-var BuildingService = (function () {
-    function BuildingService(router, http, buildingEndpoint) {
-        this.router = router;
-        this.http = http;
-        this.buildingEndpoint = buildingEndpoint;
-    }
-    BuildingService.prototype.GetAllBuildings = function () {
-        return this.buildingEndpoint.GetAllBuildings().map(function (response) { return response.json(); });
-    };
-    BuildingService.prototype.AddBuilding = function (building) {
-        return this.buildingEndpoint.AddBuilding(building).map(function (response) { return response.json(); });
-    };
-    BuildingService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [router_1.Router, http_1.Http, building_endpoint_1.BuildingEndpoint])
-    ], BuildingService);
-    return BuildingService;
-}());
-exports.BuildingService = BuildingService;
-
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 // ======================================
 // Author: Ebenezer Monney
 // Email:  info@ebenmonney.com
@@ -5939,8 +5776,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(10);
-__webpack_require__(9);
+var http_1 = __webpack_require__(6);
+__webpack_require__(10);
 var endpoint_factory_service_1 = __webpack_require__(21);
 var configuration_service_1 = __webpack_require__(12);
 var AccountEndpoint = (function (_super) {
@@ -6200,7 +6037,7 @@ exports.AccountEndpoint = AccountEndpoint;
 
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6223,9 +6060,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
+var router_1 = __webpack_require__(7);
 var platform_browser_1 = __webpack_require__(23);
-__webpack_require__(9);
+__webpack_require__(10);
 __webpack_require__(65);
 __webpack_require__(249);
 var utilities_1 = __webpack_require__(5);
@@ -6268,7 +6105,7 @@ exports.AppTitleService = AppTitleService;
 
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6294,8 +6131,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(10);
-__webpack_require__(9);
+var http_1 = __webpack_require__(6);
+__webpack_require__(10);
 var configuration_service_1 = __webpack_require__(12);
 var ServiceResources_1 = __webpack_require__(39);
 var endpoint_factory_service_1 = __webpack_require__(21);
@@ -6315,12 +6152,22 @@ var BuildingEndpoint = (function (_super) {
             return response;
         });
     };
+    BuildingEndpoint.prototype.GetBuilding = function (id) {
+        var properAddress = this.currentBuildingUrl + id;
+        return this.http.get(properAddress).map(function (response) { return response; });
+    };
     BuildingEndpoint.prototype.AddBuilding = function (building) {
         var json = JSON.stringify(building);
         return this.http.post(ServiceResources_1.Resources.BuildingPath, building).map(function (response) { return response; });
     };
+    BuildingEndpoint.prototype.UploadBuildingDocument = function (formData) {
+        var properAddress = ServiceResources_1.Resources.BuildingPath + "Documents/";
+        var headers = new http_1.Headers();
+        headers.append('Accept', 'application/json');
+        return this.http.post(properAddress, formData, { headers: headers }).map(function (response) { return response; });
+    };
     BuildingEndpoint.prototype.getAuthHeader = function (includeJsonContentType) {
-        var headers = new Headers({});
+        var headers = new http_1.Headers({});
         if (includeJsonContentType)
             headers.append("Content-Type", "application/json");
         headers.append("Accept", "application/vnd.iman.v1 json, application/json, text/plain, */*");
@@ -6334,6 +6181,198 @@ var BuildingEndpoint = (function (_super) {
     return BuildingEndpoint;
 }(endpoint_factory_service_1.EndpointFactory));
 exports.BuildingEndpoint = BuildingEndpoint;
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var http_1 = __webpack_require__(6);
+var apartament_1 = __webpack_require__(54);
+var apartamentStatuses_1 = __webpack_require__(55);
+var user_model_1 = __webpack_require__(15);
+var ServiceResources_1 = __webpack_require__(39);
+var BuildingsEndpointService = (function () {
+    function BuildingsEndpointService(_http) {
+        var _this = this;
+        this._http = _http;
+        console.log('dsa');
+        var endpointUrl = ServiceResources_1.Resources.BuildingPath;
+        this._http.get(endpointUrl)
+            .map(function (response) {
+            return response;
+        }).map(function (response) { return response.json(); }).subscribe(function (user) { return _this.onCurrentBuildingsLoadSuccessful(user); });
+    }
+    BuildingsEndpointService.prototype.ngOnInit = function () {
+        var _this = this;
+        console.log('dsa');
+        var endpointUrl = ServiceResources_1.Resources.BuildingPath;
+        this._http.get(endpointUrl)
+            .map(function (response) {
+            return response;
+        }).map(function (response) { return response.json(); }).subscribe(function (user) { return _this.onCurrentBuildingsLoadSuccessful(user); });
+        //this.buildServices = new BuildingService(this._http);
+        // this.buildServices.getAllTest2().subscribe(user => this.onCurrentBuildingsLoadSuccessful(user));
+    };
+    BuildingsEndpointService.prototype.GetAllBuildings = function () {
+        return this.GetStoredBuildings();
+    };
+    BuildingsEndpointService.prototype.GetSelectedBuilding = function (id) {
+        var loadedBuildings = this.GetStoredBuildings();
+        var localBuilding;
+        for (var i = 0; i < loadedBuildings.length; i++) {
+            if (loadedBuildings[i].id == id) {
+                localBuilding = loadedBuildings[i];
+                break;
+            }
+        }
+        return localBuilding;
+    };
+    BuildingsEndpointService.prototype.GetSelectedApartament = function (id) {
+        var selectedApart = new apartament_1.Apartament();
+        var arr = this.GetApartaments();
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].id == id) {
+                selectedApart = arr[i];
+                break;
+            }
+        }
+        return selectedApart;
+    };
+    BuildingsEndpointService.prototype.GetStoredBuildings = function () {
+        var buildings = new Array();
+        this.GetAllBuildingsService();
+        buildings.push({ image: "../../assets/images/Buildings/GotseDelchev-214.jpg", name: 'Сграда 1', description: 'малка сграда в центъра на софия', id: 0 }, { image: "../../assets/images/Buildings/sgrada2.jpg", name: 'Сграда 2', description: 'блок 214 гоце делчев', id: 1 }, { image: "../../assets/images/Buildings/sgrada3.jpg", name: 'К-с Фонаните', description: 'Комплексът без край', id: 2 });
+        //buildings.push(
+        //    { image: "../../assets/images/Buildings/GotseDelchev-214.jpg", name: 'Сграда 1', description: 'малка сграда в центъра на софия', id: 0, apartaments: new Array<Apartament>() },
+        //    { image: "../../assets/images/Buildings/sgrada2.jpg", name: 'Сграда 2', description: 'блок 214 гоце делчев', id: 1, apartaments: new Array<Apartament>() },
+        //    { image: "../../assets/images/Buildings/sgrada3.jpg", name: 'К-с Фонаните', description: 'Комплексът без край', id: 2, apartaments: new Array<Apartament>() }
+        //);
+        for (var i = 0; i < buildings.length; i++) {
+            var building = buildings[i];
+            building = this.PopulateApartaments(building);
+        }
+        return buildings;
+    };
+    BuildingsEndpointService.prototype.PopulateApartaments = function (building) {
+        var apartStatuses = new apartamentStatuses_1.ApartamentStatuses();
+        //building.apartaments.push(
+        //    { id: 0, name: 'Ап 1 ет 1', description: 'апартамент на сем. Иванови', owners: 'сем. Иванови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
+        //    { id: 1, name: 'Ап 2 ет 1', description: 'апартамент на сем. Тодорови', owners: 'сем. Тодорови', status: apartStatuses.UnpaidBills, owner: this.GetApartamentOwners() },
+        //    { id: 2, name: 'Ап 3 ет 1', description: 'апартамент на сем. Кирови', owners: 'сем. Кирови', status: apartStatuses.Question, owner: this.GetApartamentOwners() },
+        //    { id: 3, name: 'Ап 4 ет 2', description: 'апартамент на сем. Симеонови', owners: 'сем. Симеонови', status: apartStatuses.Important, owner: this.GetApartamentOwners() },
+        //    { id: 4, name: 'Ап 5 ет 2', description: 'апартамент на сем. Кичукови', owners: 'сем. Кичукови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
+        //);
+        return building;
+    };
+    BuildingsEndpointService.prototype.GetApartaments = function () {
+        var apartStatuses = new apartamentStatuses_1.ApartamentStatuses();
+        var aarr = new Array();
+        aarr.push({ id: 0, name: 'Ап 1 ет 1', description: 'апартамент на сем. Иванови', owners: 'сем. Иванови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() }, { id: 1, name: 'Ап 2 ет 1', description: 'апартамент на сем. Тодорови', owners: 'сем. Тодорови', status: apartStatuses.UnpaidBills, owner: this.GetApartamentOwners() }, { id: 2, name: 'Ап 3 ет 1', description: 'апартамент на сем. Кирови', owners: 'сем. Кирови', status: apartStatuses.Question, owner: this.GetApartamentOwners() }, { id: 3, name: 'Ап 4 ет 2', description: 'апартамент на сем. Симеонови', owners: 'сем. Симеонови', status: apartStatuses.Important, owner: this.GetApartamentOwners() }, { id: 4, name: 'Ап 5 ет 2', description: 'апартамент на сем. Кичукови', owners: 'сем. Кичукови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() });
+        return aarr;
+    };
+    BuildingsEndpointService.prototype.GetApartamentOwners = function () {
+        var usr1 = new user_model_1.User('1', 'usr1', 'name', 'usr@abv.bg', 'jbTits', '111');
+        var usr2 = new user_model_1.User('2', 'usr2', 'aa', 'usr@abv.bg', 'jbTits', '111');
+        var usr3 = new user_model_1.User('3', 'usr3', 'nzaaa', 'usr@abv.bg', 'jbTits', '111');
+        var usrs = new Array();
+        usrs.push(usr1);
+        usrs.push(usr2);
+        usrs.push(usr3);
+        return usrs;
+    };
+    BuildingsEndpointService.prototype.GetAllBuildingsService = function () {
+        console.log('t');
+        console.log(this.buildings);
+        //var t = this.$http.get(buildingURL).subscribe(x=>this.GetData(x));
+    };
+    BuildingsEndpointService.prototype.GetData = function (response) {
+        console.log(' the response');
+        console.log(response._body);
+        var bld = JSON.parse(response._body);
+    };
+    BuildingsEndpointService.prototype.getDataObservable = function (url) {
+        return this._http.get(url)
+            .map(function (data) {
+            data.json();
+            return data.json();
+        });
+    };
+    BuildingsEndpointService.prototype.onCurrentBuildingsLoadSuccessful = function (building) {
+        console.log('starting');
+        this.buildings = building;
+        console.log(this.buildings);
+    };
+    BuildingsEndpointService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.Http])
+    ], BuildingsEndpointService);
+    return BuildingsEndpointService;
+}());
+exports.BuildingsEndpointService = BuildingsEndpointService;
+var BuildingService = (function () {
+    function BuildingService(_http) {
+        this._http = _http;
+    }
+    BuildingService.prototype.getAllTest2 = function () {
+        return this.GetAllTest().map(function (response) { return response.json(); });
+    };
+    BuildingService.prototype.GetAllTest = function () {
+        var endpointUrl = ServiceResources_1.Resources.BuildingPath;
+        return this._http.get(endpointUrl)
+            .map(function (response) {
+            return response;
+        });
+    };
+    //public GetAllTest(): Observable<any>
+    //{
+    //    return this._http.get(Resources.BuildingPath)
+    //        .map((res: Response) => res.json())
+    //        .catch((error: any) => Observable.throw(error.json()));
+    //}
+    BuildingService.prototype.GetAll = function () {
+        var response = this.GetData(ServiceResources_1.Resources.BuildingPath);
+        //  let bld = JSON.parse(response._body); 
+        return response;
+    };
+    BuildingService.prototype.GetById = function (id) {
+        var properUrl = ServiceResources_1.Resources.BuildingPath + id;
+        //var response = this.GetData(properUrl);
+        //  let bld: Building = JSON.parse(response._body);
+    };
+    BuildingService.prototype.GetData = function (url) {
+        var resp;
+        console.log('GetData');
+        //var a =   this._http.get(url).subscribe(result =>this.ConsumeResponse(result));
+        //this._http.get(url).subscribe((result: any) => {
+        //    console.log('With Subscripbe');
+        //    var resultSet = result._body;
+        //    console.log(resultSet);
+        //});
+        var s;
+        var obs = this._http.get(url).map(function (x) {
+            s = x;
+            return x;
+        });
+        console.log(obs.take(0));
+        console.log(s);
+        return resp;
+    };
+    return BuildingService;
+}());
 
 
 /***/ }),
@@ -6403,10 +6442,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(10);
+var http_1 = __webpack_require__(6);
 var Observable_1 = __webpack_require__(2);
 __webpack_require__(32);
-__webpack_require__(9);
+__webpack_require__(10);
 var NotificationEndpoint = (function () {
     function NotificationEndpoint() {
         this.demoNotifications = [
@@ -24187,7 +24226,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
+var router_1 = __webpack_require__(7);
 var login_component_1 = __webpack_require__(27);
 var home_component_1 = __webpack_require__(47);
 var customers_component_1 = __webpack_require__(46);
@@ -24196,7 +24235,7 @@ var orders_component_1 = __webpack_require__(49);
 var settings_component_1 = __webpack_require__(51);
 var about_component_1 = __webpack_require__(40);
 var not_found_component_1 = __webpack_require__(48);
-var auth_service_1 = __webpack_require__(8);
+var auth_service_1 = __webpack_require__(9);
 var auth_guard_service_1 = __webpack_require__(111);
 var buildings_component_1 = __webpack_require__(43);
 var building_details_component_1 = __webpack_require__(42);
@@ -24260,7 +24299,7 @@ var core_1 = __webpack_require__(0);
 var forms_1 = __webpack_require__(70);
 var platform_browser_1 = __webpack_require__(23);
 var animations_1 = __webpack_require__(84);
-var http_1 = __webpack_require__(10);
+var http_1 = __webpack_require__(6);
 __webpack_require__(239);
 var core_2 = __webpack_require__(35);
 var ngx_datatable_1 = __webpack_require__(85);
@@ -24273,7 +24312,7 @@ var carousel_1 = __webpack_require__(242);
 var ng2_charts_1 = __webpack_require__(241);
 var app_routing_module_1 = __webpack_require__(89);
 var app_error_handler_1 = __webpack_require__(88);
-var app_title_service_1 = __webpack_require__(58);
+var app_title_service_1 = __webpack_require__(57);
 var app_translation_service_1 = __webpack_require__(11);
 var configuration_service_1 = __webpack_require__(12);
 var alert_service_1 = __webpack_require__(4);
@@ -24281,8 +24320,8 @@ var local_store_manager_service_1 = __webpack_require__(18);
 var endpoint_factory_service_1 = __webpack_require__(21);
 var notification_service_1 = __webpack_require__(30);
 var notification_endpoint_service_1 = __webpack_require__(61);
-var account_service_1 = __webpack_require__(7);
-var account_endpoint_service_1 = __webpack_require__(57);
+var account_service_1 = __webpack_require__(8);
+var account_endpoint_service_1 = __webpack_require__(56);
 var equal_validator_directive_1 = __webpack_require__(104);
 var last_element_directive_1 = __webpack_require__(105);
 var autofocus_directive_1 = __webpack_require__(101);
@@ -24312,11 +24351,11 @@ var roles_management_component_1 = __webpack_require__(94);
 var role_editor_component_1 = __webpack_require__(44);
 var navigation_component_1 = __webpack_require__(100);
 var buildings_component_1 = __webpack_require__(43);
-var buildings_endpoint_service_1 = __webpack_require__(29);
+var buildings_endpoint_service_1 = __webpack_require__(59);
 var building_details_component_1 = __webpack_require__(42);
 var apartament_component_1 = __webpack_require__(41);
-var building_endpoint_1 = __webpack_require__(59);
-var BuildingService_1 = __webpack_require__(56);
+var building_endpoint_1 = __webpack_require__(58);
+var BuildingService_1 = __webpack_require__(29);
 var AppModule = (function () {
     function AppModule() {
     }
@@ -24419,15 +24458,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
+var router_1 = __webpack_require__(7);
 var ng2_toasty_1 = __webpack_require__(71);
 var alert_service_1 = __webpack_require__(4);
 var notification_service_1 = __webpack_require__(30);
 var app_translation_service_1 = __webpack_require__(11);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var local_store_manager_service_1 = __webpack_require__(18);
-var app_title_service_1 = __webpack_require__(58);
-var auth_service_1 = __webpack_require__(8);
+var app_title_service_1 = __webpack_require__(57);
+var auth_service_1 = __webpack_require__(9);
 var configuration_service_1 = __webpack_require__(12);
 var permission_model_1 = __webpack_require__(13);
 var login_component_1 = __webpack_require__(27);
@@ -24795,7 +24834,7 @@ var core_1 = __webpack_require__(0);
 var alert_service_1 = __webpack_require__(4);
 var app_translation_service_1 = __webpack_require__(11);
 var notification_service_1 = __webpack_require__(30);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var permission_model_1 = __webpack_require__(13);
 var utilities_1 = __webpack_require__(5);
 var NotificationsViewerComponent = (function () {
@@ -24987,7 +25026,7 @@ var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(22);
 var alert_service_1 = __webpack_require__(4);
 var app_translation_service_1 = __webpack_require__(11);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var utilities_1 = __webpack_require__(5);
 var role_model_1 = __webpack_require__(28);
 var permission_model_1 = __webpack_require__(13);
@@ -25374,7 +25413,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(22);
-var auth_service_1 = __webpack_require__(8);
+var auth_service_1 = __webpack_require__(9);
 var alert_service_1 = __webpack_require__(4);
 var app_translation_service_1 = __webpack_require__(11);
 var local_store_manager_service_1 = __webpack_require__(18);
@@ -25590,7 +25629,7 @@ var alert_service_1 = __webpack_require__(4);
 var configuration_service_1 = __webpack_require__(12);
 var app_translation_service_1 = __webpack_require__(11);
 var bootstrap_select_directive_1 = __webpack_require__(52);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var utilities_1 = __webpack_require__(5);
 var permission_model_1 = __webpack_require__(13);
 var UserPreferencesComponent = (function () {
@@ -25730,7 +25769,7 @@ var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(22);
 var alert_service_1 = __webpack_require__(4);
 var app_translation_service_1 = __webpack_require__(11);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var utilities_1 = __webpack_require__(5);
 var user_model_1 = __webpack_require__(15);
 var permission_model_1 = __webpack_require__(13);
@@ -25943,9 +25982,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var auth_service_1 = __webpack_require__(8);
-var router_1 = __webpack_require__(6);
-var account_service_1 = __webpack_require__(7);
+var auth_service_1 = __webpack_require__(9);
+var router_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var NavigationComponent = (function () {
     function NavigationComponent(router, authService, accountService) {
         this.router = router;
@@ -26609,8 +26648,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
-var auth_service_1 = __webpack_require__(8);
+var router_1 = __webpack_require__(7);
+var auth_service_1 = __webpack_require__(9);
 var AuthGuard = (function () {
     function AuthGuard(authService, router) {
         this.authService = authService;
@@ -29502,7 +29541,7 @@ module.exports = "<div id=\"app_container\" class=\"{{configurations.theme | low
 /* 147 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n    <h1> Обработка на сградата</h1>\r\n    <!-- image + text for intro -->\r\n    <div class=\"row\">\r\n        <div class=\"media\">\r\n            <div class=\"media-left\">\r\n                <a href=\"#\">\r\n                    <img class=\"media-object\" src=\"#\" alt=\"...\">\r\n                </a>\r\n            </div>\r\n            <div class=\"media-body\">\r\n                <h4 class=\"media-heading\">{{selectedBuilding.name}}</h4>\r\n                <div>\r\n                   {{selectedBuilding.description}}\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <!-- image + text for intro -->\r\n\r\n    <!-- Added apartaments-->\r\n    <div class=\"panel panel-default\">\r\n        <!-- Default panel contents -->\r\n        <div class=\"panel-heading\">Въведени Апартаменти <a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\"><span class=\"glyphicon glyphicon-folder-open\"></span> Добави</a></div>\r\n        <div class=\"panel-body\">\r\n            <p>това са всички апартаменти в сградата</p>\r\n        </div>\r\n        <!-- List group -->\r\n        <div  class=\"list-group\" *ngFor=\"let apartament of selectedApartaments\">\r\n            <a href=\"/building-apartaments/{{apartament.id}}\" class=\"list-group-item\">{{apartament.name}} - {{apartament.owners}} <span class=\"label label-{{apartament.status}}\">{{apartament.status}}</span> </a>\r\n        </div>\r\n    </div>\r\n    <!-- Added apartaments-->\r\n</div>\r\n\r\n\r\n<!-- Modal fo add apartament-->\r\n<div class=\"modal fade bs-example-modal-lg\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myLargeModalLabel\">\r\n    <div class=\"modal-dialog modal-lg\" role=\"document\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-header\">\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\r\n                <h4 class=\"modal-title\" id=\"gridSystemModalLabel\">Добавяне на Апартамент</h4>\r\n            </div>\r\n            <div class=\"modal-body\">\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-name\" class=\"control-label\">Наименование:</label>\r\n                    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newApartament.name\"  >\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-description\" class=\"control-label\">Собственици:</label>\r\n                    <textarea class=\"form-control\" [(ngModel)]=\"newApartament.owners\" [ngModelOptions]=\"{standalone: true}\"></textarea>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-description\" class=\"control-label\">Описание:</label>\r\n                    <textarea class=\"form-control\" [(ngModel)]=\"newApartament.description\" [ngModelOptions]=\"{standalone: true}\" ></textarea>\r\n                </div>\r\n                <div class=\"modal-footer\">\r\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Откажи</button>\r\n                    <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"Save()\" >Запази</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<!-- Modal fo add apartament-->";
+module.exports = "<div class=\"container\">\r\n\r\n    <h1> Обработка на сградата</h1>\r\n    <!-- image + text for intro -->\r\n    <div *ngIf=\"selectedBuilding != null\" class=\"row\">\r\n        <div class=\"media\">\r\n            <div class=\"media-left\">\r\n                <a href=\"#\">\r\n                    <img class=\"media-object\" src=\"#\" alt=\"...\">\r\n                </a>\r\n \r\n            </div>\r\n            <div class=\"media-body\">\r\n                <h4 class=\"media-heading\">{{selectedBuilding.name}}</h4>\r\n                <div>\r\n                   {{selectedBuilding.description}}\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <!-- image + text for intro -->\r\n\r\n    <!-- Added floors-->\r\n    <div class=\"panel panel-default\">\r\n        <!-- Default panel contents -->\r\n        <div class=\"panel-heading\">Налични етажи <a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\"><span class=\"glyphicon glyphicon-folder-open\"></span> Добави етаж</a></div>\r\n        <div class=\"panel-body\">\r\n            <p>това са всички апартаменти в сградата</p>\r\n        </div>\r\n        <!-- List group -->\r\n        <div  class=\"list-group\" *ngFor=\"let floor of selectedFloors\">\r\n            <a href=\"/building-apartaments/{{floor.id}}\" class=\"list-group-item\">{{floor.name}}<span class=\"label\"></span> </a>\r\n        </div>\r\n    </div>\r\n    <!-- Added floors-->\r\n</div>\r\n\r\n\r\n<!-- Modal fo add apartament-->\r\n<div class=\"modal fade bs-example-modal-lg\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myLargeModalLabel\">\r\n    <div class=\"modal-dialog modal-lg\" role=\"document\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-header\">\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\r\n                <h4 class=\"modal-title\" id=\"gridSystemModalLabel\">Добавяне на Етаж</h4>\r\n            </div>\r\n            <div class=\"modal-body\">\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-name\" class=\"control-label\">Име на етажа:</label>\r\n                    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newFloor.name\"  >\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-description\" class=\"control-label\">Описание:</label>\r\n                    <textarea class=\"form-control\" [(ngModel)]=\"newFloor.description\" [ngModelOptions]=\"{standalone: true}\" ></textarea>\r\n                </div>\r\n                <div class=\"modal-footer\">\r\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Откажи</button>\r\n                    <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"Save()\" >Запази</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<input type=\"file\" (change)=\"fileChange($event)\" placeholder=\"Upload file\" >\r\n ";
 
 /***/ }),
 /* 148 */

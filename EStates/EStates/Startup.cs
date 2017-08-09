@@ -28,6 +28,7 @@ using ES.Core.Handlers;
 using ES.Data.Managers;
 using ES.Data.Interfaces;
 using ES.Data.Identity;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace EStates
 {
@@ -52,6 +53,15 @@ namespace EStates
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<FormOptions>(options =>
+            {
+                options.ValueCountLimit = 1024; //default 1024
+                options.ValueLengthLimit = int.MaxValue; //not recommended value
+                options.MultipartBodyLengthLimit = long.MaxValue; //not recommended value
+                options.MemoryBufferThreshold = Int32.MaxValue;
+
+            });
+
             EmailTemplates.Initialize(_hostingEnvironment);
 
             EmailSender.Configuration = new SmtpConfig
@@ -68,6 +78,7 @@ namespace EStates
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
+              
                 options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"], b => b.MigrationsAssembly("EStates"));
                 options.UseOpenIddict();
             });
@@ -97,6 +108,8 @@ namespace EStates
                 options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
                 options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
                 options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+
+            
             });
 
 
@@ -114,6 +127,7 @@ namespace EStates
                 options.AddSigningKey(new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(Configuration["STSKey"])));
             });
 
+      
 
             // Enable cors if required
             //services.AddCors();
@@ -203,6 +217,7 @@ namespace EStates
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            
 
             // Configure Cors if enabled
             //app.UseCors(builder => builder

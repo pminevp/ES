@@ -2,12 +2,13 @@
 
     <h1> Обработка на сградата</h1>
     <!-- image + text for intro -->
-    <div class="row">
+    <div *ngIf="selectedBuilding != null" class="row">
         <div class="media">
             <div class="media-left">
                 <a href="#">
                     <img class="media-object" src="#" alt="...">
                 </a>
+ 
             </div>
             <div class="media-body">
                 <h4 class="media-heading">{{selectedBuilding.name}}</h4>
@@ -19,19 +20,19 @@
     </div>
     <!-- image + text for intro -->
 
-    <!-- Added apartaments-->
+    <!-- Added floors-->
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">Въведени Апартаменти <a data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-folder-open"></span> Добави</a></div>
+        <div class="panel-heading">Налични етажи <a data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-folder-open"></span> Добави етаж</a></div>
         <div class="panel-body">
             <p>това са всички апартаменти в сградата</p>
         </div>
         <!-- List group -->
-        <div  class="list-group" *ngFor="let apartament of selectedApartaments">
-            <a href="/building-apartaments/{{apartament.id}}" class="list-group-item">{{apartament.name}} - {{apartament.owners}} <span class="label label-{{apartament.status}}">{{apartament.status}}</span> </a>
+        <div  class="list-group" *ngFor="let floor of selectedFloors">
+            <a href="/building-apartaments/{{floor.id}}" class="list-group-item">{{floor.name}}<span class="label"></span> </a>
         </div>
     </div>
-    <!-- Added apartaments-->
+    <!-- Added floors-->
 </div>
 
 
@@ -41,20 +42,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">Добавяне на Апартамент</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">Добавяне на Етаж</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="building-name" class="control-label">Наименование:</label>
-                    <input type="text" class="form-control" [(ngModel)]="newApartament.name"  >
-                </div>
-                <div class="form-group">
-                    <label for="building-description" class="control-label">Собственици:</label>
-                    <textarea class="form-control" [(ngModel)]="newApartament.owners" [ngModelOptions]="{standalone: true}"></textarea>
+                    <label for="building-name" class="control-label">Име на етажа:</label>
+                    <input type="text" class="form-control" [(ngModel)]="newFloor.name"  >
                 </div>
                 <div class="form-group">
                     <label for="building-description" class="control-label">Описание:</label>
-                    <textarea class="form-control" [(ngModel)]="newApartament.description" [ngModelOptions]="{standalone: true}" ></textarea>
+                    <textarea class="form-control" [(ngModel)]="newFloor.description" [ngModelOptions]="{standalone: true}" ></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
@@ -64,4 +61,6 @@
         </div>
     </div>
 </div>
-<!-- Modal fo add apartament-->
+
+<input type="file" (change)="fileChange($event)" placeholder="Upload file" >
+ 

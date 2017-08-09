@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿    using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ES.Core.Handlers.Services;
 using ES.Core.Handlers;
@@ -46,5 +46,15 @@ namespace EStates.Controllers
         public void Delete(int id)
         {
         }
+
+
+        [Route("Documents")]
+        [HttpPost]
+        public JsonResult BuildingDocuments()
+        {
+
+            return Json(new { success = true, message = "Next step" });
+        }
+ 
     }
 }
