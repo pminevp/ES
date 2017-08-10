@@ -7,5 +7,7 @@
         public string name { get; set; }
 
         public int buildingId { get; set; }
+
+        public int buildingEntranceId { get; set; }
     }
 }

@@ -22,6 +22,8 @@ namespace EStates.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("BuildingEntranceid");
+
                     b.Property<int?>("BuildingId");
 
                     b.Property<string>("Description");
@@ -33,6 +35,8 @@ namespace EStates.Migrations
                     b.Property<string>("Status");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BuildingEntranceid");
 
                     b.HasIndex("BuildingId");
 
@@ -135,6 +139,10 @@ namespace EStates.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<int>("Entrances");
+
+                    b.Property<int>("Floors");
+
                     b.Property<string>("Image");
 
                     b.Property<string>("Name");
@@ -144,18 +152,34 @@ namespace EStates.Migrations
                     b.ToTable("AppBuilding");
                 });
 
-            modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>
+            modelBuilder.Entity("ES.Data.Models.BuildingEntrance", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int?>("CurrentBuildingId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("name");
 
                     b.HasKey("id");
 
                     b.HasIndex("CurrentBuildingId");
+
+                    b.ToTable("BuildingEntrance");
+                });
+
+            modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("buildingEntranceid");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("buildingEntranceid");
 
                     b.ToTable("AppBuildingFloor");
                 });
@@ -476,12 +500,16 @@ namespace EStates.Migrations
 
             modelBuilder.Entity("ES.Data.Models.Apartament", b =>
                 {
+                    b.HasOne("ES.Data.Models.BuildingEntrance")
+                        .WithMany("Apartaments")
+                        .HasForeignKey("BuildingEntranceid");
+
                     b.HasOne("ES.Data.Models.Building")
                         .WithMany("Apartaments")
                         .HasForeignKey("BuildingId");
 
                     b.HasOne("ES.Data.Models.BuildingFloor", "ParentFloor")
-                        .WithMany("Apartaments")
+                        .WithMany()
                         .HasForeignKey("ParentFloorid");
                 });
 
@@ -492,11 +520,18 @@ namespace EStates.Migrations
                         .HasForeignKey("ApartamentId");
                 });
 
-            modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>
+            modelBuilder.Entity("ES.Data.Models.BuildingEntrance", b =>
                 {
                     b.HasOne("ES.Data.Models.Building", "CurrentBuilding")
                         .WithMany()
                         .HasForeignKey("CurrentBuildingId");
+                });
+
+            modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>
+                {
+                    b.HasOne("ES.Data.Models.BuildingEntrance", "buildingEntrance")
+                        .WithMany()
+                        .HasForeignKey("buildingEntranceid");
                 });
 
             modelBuilder.Entity("ES.Data.Models.Order", b =>

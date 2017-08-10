@@ -1,27 +1,21 @@
 ﻿using ES.Data;
 using ES.Data.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ES.Core.Handlers.Services
 {
-   public class BuildingsService
+   public class BuildingsService : BaseServices
     {
-        private ApplicationDbContext _context;
-        private IUnitOfWork _unitOfWork;
+        BuildingEntranceService _entranceService;
 
-        public BuildingsService(ApplicationDbContext context)
+        public BuildingsService(ApplicationDbContext context) : base(context)
         {
-            _context = context;
-
-            _unitOfWork = new UnitOfWork(context);
+            _entranceService = new BuildingEntranceService(_unitOfWork);
         }
 
-        public BuildingsService(IUnitOfWork unitOfWork)
+        public BuildingsService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _unitOfWork = unitOfWork;  
+            _entranceService = new BuildingEntranceService(unitOfWork);
         }
 
         public IEnumerable<Building> GetAll()
@@ -36,10 +30,27 @@ namespace ES.Core.Handlers.Services
             _unitOfWork.Buildings.Add(building);
             _unitOfWork.SaveChanges();
         }
+
+        /// <summary>
+        /// add  with adding floors and entrances
+        /// </summary>
+        /// <param name="building"></param>
+        public void AddCascade(Building building)
+        {
+            _unitOfWork.Buildings.Add(building);
+            _unitOfWork.SaveChanges();
+
+            if(building.Entrances > 0)
+            {
+                _entranceService.AddEntranceCascade(building);
+            }
+        }
+
         public void Update(Building building)
         {
             _unitOfWork.Buildings.Update(building);
             _unitOfWork.SaveChanges();
         }
+
     }
 }

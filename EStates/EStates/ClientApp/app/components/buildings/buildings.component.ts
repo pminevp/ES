@@ -40,7 +40,6 @@ export class BuildingsComponent implements OnInit {
 
     public Save(){
 
-        console.log(this.newBuilding.name);
         this.buildings.push(this.newBuilding);       
         this.buildingService.AddBuilding(this.newBuilding).subscribe(x => console.log(x));                
           

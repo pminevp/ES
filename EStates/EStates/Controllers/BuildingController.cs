@@ -1,8 +1,8 @@
-﻿    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ES.Core.Handlers.Services;
 using ES.Core.Handlers;
-using ES.Data.Models; 
+using ES.Data.Models;
 
 namespace EStates.Controllers
 {
@@ -18,23 +18,27 @@ namespace EStates.Controllers
         }
 
         [HttpGet]
-        public  IEnumerable<Building> Get()
+        public IEnumerable<Building> Get()
         {
             return _buildingServices.GetAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Building Get(int id)=> _buildingServices.GetById(id);
+        public Building Get(int id) => _buildingServices.GetById(id);
 
         // POST api/values
         [HttpPost]
         public Building Post([FromBody] Building building)
-        {          
-           _buildingServices.Add(building);
+        {
+            if (building.Entrances > 1)
+                _buildingServices.AddCascade(building);
+            else
+                _buildingServices.Add(building);
+
             return building;
         }
-   
+
 
         // PUT api/values/5
         [HttpPut("{id}")]
@@ -55,6 +59,6 @@ namespace EStates.Controllers
 
             return Json(new { success = true, message = "Next step" });
         }
- 
+
     }
 }

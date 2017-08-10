@@ -12,6 +12,10 @@ namespace ES.Data.Models
 
         public string Description { get; set; }
 
+        public int Entrances { get; set; }
+
+        public int Floors { get; set; }
+
         public List<Apartament> Apartaments { get; set; }
     }
 }

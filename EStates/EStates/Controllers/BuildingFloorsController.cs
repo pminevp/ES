@@ -25,21 +25,21 @@ namespace EStates.Controllers
         [HttpPost]
         public void Post([FromBody]BuildingFloorViewModel Floor)
         {
-            var building = _unitOfWork.Buildings.Get(Floor.buildingId);
-            var model = new BuildingFloor { id = Floor.id, Name = Floor.name, CurrentBuilding = building };
+            //var building = _unitOfWork.Buildings.Get(Floor.buildingId);
+            //var model = new BuildingFloor { id = Floor.id, Name = Floor.name, CurrentBuilding = building };
 
-            _unitOfWork.BuildingFloor.Add(model);
-            _unitOfWork.SaveChanges();
+            //_unitOfWork.BuildingFloor.Add(model);
+            //_unitOfWork.SaveChanges();
         }
 
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]BuildingFloorViewModel Floor)
         {
-            var building = _unitOfWork.Buildings.Get(Floor.buildingId);
-            var model = new BuildingFloor { id = Floor.id, Name = Floor.name, CurrentBuilding = building };
+            //var building = _unitOfWork.Buildings.Get(Floor.buildingId);
+            //var model = new BuildingFloor { id = Floor.id, Name = Floor.name, CurrentBuilding = building };
 
-            _unitOfWork.BuildingFloor.Update(model);
-            _unitOfWork.SaveChanges();
+            //_unitOfWork.BuildingFloor.Update(model);
+            //_unitOfWork.SaveChanges();
         }
 
         [HttpDelete("{id}")]

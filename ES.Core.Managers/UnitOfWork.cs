@@ -1,7 +1,6 @@
 ﻿using ES.Data;
 using ES.Data.Repositories;
 using ES.Data.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace ES.Core.Handlers
 {
@@ -15,6 +14,7 @@ namespace ES.Core.Handlers
         IFloorRepository _floor;
         IApartamentRepository _apartament;
         IBuildingRepository _building;
+        IBuildingEntranceRepository _buildingEntrance;
 
 
         public UnitOfWork(ApplicationDbContext context)
@@ -91,6 +91,17 @@ namespace ES.Core.Handlers
                     _building = new BuildingRepository(_context);
 
                 return _building;
+            }
+        }
+
+        public IBuildingEntranceRepository BuildingEntrance
+        {
+            get
+            {
+                if (_buildingEntrance == null)
+                    _buildingEntrance = new BuildingEntranceRepository(_context);
+
+                return _buildingEntrance;
             }
         }
 

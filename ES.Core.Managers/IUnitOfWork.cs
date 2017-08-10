@@ -18,6 +18,7 @@ namespace ES.Core.Handlers
 
         IBuildingRepository Buildings { get; }
 
+        IBuildingEntranceRepository BuildingEntrance { get; }
 
         int SaveChanges();
     }

@@ -9,8 +9,8 @@ using ES.Core.Commons.Enums;
 namespace EStates.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170731141149_ApartamentsAndBuildingV6")]
-    partial class ApartamentsAndBuildingV6
+    [Migration("20170810053837_Upgrade_Apartament_Model")]
+    partial class Upgrade_Apartament_Model
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,8 +21,9 @@ namespace EStates.Migrations
             modelBuilder.Entity("ES.Data.Models.Apartament", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(100);
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("BuildingEntranceid");
 
                     b.Property<int?>("BuildingId");
 
@@ -30,11 +31,17 @@ namespace EStates.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("ParentFloorid");
+
                     b.Property<string>("Status");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BuildingEntranceid");
+
                     b.HasIndex("BuildingId");
+
+                    b.HasIndex("ParentFloorid");
 
                     b.ToTable("AppApartament");
                 });
@@ -129,10 +136,13 @@ namespace EStates.Migrations
             modelBuilder.Entity("ES.Data.Models.Building", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(100);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
+
+                    b.Property<int>("Entrances");
+
+                    b.Property<int>("Floors");
 
                     b.Property<string>("Image");
 
@@ -141,6 +151,38 @@ namespace EStates.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppBuilding");
+                });
+
+            modelBuilder.Entity("ES.Data.Models.BuildingEntrance", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CurrentBuildingId");
+
+                    b.Property<string>("name");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("CurrentBuildingId");
+
+                    b.ToTable("BuildingEntrance");
+                });
+
+            modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("buildingEntranceid");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("buildingEntranceid");
+
+                    b.ToTable("AppBuildingFloor");
                 });
 
             modelBuilder.Entity("ES.Data.Models.Customer", b =>
@@ -459,9 +501,17 @@ namespace EStates.Migrations
 
             modelBuilder.Entity("ES.Data.Models.Apartament", b =>
                 {
+                    b.HasOne("ES.Data.Models.BuildingEntrance")
+                        .WithMany("Apartaments")
+                        .HasForeignKey("BuildingEntranceid");
+
                     b.HasOne("ES.Data.Models.Building")
                         .WithMany("Apartaments")
                         .HasForeignKey("BuildingId");
+
+                    b.HasOne("ES.Data.Models.BuildingFloor", "ParentFloor")
+                        .WithMany()
+                        .HasForeignKey("ParentFloorid");
                 });
 
             modelBuilder.Entity("ES.Data.Models.ApplicationUser", b =>
@@ -469,6 +519,20 @@ namespace EStates.Migrations
                     b.HasOne("ES.Data.Models.Apartament")
                         .WithMany("Owners")
                         .HasForeignKey("ApartamentId");
+                });
+
+            modelBuilder.Entity("ES.Data.Models.BuildingEntrance", b =>
+                {
+                    b.HasOne("ES.Data.Models.Building", "CurrentBuilding")
+                        .WithMany()
+                        .HasForeignKey("CurrentBuildingId");
+                });
+
+            modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>
+                {
+                    b.HasOne("ES.Data.Models.BuildingEntrance", "buildingEntrance")
+                        .WithMany()
+                        .HasForeignKey("buildingEntranceid");
                 });
 
             modelBuilder.Entity("ES.Data.Models.Order", b =>

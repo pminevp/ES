@@ -5,6 +5,8 @@ export class Building {
     image: any;
     name: string;
     description: string;
+    entrances?: number;
+    floors?: number;
     //apartaments: Array<Apartament>
      
 }
