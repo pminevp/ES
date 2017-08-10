@@ -22,6 +22,11 @@ namespace EStates.Controllers
         [HttpGet("{id}")]
         public BuildingFloor Get(int id) => _unitOfWork.BuildingFloor.Get(id);
 
+        [Route("ApartamentsByFloorId/{id}")]
+        [HttpGet()]
+        public List<Apartament> GetApartamentsByFloorId(int id) => _unitOfWork.Apartaments.GetApartamentsByFloorId(id).Result;
+
+
         [HttpPost]
         public void Post([FromBody]BuildingFloorViewModel Floor)
         {

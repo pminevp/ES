@@ -2,7 +2,7 @@
 
     <h1> Обработка на вход</h1>
     <!-- image + text for intro -->
-    <div *ngIf="selectedEntrance != null" class="row">
+    <div *ngIf="selectedFloor != null" class="row">
         <div class="media">
             <div class="media-left">
                 <a href="#">
@@ -10,13 +10,14 @@
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading">{{selectedEntrance.name}}</h4>
+                <h4 class="media-heading">{{selectedFloor.name}}</h4>
+                <span>{{selectedFloor.description}}</span>
             </div>
         </div>
 
         <!-- image + text for intro -->
         <!-- Added floors-->
-        <div class="panel panel-default" *ngIf="selectedFloors != null">
+        <div class="panel panel-default" *ngIf="selectedApartaments != null">
             <!-- Default panel contents -->
             <div class="panel-heading">
                 <a data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-plus"></span> Добави Етаж</a>
@@ -24,7 +25,7 @@
             </div>
             <div class="panel-body">
                 <div class="list-group">
-                    <a href="/building-floor/{{floor.id}}" class="list-group-item" *ngFor="let floor of selectedFloors">{{floor.name}}</a>
+                    <a href="#/{{apart.id}}" class="list-group-item" *ngFor="let apart of selectedApartaments">{{apart.name}}</a>
                 </div>
             </div>
         </div>
@@ -40,11 +41,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="building-name" class="control-label">Име на Етаж:</label>
-                            <input type="text" class="form-control" [(ngModel)]="newFloors.name">
+                            <input type="text" class="form-control" [(ngModel)]="newApartament.name">
                         </div>
                         <div class="form-group">
                             <label for="Floor-description" class="control-label">Описание на етаж:</label>
-                            <input id="Floor-description" type="text" class="form-control" [(ngModel)]="newFloors.description">
+                            <input id="Floor-description" type="text" class="form-control" [(ngModel)]="newApartament.description">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>

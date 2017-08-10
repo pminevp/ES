@@ -14,7 +14,7 @@ import { BuildingEntrance } from "../../models/buildingEntrance";
 import { BuildingFloorService } from "../../services/BuildingFloor.service";
 
 @Component({
-    selector: 'app-buildingDetails',
+    selector: 'app-buildingEntrancesComponent',
     templateUrl: './building-entrances.component.html',
     styleUrls: ['./building-entrances.component.css']
 })

@@ -23,6 +23,7 @@ import { BuildingsComponent } from "./components/buildings/buildings.component";
 import { BuildingDetailsComponent } from "./components/building-details/building-details.component";
 import { ApartamentComponent } from "./components/apartament/apartament.component";
 import { BuildingEntrancesComponent } from "./components/buildingEntrances/building-entrances.component";
+import { BuildingFloorComponent } from "./components/buildingFloor/building-floor-component";
 
 
 
@@ -41,7 +42,8 @@ import { BuildingEntrancesComponent } from "./components/buildingEntrances/build
             { path: "buildings", component: BuildingsComponent },
             { path: "building-details/:id", component: BuildingDetailsComponent },
             { path: 'building-apartaments/:id', component: ApartamentComponent },
-            { path: 'building-entrance/:id', component: BuildingEntrancesComponent},
+            { path: 'building-entrance/:id', component: BuildingEntrancesComponent },
+            { path: 'building-floor/:id', component: BuildingFloorComponent},
             { path: "**", component: NotFoundComponent, data: { title: "Page Not Found" } },
         ])
     ],

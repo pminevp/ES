@@ -78,6 +78,7 @@ import { BuildingEntranceEndpointService } from "./services/buildingEntrance-end
 import { BuildingFloorService } from "./services/BuildingFloor.service";
 import { BuildingFloorEndpoint } from "./services/buildingfloor-endpoint.service";
 import { BuildingEntrancesComponent } from "./components/buildingEntrances/building-entrances.component";
+import { BuildingFloorComponent } from "./components/buildingFloor/building-floor-component";
 
 
 
@@ -132,7 +133,8 @@ import { BuildingEntrancesComponent } from "./components/buildingEntrances/build
         BuildingsComponent,
         BuildingDetailsComponent,
         ApartamentComponent,
-        BuildingEntrancesComponent
+        BuildingEntrancesComponent,
+        BuildingFloorComponent
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler },
