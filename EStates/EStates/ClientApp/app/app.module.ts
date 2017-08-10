@@ -73,6 +73,11 @@ import { BuildingDetailsComponent } from "./components/building-details/building
 import { ApartamentComponent } from "./components/apartament/apartament.component";
 import { BuildingEndpoint } from "./services/building-endpoint";
 import { BuildingService } from "./services/BuildingService";
+import { BuildingEntranceEndpoint } from "./services/buildingEntrance-endpoint";
+import { BuildingEntranceEndpointService } from "./services/buildingEntrance-endpoint.service";
+import { BuildingFloorService } from "./services/BuildingFloor.service";
+import { BuildingFloorEndpoint } from "./services/buildingfloor-endpoint.service";
+import { BuildingEntrancesComponent } from "./components/buildingEntrances/building-entrances.component";
 
 
 
@@ -126,7 +131,8 @@ import { BuildingService } from "./services/BuildingService";
         NavigationComponent,
         BuildingsComponent,
         BuildingDetailsComponent,
-        ApartamentComponent
+        ApartamentComponent,
+        BuildingEntrancesComponent
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler },
@@ -142,7 +148,11 @@ import { BuildingService } from "./services/BuildingService";
         EndpointFactory,
         BuildingsEndpointService,
         BuildingService,
-        BuildingEndpoint
+        BuildingEndpoint,
+        BuildingEntranceEndpoint,
+        BuildingEntranceEndpointService,
+        BuildingFloorService,
+        BuildingFloorEndpoint
     ],
     bootstrap: [AppComponent]
 })

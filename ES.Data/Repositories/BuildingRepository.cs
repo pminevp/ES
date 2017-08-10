@@ -7,7 +7,9 @@ namespace ES.Data.Repositories
     public class BuildingRepository : Repository<Building>, IBuildingRepository
     {
         public BuildingRepository(DbContext context) : base(context)
-        { }
+        {
+         
+        }
 
         private ApplicationDbContext appContext
         {

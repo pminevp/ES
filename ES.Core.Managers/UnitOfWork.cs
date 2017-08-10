@@ -1,6 +1,10 @@
-﻿using ES.Data;
+﻿using System;
+using System.Collections.Generic;
+using ES.Data;
+using ES.Data.Models;
 using ES.Data.Repositories;
 using ES.Data.Repositories.Interfaces;
+using System.Linq;
 
 namespace ES.Core.Handlers
 {
@@ -103,6 +107,13 @@ namespace ES.Core.Handlers
 
                 return _buildingEntrance;
             }
+        }
+
+        public List<BuildingFloor> GetBuildingFloorByEntranceId(int id)
+        {
+            var floors = BuildingFloor.GetAll();
+
+            return floors.Where(x => x.buildingEntrance.id == id).ToList();
         }
 
         public int SaveChanges()

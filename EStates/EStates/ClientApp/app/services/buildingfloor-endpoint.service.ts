@@ -8,9 +8,13 @@ import { ConfigurationService } from './configuration.service';
 @Injectable()
 export class BuildingFloorEndpoint extends EndpointFactory {
 
-    private readonly _floorBaseUrl: string ="/api/BuildingFloors/"
+    private readonly _floorBaseUrl: string = "/api/BuildingFloors/"
+    private readonly _buildingEntrancesUrl: string ="/api/BuildingEntrance/Floors/"
+ 
 
-    public getFloorUrl() { return this.configurations.baseUrl + this._floorBaseUrl; }
+    public getFloorUrl() { return this.configurations.baseUrl + this._buildingEntrancesUrl; }
+
+    public getFloorsByEntranceUrl() { return this.configurations.baseUrl + this._floorBaseUrl;}
 
     constructor(http: Http, configurations: ConfigurationService, injector: Injector) {
 
@@ -24,6 +28,11 @@ export class BuildingFloorEndpoint extends EndpointFactory {
 
     public GetFloor(id: number) {
         return this.http.get(this._floorBaseUrl + id).map((response: Response) => { return response; });
+    }
+
+    public GetFloorsByEntranceId(id: number): Observable<Response> {
+
+        return this.http.get(this.getFloorUrl() + id).map((response: Response) => { return response; })
     }
 
 }

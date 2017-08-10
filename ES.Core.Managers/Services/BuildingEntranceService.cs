@@ -35,8 +35,9 @@ namespace ES.Core.Handlers.Services
             {
                 var newEntrance = new BuildingEntrance();
                 newEntrance.name = $"Вход {i}";
-                _unitOfWork.BuildingEntrance.Add(newEntrance);
+                newEntrance.CurrentBuilding = building;
 
+                _unitOfWork.BuildingEntrance.Add(newEntrance);
                 _buildingFloorServices.AddMultipleFloors(newEntrance, building.Floors);
             }
         }

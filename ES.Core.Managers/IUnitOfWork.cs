@@ -1,4 +1,5 @@
-﻿using ES.Data.Repositories.Interfaces;
+﻿using ES.Data.Models;
+using ES.Data.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,8 @@ namespace ES.Core.Handlers
         IBuildingRepository Buildings { get; }
 
         IBuildingEntranceRepository BuildingEntrance { get; }
+
+        List<BuildingFloor> GetBuildingFloorByEntranceId(int id);
 
         int SaveChanges();
     }

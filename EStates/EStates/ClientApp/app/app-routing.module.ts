@@ -22,6 +22,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { BuildingsComponent } from "./components/buildings/buildings.component";
 import { BuildingDetailsComponent } from "./components/building-details/building-details.component";
 import { ApartamentComponent } from "./components/apartament/apartament.component";
+import { BuildingEntrancesComponent } from "./components/buildingEntrances/building-entrances.component";
 
 
 
@@ -39,7 +40,8 @@ import { ApartamentComponent } from "./components/apartament/apartament.componen
             { path: "buildings/:id", component: BuildingsComponent },
             { path: "buildings", component: BuildingsComponent },
             { path: "building-details/:id", component: BuildingDetailsComponent },
-            { path: 'building-apartaments/:id', component: ApartamentComponent},
+            { path: 'building-apartaments/:id', component: ApartamentComponent },
+            { path: 'building-entrance/:id', component: BuildingEntrancesComponent},
             { path: "**", component: NotFoundComponent, data: { title: "Page Not Found" } },
         ])
     ],

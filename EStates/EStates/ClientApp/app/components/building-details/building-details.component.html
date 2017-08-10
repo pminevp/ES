@@ -23,18 +23,18 @@
     <!-- Added floors-->
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">Налични етажи <a data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-folder-open"></span> Добави етаж</a></div>
-        <div class="panel-body">
-            <p>това са всички апартаменти в сградата</p>
+        <div class="panel-heading">
+            <a data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-plus"></span> Добави Вход</a>
+            <b style="text-align:center;">Налични Входове</b> 
         </div>
-        <!-- List group -->
-        <div  class="list-group" *ngFor="let floor of selectedFloors">
-            <a href="/building-apartaments/{{floor.id}}" class="list-group-item">{{floor.name}}<span class="label"></span> </a>
+        <div class="panel-body"  >  
+            <div class="list-group">
+                <a href="/building-entrance/{{entrances.id}}" class="list-group-item" *ngFor="let entrances of buildingEntrances">{{entrances.name}}</a>
+            </div>
         </div>
     </div>
-    <!-- Added floors-->
+    <!-- Added entrances-->
 </div>
-
 
 <!-- Modal fo add apartament-->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -42,17 +42,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">Добавяне на Етаж</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">Добавяне на Вход</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="building-name" class="control-label">Име на етажа:</label>
-                    <input type="text" class="form-control" [(ngModel)]="newFloor.name"  >
-                </div>
-                <div class="form-group">
-                    <label for="building-description" class="control-label">Описание:</label>
-                    <textarea class="form-control" [(ngModel)]="newFloor.description" [ngModelOptions]="{standalone: true}" ></textarea>
-                </div>
+                    <label for="building-name" class="control-label">Име на вход:</label>
+                    <input type="text" class="form-control" [(ngModel)]="newEntrance.name"  >
+                </div> 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="Save()" >Запази</button>

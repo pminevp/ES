@@ -9,6 +9,8 @@ import { BuildingFloor } from "../../models/buildingFloor";
 import {  Headers,Http, RequestOptionsArgs } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 import { Resources } from "../../../ServiceResources";
+import { BuildingEntranceEndpoint } from "../../services/buildingEntrance-endpoint";
+import { BuildingEntrance } from "../../models/buildingEntrance";
  
 @Component({
     selector: 'app-buildingDetails',
@@ -19,26 +21,30 @@ import { Resources } from "../../../ServiceResources";
 export class BuildingDetailsComponent {
 
     private selectedBuildingId: number;
-    selectedBuilding: Building;
-    selectedFloors: Array<BuildingFloor>
-    newFloor: BuildingFloor;
+    private selectedBuilding: Building;
+    private selectedFloors: Array<BuildingFloor>
+    private newEntrance: BuildingEntrance;
+    private buildingEntrances: BuildingEntrance[];
 
-    constructor(route: ActivatedRoute, private buildingsEndpoint: BuildingService, private http : Http)
+    constructor(route: ActivatedRoute, private buildingsEndpoint: BuildingService, private http: Http, private buildingEntranceEndpoint: BuildingEntranceEndpoint)
     {
-        this.newFloor = new Apartament();
+        this.newEntrance = new BuildingEntrance();
         var id = route.snapshot.params['id'];
         if (id === undefined) {           
         }
         else { 
             this.selectedBuildingId = id;
             buildingsEndpoint.GetBuilding(id).subscribe(bld => this.selectedBuilding = bld);
+
+            buildingEntranceEndpoint.GetEntrancesByBuildingId(id).subscribe(entr => this.buildingEntrances = entr);         
         }
     }
 
     Save() {
 
-        var apartStat = new ApartamentStatuses();
-        console.log(this.newFloor);
+        var apartStat = new ApartamentStatuses(); 
+        this.buildingEntrances.push(this.newEntrance);
+        this.newEntrance = new BuildingEntrance();
     }
 
     fileChange(event) {
