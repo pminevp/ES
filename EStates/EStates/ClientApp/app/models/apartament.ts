@@ -2,9 +2,10 @@
 
 export class Apartament {
     id: number;
+    buildingEntranceId: number;
+    buildingId: number;
     name: string;
     description: string;
-    owners: any;
+    parentFloorId: number;
     status: string;
-    owner?: Array<User>
 }

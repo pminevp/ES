@@ -27,5 +27,12 @@ namespace ES.Data.Repositories
         {
             return (await GetFloorChildIncuded()).Where(x => x.buildingEntrance.id == id).ToList();
         }
+
+        public async Task<BuildingFloor> GetFloorWithEntrenceIncluded(int id)
+        {
+            var floors =  (await GetFloorChildIncuded()).First(x => x.id == id);
+
+            return floors;
+        }
     }
 }

@@ -120,11 +120,11 @@ export class BuildingsEndpointService implements OnInit {
     private GetApartaments() {
         var apartStatuses = new ApartamentStatuses();
         var aarr = new Array<Apartament>();
-        aarr.push({ id: 0, name: 'Ап 1 ет 1', description: 'апартамент на сем. Иванови', owners: 'сем. Иванови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
-            { id: 1, name: 'Ап 2 ет 1', description: 'апартамент на сем. Тодорови', owners: 'сем. Тодорови', status: apartStatuses.UnpaidBills, owner: this.GetApartamentOwners() },
-            { id: 2, name: 'Ап 3 ет 1', description: 'апартамент на сем. Кирови', owners: 'сем. Кирови', status: apartStatuses.Question, owner: this.GetApartamentOwners() },
-            { id: 3, name: 'Ап 4 ет 2', description: 'апартамент на сем. Симеонови', owners: 'сем. Симеонови', status: apartStatuses.Important, owner: this.GetApartamentOwners() },
-            { id: 4, name: 'Ап 5 ет 2', description: 'апартамент на сем. Кичукови', owners: 'сем. Кичукови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() });
+        //aarr.push({ id: 0, name: 'Ап 1 ет 1', description: 'апартамент на сем. Иванови', owners: 'сем. Иванови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() },
+        //    { id: 1, name: 'Ап 2 ет 1', description: 'апартамент на сем. Тодорови', owners: 'сем. Тодорови', status: apartStatuses.UnpaidBills, owner: this.GetApartamentOwners() },
+        //    { id: 2, name: 'Ап 3 ет 1', description: 'апартамент на сем. Кирови', owners: 'сем. Кирови', status: apartStatuses.Question, owner: this.GetApartamentOwners() },
+        //    { id: 3, name: 'Ап 4 ет 2', description: 'апартамент на сем. Симеонови', owners: 'сем. Симеонови', status: apartStatuses.Important, owner: this.GetApartamentOwners() },
+        //    { id: 4, name: 'Ап 5 ет 2', description: 'апартамент на сем. Кичукови', owners: 'сем. Кичукови', status: apartStatuses.Normal, owner: this.GetApartamentOwners() });
 
         return aarr;
     }

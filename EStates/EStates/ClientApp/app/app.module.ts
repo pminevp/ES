@@ -79,6 +79,8 @@ import { BuildingFloorService } from "./services/BuildingFloor.service";
 import { BuildingFloorEndpoint } from "./services/buildingfloor-endpoint.service";
 import { BuildingEntrancesComponent } from "./components/buildingEntrances/building-entrances.component";
 import { BuildingFloorComponent } from "./components/buildingFloor/building-floor-component";
+import { BuildingApartamentEndpoint } from "./services/buildingApartament-endpoint";
+import { BuildingApartamentEndpointService } from "./services/buildingApartament-endpoint.service";
 
 
 
@@ -154,7 +156,9 @@ import { BuildingFloorComponent } from "./components/buildingFloor/building-floo
         BuildingEntranceEndpoint,
         BuildingEntranceEndpointService,
         BuildingFloorService,
-        BuildingFloorEndpoint
+        BuildingFloorEndpoint,
+        BuildingApartamentEndpoint,
+        BuildingApartamentEndpointService
     ],
     bootstrap: [AppComponent]
 })

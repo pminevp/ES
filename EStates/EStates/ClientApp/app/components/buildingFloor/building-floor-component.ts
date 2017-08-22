@@ -10,6 +10,7 @@ import { Headers, Http, RequestOptionsArgs } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 import { Resources } from "../../../ServiceResources";
 import { BuildingFloorService } from "../../services/BuildingFloor.service";
+import { BuildingApartamentEndpoint } from "../../services/buildingApartament-endpoint";
 
 @Component({
     selector: 'app-buildingFloorComponent',
@@ -25,9 +26,10 @@ export class BuildingFloorComponent {
     private selectedApartaments: Apartament[];
     newApartament: Apartament;
 
-    constructor(route: ActivatedRoute, private http: Http, private buildingFloorEndpoint: BuildingFloorService) {
+    constructor(route: ActivatedRoute, private http: Http, private buildingFloorEndpoint: BuildingFloorService, private buildingApartamentEndpoint: BuildingApartamentEndpoint) {
 
         this.newApartament = new Apartament();
+        this.newApartament.parentFloorId = id;
 
         var id = route.snapshot.params['id'];
         if (id === undefined) {
@@ -35,13 +37,17 @@ export class BuildingFloorComponent {
         else {
             this.selectedFloorId = id;
             this.buildingFloorEndpoint.GetFloorById(id).subscribe(floor => this.selectedFloor = floor);
-            this.buildingFloorEndpoint.GetApartamentsByFloorId(id).subscribe(aprt => this.selectedApartaments = aprt);
+            this.buildingFloorEndpoint.GetApartamentsByFloorId(id).subscribe(aprt => this.selectedApartaments = aprt);            
+
         }
     }
 
     Save() {
+
+        this.buildingApartamentEndpoint.AddApartament(this.newApartament).subscribe( apart=> this.newApartament = apart);
         this.selectedApartaments.push(this.newApartament);
         this.newApartament = new Apartament();
+        this.newApartament.parentFloorId = this.selectedFloorId;
     }
 
 }

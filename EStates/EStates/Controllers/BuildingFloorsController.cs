@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ES.Core.Handlers;
 using ES.Data.Models;
 using EStates.ViewModels;
+using System.Threading.Tasks;
 
 namespace EStates.Controllers
 {
@@ -20,12 +21,16 @@ namespace EStates.Controllers
         public IEnumerable<BuildingFloor> Get() => _unitOfWork.BuildingFloor.GetAll();
 
         [HttpGet("{id}")]
-        public BuildingFloor Get(int id) => _unitOfWork.BuildingFloor.Get(id);
+        public async Task<BuildingFloor> Get(int id) =>  await _unitOfWork.BuildingFloor.GetFloorWithEntrenceIncluded(id);
 
         [Route("ApartamentsByFloorId/{id}")]
         [HttpGet()]
-        public List<Apartament> GetApartamentsByFloorId(int id) => _unitOfWork.Apartaments.GetApartamentsByFloorId(id).Result;
+        public async Task<List<Apartament>> GetApartamentsByFloorId(int id)
+        {
+            var aparts = await _unitOfWork.Apartaments.GetApartamentsByFloorId(id);
 
+            return aparts;
+        }
 
         [HttpPost]
         public void Post([FromBody]BuildingFloorViewModel Floor)
@@ -48,7 +53,8 @@ namespace EStates.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id){
+        public void Delete(int id)
+        {
 
             var building = _unitOfWork.BuildingFloor.Get(id);
             _unitOfWork.BuildingFloor.Remove(building);

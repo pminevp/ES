@@ -29,12 +29,7 @@ export class ApartamentComponent {
             this.selectedApartamentId = id;
             this.selectedApartament = buildingsEndpoint.GetSelectedApartament(id);
 
-            if (this.selectedApartament.owners === undefined) {
-
-            }
-            else {
-                this.owners = this.selectedApartament.owner;
-            }
+            
 
             console.log(this.owners);
         }
@@ -42,8 +37,7 @@ export class ApartamentComponent {
 
 
     Save() {
-        console.log(this.newUser);
-        this.selectedApartament.owner.push(this.newUser);
+        console.log(this.newUser);     
         this.newUser = new User();
     }
 
