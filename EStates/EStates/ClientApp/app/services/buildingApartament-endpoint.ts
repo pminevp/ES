@@ -8,6 +8,8 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import { BuildingApartamentEndpointService } from "./buildingApartament-endpoint.service";
 import { Apartament } from "../models/apartament";
+import { UserToApartament } from "../models/userToApartament.model";
+import { User } from "../models/user.model";
 
 @Injectable()
 export class BuildingApartamentEndpoint{
@@ -27,5 +29,9 @@ export class BuildingApartamentEndpoint{
 
     UpdateApartament(apart: Apartament) {
         return this.buildingEndpointService.UpdateApartament(apart).map((resp: Response) => <Apartament>resp.json());
+    }
+
+    AddUserToApartament(newUser: UserToApartament) {
+        return this.buildingEndpointService.AddUserToApartament(newUser).map((resp: Response) => <User>resp.json());
     }
 }

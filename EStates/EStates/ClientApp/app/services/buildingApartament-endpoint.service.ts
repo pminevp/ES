@@ -7,6 +7,7 @@ import { Resources } from "../../ServiceResources";
 import { Building } from "../models/building";
 import { EndpointFactory } from "./endpoint-factory.service";
 import { Apartament } from "../models/apartament";
+import { UserToApartament } from "../models/userToApartament.model";
 
 @Injectable()
 
@@ -33,5 +34,10 @@ export class BuildingApartamentEndpointService extends EndpointFactory
     public GetApartamentById(id: number): Observable<Response> {
 
         return this.http.get(this._buildingApartamentUrl + id).map((resp: Response) => { return resp; });
+    }
+
+    public AddUserToApartament(newUser: UserToApartament): Observable<Response> {
+
+        return this.http.post(this._buildingApartamentUrl + "AddUser/", newUser).map((resp: Response) => { return resp; });
     }
 }

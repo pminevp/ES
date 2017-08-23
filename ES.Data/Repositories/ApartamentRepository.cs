@@ -23,5 +23,11 @@ namespace ES.Data.Repositories
             var apartaments = await appContext.Apartament.Include(x => x.ParentFloor).ToListAsync();
             return apartaments.Where(x => x.ParentFloor.id == id).ToList();
         }
+
+        public async Task<Apartament> GetApartamentOwnerIncluded(int id)
+        {
+            var apartament = await appContext.Apartament.Include(x => x.Owners).ToListAsync();
+            return apartament.First(x => x.Id == id);
+        }
     }
 }
