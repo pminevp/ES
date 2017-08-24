@@ -29,9 +29,9 @@ namespace EStates.Controllers
         }
 
         [HttpGet("{id}")]
-        public Apartament Get(int id)
+        public async Task<Apartament> Get(int id)
         {
-            return _unitOfWork.Apartaments.Get(id);
+          return await _unitOfWork.Apartaments.GetApartamentOwnerIncluded(id);
         }
 
         [HttpPost]

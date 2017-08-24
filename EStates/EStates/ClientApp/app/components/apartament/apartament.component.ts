@@ -28,16 +28,21 @@ export class ApartamentComponent {
         var id = route.snapshot.params['id'];
         this.newUser = new User();
         this.newUserToApart = new UserToApartament();
+        this.owners = new Array<User>();
 
         if (id === undefined) {
         }
         else {
             this.selectedApartamentId = id;
-            this.selectedApartament = buildingsEndpoint.GetSelectedApartament(id);
+            buildingsApartamentEndpoint.GetById(id).subscribe(apart => {
 
-            
+                this.selectedApartament = apart;
 
-            console.log(this.owners);
+                this.owners = this.selectedApartament.owners;
+                console.log('loaded');
+                console.log(this.owners);
+            });
+      
         }
     }
 

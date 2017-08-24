@@ -90,6 +90,9 @@ export class UserInfoComponent implements OnInit {
 
 
     private loadCurrentUserData() {
+
+        this.user.buildingId = 0;
+
         this.alertService.startLoadingMessage();
 
         if (this.canViewAllRoles) {
@@ -98,6 +101,9 @@ export class UserInfoComponent implements OnInit {
         else {
             this.accountService.getUser().subscribe(user => this.onCurrentUserDataLoadSuccessful(user, []), error => this.onCurrentUserDataLoadFailed(error));
         }
+
+         
+            
     }
 
 
@@ -149,7 +155,7 @@ export class UserInfoComponent implements OnInit {
 
             this.isEditingSelf = this.accountService.currentUser ? this.userEdit.id == this.accountService.currentUser.id : false;
         }
-
+   
         this.isEditMode = true;
         this.showValidationErrors = true;
         this.isChangePassword = false;

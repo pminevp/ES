@@ -5,6 +5,8 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { BuildingsEndpointService } from "../../services/buildings-endpoint.service";
 import { BuildingService } from "../../services/BuildingService";
 import { AlertService, MessageSeverity } from "../../services/alert.service";
+import { Permission } from "../../models/permission.model";
+import { AccountService } from "../../services/account.service";
 
 @Component({
     selector: "app-building",
@@ -17,8 +19,7 @@ export class BuildingsComponent implements OnInit {
     private buildings: Building[] = [];
     private newBuilding: Building = new Building();
 
-    constructor(private buildingService: BuildingService, private alertService: AlertService) {
-
+    constructor(private buildingService: BuildingService, private alertService: AlertService, private accountService: AccountService) {
     }
 
     ngOnInit(): void {
@@ -27,7 +28,14 @@ export class BuildingsComponent implements OnInit {
     }
 
     private loadCurrentBuildingData() {
-        this.buildingService.GetAllBuildings().subscribe(building => this.onBuildingLoadSuccessful(building), error => this.onBuildingLoadFailed(error));
+        this.buildingService.GetAllBuildings().subscribe(building => {
+            this.onBuildingLoadSuccessful(building)
+
+            if (this.buildings.length == 1) {
+                window.location.href = "building-details/" + this.buildings[0].id
+            }     
+
+        }, error => this.onBuildingLoadFailed(error));
     }
 
     private onBuildingLoadSuccessful(_building: Building[]) {
@@ -46,4 +54,9 @@ export class BuildingsComponent implements OnInit {
         this.alertService.showStickyMessage("Добавена Сграда!", "Сградата: " + this.newBuilding.name + " Беше добавена успешно!", MessageSeverity.default);
         this.newBuilding = new Building();
     }
+
+    //Filtrates do we have permission to Create
+    get IsGlobalAdmin() {
+        return this.accountService.userHasPermission(Permission.ManageBuildingsPermission);          
+    }   
 }

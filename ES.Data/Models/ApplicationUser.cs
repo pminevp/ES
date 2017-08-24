@@ -27,6 +27,7 @@ namespace ES.Data.Models
         public bool IsEnabled { get; set; }
         public bool IsLockedOut => this.LockoutEnabled && this.LockoutEnd >= DateTimeOffset.UtcNow;
 
+        public int BuildingId { get; set; }
 
         public ICollection<Order> Orders { get; set; }
     }

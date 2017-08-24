@@ -1,4 +1,4 @@
-﻿<div class="container">
+﻿<div class="container" *ngIf="selectedApartament != null">
 
     <h1> Обработка на Апартамент</h1>
     <!-- image + text for intro -->
@@ -21,18 +21,14 @@
     <!-- Added apartaments-->
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">Жители на Апартамента <a data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-folder-open"></span> Добави</a></div>
-       
+        <div class="panel-heading">Жители на Апартамента <a data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-folder-open"></span> Добави</a></div>       
             <!-- List group -->
             <div class="list-group" *ngFor="let own of owners">
-                <a href="#" class="list-group-item">{{own.fullName}}</a>
-            </div>
-       
-       
+                <a class="list-group-item">{{own.fullName}}</a>
+            </div>     
     </div>
     <!-- Added apartaments-->
 </div>
-
 
 <!-- Modal fo add apartament-->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

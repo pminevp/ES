@@ -208,7 +208,20 @@
                 <input type="text" attr.id="fullName-{{uniqueId}}" name="fullName" placeholder="Enter full name" class="form-control" [(ngModel)]="userEdit.fullName" />
             </div>
         </div>
+        <div *ngIf="!isViewOnly" class="row">
+            <div class="col-md-12">
+                <hr [class.last-separator-hr]="!isEditMode" [class.edit-last-separator-hr]="isEditMode" />
+            </div>
+        </div>
 
+        <!-- test-->
+        <div class="form-group" *ngIf="userEdit != null">
+            <label [class.col-md-3]="isViewOnly" [class.col-md-2]="!isViewOnly" class="control-label" for="buildingId-{{uniqueId}}">Assaigned Building:</label>
+           <div [class.col-md-9]="isViewOnly" [class.col-md-10]="!isViewOnly">
+                <input type="text" attr.id="fullName-{{uniqueId}}" name="buildingId" placeholder="Enter buildingId name" class="form-control"  [(ngModel)]="userEdit.buildingId" />
+            </div>
+        </div>
+        <!-- test-->
         <div class="row">
             <div class="col-md-12">
                 <hr [class.separator-hr]="!isEditMode" [class.edit-separator-hr]="isEditMode" />

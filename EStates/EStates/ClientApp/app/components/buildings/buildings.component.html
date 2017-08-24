@@ -2,7 +2,7 @@
     <div class="page-header">
         <h1>Сградни устройства <small>добавяне, управление и премахване на сгради</small></h1>
         <!--add new Building-->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Добави сграда</button>
+        <button type="button" class="btn btn-primary" *ngIf="IsGlobalAdmin" data-toggle="modal" data-target=".bs-example-modal-lg">Добави сграда</button>
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">

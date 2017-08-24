@@ -8,4 +8,5 @@ export class Apartament {
     description: string;
     parentFloorId: number;
     status: string;
+    owners: Array<User>;
 }

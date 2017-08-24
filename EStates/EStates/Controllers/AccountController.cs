@@ -125,6 +125,8 @@ namespace EStates.Controllers
         public async Task<IActionResult> UpdateUser(string id, [FromBody] UserEditViewModel user)
         {
             ApplicationUser appUser = await _accountManager.GetUserByIdAsync(id);
+            appUser.BuildingId = user.BuildingId;
+
             string[] currentRoles = appUser != null ? (await _accountManager.GetUserRolesAsync(appUser)).ToArray() : null;
 
             var manageUsersPolicy = _authorizationService.AuthorizeAsync(this.User, id, AuthPolicies.ManageUserByUserIdPolicy);

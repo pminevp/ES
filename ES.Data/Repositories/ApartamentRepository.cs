@@ -20,13 +20,19 @@ namespace ES.Data.Repositories
 
         public async Task<List<Apartament>> GetApartamentsByFloorId(int id)
         {
-            var apartaments = await appContext.Apartament.Include(x => x.ParentFloor).ToListAsync();
+            var apartaments = await appContext.Apartament
+                                                          .Include(x => x.ParentFloor)
+                                                          .Include(x=>x.Owners).ToListAsync();
+
             return apartaments.Where(x => x.ParentFloor.id == id).ToList();
         }
 
         public async Task<Apartament> GetApartamentOwnerIncluded(int id)
         {
-            var apartament = await appContext.Apartament.Include(x => x.Owners).ToListAsync();
+            var apartament = await appContext.Apartament
+                                                        .Include(x => x.ParentFloor)
+                                                        .Include(x => x.Owners)
+                                                        .ToListAsync();
             return apartament.First(x => x.Id == id);
         }
     }
