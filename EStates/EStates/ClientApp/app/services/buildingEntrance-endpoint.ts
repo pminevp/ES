@@ -20,9 +20,14 @@ export class BuildingEntranceEndpoint {
     GetEntrancesByBuildingId(id: number)
     {
         return this.buildingEndpoint.GetEntrancesByBuildingId(id).map((response: Response) => <BuildingEntrance[]>response.json());
+    
     }
 
     GetEntranceById(id: number) {
         return this.buildingEndpoint.GetEntranceById(id).map((response:Response)=> <BuildingEntrance>response.json());
+    }
+
+    GetEntrances(buildingId: number, userId: string) {
+        return this.buildingEndpoint.GetEntrancesByBuildingIdAndUserId(buildingId, userId).map((resp: Response) => <BuildingEntrance[]>resp.json());
     }
 }

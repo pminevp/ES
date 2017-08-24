@@ -9,9 +9,10 @@ using ES.Core.Commons.Enums;
 namespace EStates.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170824054611_ApplicaitonUser-Add_Managed_Entrances-V1")]
+    partial class ApplicaitonUserAdd_Managed_EntrancesV1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -159,17 +160,17 @@ namespace EStates.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CurrentBuildingId");
+                    b.Property<string>("ApplicationUserId");
 
-                    b.Property<string>("managerId");
+                    b.Property<int?>("CurrentBuildingId");
 
                     b.Property<string>("name");
 
                     b.HasKey("id");
 
-                    b.HasIndex("CurrentBuildingId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("managerId");
+                    b.HasIndex("CurrentBuildingId");
 
                     b.ToTable("BuildingEntrance");
                 });
@@ -532,13 +533,13 @@ namespace EStates.Migrations
 
             modelBuilder.Entity("ES.Data.Models.BuildingEntrance", b =>
                 {
+                    b.HasOne("ES.Data.Models.ApplicationUser")
+                        .WithMany("ManagedEntrances")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ES.Data.Models.Building", "CurrentBuilding")
                         .WithMany()
                         .HasForeignKey("CurrentBuildingId");
-
-                    b.HasOne("ES.Data.Models.ApplicationUser", "manager")
-                        .WithMany("ManagedEntrances")
-                        .HasForeignKey("managerId");
                 });
 
             modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>

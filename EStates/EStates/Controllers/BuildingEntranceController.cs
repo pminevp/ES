@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ES.Core.Handlers;
 using ES.Data.Models;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EStates.Controllers
 {
@@ -41,6 +42,14 @@ namespace EStates.Controllers
 
             return dat;
         }
+
+        [HttpGet("SelectEntrances/{buildingId:int}/{userId}")]
+        public List<BuildingEntrance> GetBuildingEntrancesByUser(int buildingId,string userId)
+        {
+            var result = _unitOfWork.BuildingEntrance.GetByUserId(buildingId, userId);
+            return result;
+        }
+
 
         [HttpPost]
         public void Post([FromBody]BuildingEntrance buildingEntrance)

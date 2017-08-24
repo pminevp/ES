@@ -29,6 +29,11 @@ namespace ES.Data.Models
 
         public int BuildingId { get; set; }
 
+        [Obsolete]
+        public ICollection<BuildingFloor> ManagedFloors { get; set; }
+
+        public ICollection<BuildingEntrance> ManagedEntrances { get; set; }
+
         public ICollection<Order> Orders { get; set; }
     }
 }

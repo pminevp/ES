@@ -24,6 +24,9 @@ namespace ES.Data.Repositories
             return t;
         }
 
-      
+        public List<BuildingEntrance> GetByUserId(int buildingId, string userId)
+        {
+            return base.Find(x => x.CurrentBuilding.Id == buildingId && x.manager.Id == userId).ToList();
+        }
     }
 }

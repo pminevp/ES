@@ -11,5 +11,7 @@ namespace ES.Data.Models
         public IEnumerable<Apartament> Apartaments { get; set; }
 
         public Building CurrentBuilding { get; set; }
+
+        public ApplicationUser manager { get; set; }
     }
 }

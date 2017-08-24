@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8f7200543c7ba7101f93"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d35e9a6dddeba5b968e4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -851,11 +851,215 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var router_1 = __webpack_require__(6);
+var http_1 = __webpack_require__(4);
+var Observable_1 = __webpack_require__(2);
+var Subject_1 = __webpack_require__(17);
+__webpack_require__(20);
+__webpack_require__(21);
+__webpack_require__(5);
+var account_endpoint_service_1 = __webpack_require__(63);
+var auth_service_1 = __webpack_require__(12);
+var AccountService = (function () {
+    var AccountService = AccountService_1 = function AccountService(router, http, authService, accountEndpoint) {
+        this.router = router;
+        this.http = http;
+        this.authService = authService;
+        this.accountEndpoint = accountEndpoint;
+        this._rolesChanged = new Subject_1.Subject();
+    };
+    AccountService.prototype.getUser = function (userId) {
+        return this.accountEndpoint.getUserEndpoint(userId)
+            .map(function (response) { return response.json(); });
+    };
+    AccountService.prototype.getUserAndRoles = function (userId) {
+        return Observable_1.Observable.forkJoin(this.accountEndpoint.getUserEndpoint(userId).map(function (response) { return response.json(); }), this.accountEndpoint.getRolesEndpoint().map(function (response) { return response.json(); }));
+    };
+    AccountService.prototype.getUsers = function (page, pageSize) {
+        return this.accountEndpoint.getUsersEndpoint(page, pageSize)
+            .map(function (response) { return response.json(); });
+    };
+    AccountService.prototype.getUsersAndRoles = function (page, pageSize) {
+        return Observable_1.Observable.forkJoin(this.accountEndpoint.getUsersEndpoint(page, pageSize).map(function (response) { return response.json(); }), this.accountEndpoint.getRolesEndpoint().map(function (response) { return response.json(); }));
+    };
+    AccountService.prototype.updateUser = function (user) {
+        var _this = this;
+        if (user.id) {
+            return this.accountEndpoint.getUpdateUserEndpoint(user, user.id);
+        }
+        else {
+            return this.accountEndpoint.getUserByUserNameEndpoint(user.userName)
+                .map(function (response) { return response.json(); })
+                .mergeMap(function (foundUser) {
+                user.id = foundUser.id;
+                return _this.accountEndpoint.getUpdateUserEndpoint(user, user.id);
+            });
+        }
+    };
+    AccountService.prototype.newUser = function (user) {
+        return this.accountEndpoint.getNewUserEndpoint(user)
+            .map(function (response) { return response.json(); });
+    };
+    AccountService.prototype.getUserPreferences = function () {
+        return this.accountEndpoint.getUserPreferencesEndpoint()
+            .map(function (response) { return response.json(); });
+    };
+    AccountService.prototype.updateUserPreferences = function (configuration) {
+        return this.accountEndpoint.getUpdateUserPreferencesEndpoint(configuration);
+    };
+    AccountService.prototype.deleteUser = function (userOrUserId) {
+        var _this = this;
+        if (typeof userOrUserId === 'string' || userOrUserId instanceof String) {
+            return this.accountEndpoint.getDeleteUserEndpoint(userOrUserId)
+                .map(function (response) { return response.json(); })
+                .do(function (data) { return _this.onRolesUserCountChanged(data.roles); });
+        }
+        else {
+            if (userOrUserId.id) {
+                return this.deleteUser(userOrUserId.id);
+            }
+            else {
+                return this.accountEndpoint.getUserByUserNameEndpoint(userOrUserId.userName)
+                    .map(function (response) { return response.json(); })
+                    .mergeMap(function (user) { return _this.deleteUser(user.id); });
+            }
+        }
+    };
+    AccountService.prototype.unblockUser = function (userId) {
+        return this.accountEndpoint.getUnblockUserEndpoint(userId);
+    };
+    AccountService.prototype.userHasPermission = function (permissionValue) {
+        return this.permissions.some(function (p) { return p == permissionValue; });
+    };
+    AccountService.prototype.GetUsersPermissionValuesByRole = function (Role) {
+        for (var i = 0; i < this.permissions.length; i++) {
+            if (this.permissions[i] == Role) {
+                console.log(this.permissions[i]);
+                return this.permissions[i];
+            }
+        }
+        return null;
+    };
+    AccountService.prototype.refreshLoggedInUser = function () {
+        return this.authService.refreshLogin();
+    };
+    AccountService.prototype.getRoles = function (page, pageSize) {
+        return this.accountEndpoint.getRolesEndpoint(page, pageSize)
+            .map(function (response) { return response.json(); });
+    };
+    AccountService.prototype.getRolesAndPermissions = function (page, pageSize) {
+        return Observable_1.Observable.forkJoin(this.accountEndpoint.getRolesEndpoint(page, pageSize).map(function (response) { return response.json(); }), this.accountEndpoint.getPermissionsEndpoint().map(function (response) { return response.json(); }));
+    };
+    AccountService.prototype.updateRole = function (role) {
+        var _this = this;
+        if (role.id) {
+            return this.accountEndpoint.getUpdateRoleEndpoint(role, role.id)
+                .do(function (data) { return _this.onRolesChanged([role], AccountService_1.roleModifiedOperation); });
+        }
+        else {
+            return this.accountEndpoint.getRoleByRoleNameEndpoint(role.name)
+                .map(function (response) { return response.json(); })
+                .mergeMap(function (foundRole) {
+                role.id = foundRole.id;
+                return _this.accountEndpoint.getUpdateRoleEndpoint(role, role.id);
+            })
+                .do(function (data) { return _this.onRolesChanged([role], AccountService_1.roleModifiedOperation); });
+        }
+    };
+    AccountService.prototype.newRole = function (role) {
+        var _this = this;
+        return this.accountEndpoint.getNewRoleEndpoint(role)
+            .map(function (response) { return response.json(); })
+            .do(function (data) { return _this.onRolesChanged([role], AccountService_1.roleAddedOperation); });
+    };
+    AccountService.prototype.deleteRole = function (roleOrRoleId) {
+        var _this = this;
+        if (typeof roleOrRoleId === 'string' || roleOrRoleId instanceof String) {
+            return this.accountEndpoint.getDeleteRoleEndpoint(roleOrRoleId)
+                .map(function (response) { return response.json(); })
+                .do(function (data) { return _this.onRolesChanged([data], AccountService_1.roleDeletedOperation); });
+        }
+        else {
+            if (roleOrRoleId.id) {
+                return this.deleteRole(roleOrRoleId.id);
+            }
+            else {
+                return this.accountEndpoint.getRoleByRoleNameEndpoint(roleOrRoleId.name)
+                    .map(function (response) { return response.json(); })
+                    .mergeMap(function (role) { return _this.deleteRole(role.id); });
+            }
+        }
+    };
+    AccountService.prototype.getPermissions = function () {
+        return this.accountEndpoint.getPermissionsEndpoint()
+            .map(function (response) { return response.json(); });
+    };
+    AccountService.prototype.onRolesChanged = function (roles, op) {
+        this._rolesChanged.next({ roles: roles, operation: op });
+    };
+    AccountService.prototype.onRolesUserCountChanged = function (roles) {
+        return this.onRolesChanged(roles, AccountService_1.roleModifiedOperation);
+    };
+    AccountService.prototype.getRolesChangedEvent = function () {
+        return this._rolesChanged.asObservable();
+    };
+    Object.defineProperty(AccountService.prototype, "permissions", {
+        get: function () {
+            return this.authService.userPermissions;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AccountService.prototype, "currentUser", {
+        get: function () {
+            return this.authService.currentUser;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AccountService.roleAddedOperation = "add";
+    AccountService.roleDeletedOperation = "delete";
+    AccountService.roleModifiedOperation = "modify";
+    AccountService = AccountService_1 = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [router_1.Router, http_1.Http, auth_service_1.AuthService,
+            account_endpoint_service_1.AccountEndpoint])
+    ], AccountService);
+    return AccountService;
+    var AccountService_1;
+}());
+exports.AccountService = AccountService;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// ======================================
+// Author: Ebenezer Monney
+// Email:  info@ebenmonney.com
+// Copyright (c) 2017 www.ebenmonney.com
+// 
+// ==> Gun4Hire: contact@ebenmonney.com
+// ======================================
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(4);
 var Subject_1 = __webpack_require__(17);
-var utilities_1 = __webpack_require__(9);
+var utilities_1 = __webpack_require__(10);
 var AlertService = (function () {
     function AlertService() {
         this.messages = new Subject_1.Subject();
@@ -1035,7 +1239,7 @@ var MessageSeverity;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1058,10 +1262,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var app_translation_service_1 = __webpack_require__(12);
+var app_translation_service_1 = __webpack_require__(13);
 var local_store_manager_service_1 = __webpack_require__(19);
 var db_Keys_1 = __webpack_require__(70);
-var utilities_1 = __webpack_require__(9);
+var utilities_1 = __webpack_require__(10);
 var ConfigurationService = (function () {
     var ConfigurationService = ConfigurationService_1 = function ConfigurationService(localStorage, translationService) {
         this.localStorage = localStorage;
@@ -1275,7 +1479,7 @@ exports.ConfigurationService = ConfigurationService;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1610,211 +1814,39 @@ exports.Utilities = Utilities;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+//-------------------
+// authentication roles in Typescipt
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var router_1 = __webpack_require__(6);
-var http_1 = __webpack_require__(4);
-var Observable_1 = __webpack_require__(2);
-var Subject_1 = __webpack_require__(17);
-__webpack_require__(20);
-__webpack_require__(21);
-__webpack_require__(5);
-var account_endpoint_service_1 = __webpack_require__(63);
-var auth_service_1 = __webpack_require__(11);
-var AccountService = (function () {
-    var AccountService = AccountService_1 = function AccountService(router, http, authService, accountEndpoint) {
-        this.router = router;
-        this.http = http;
-        this.authService = authService;
-        this.accountEndpoint = accountEndpoint;
-        this._rolesChanged = new Subject_1.Subject();
-    };
-    AccountService.prototype.getUser = function (userId) {
-        return this.accountEndpoint.getUserEndpoint(userId)
-            .map(function (response) { return response.json(); });
-    };
-    AccountService.prototype.getUserAndRoles = function (userId) {
-        return Observable_1.Observable.forkJoin(this.accountEndpoint.getUserEndpoint(userId).map(function (response) { return response.json(); }), this.accountEndpoint.getRolesEndpoint().map(function (response) { return response.json(); }));
-    };
-    AccountService.prototype.getUsers = function (page, pageSize) {
-        return this.accountEndpoint.getUsersEndpoint(page, pageSize)
-            .map(function (response) { return response.json(); });
-    };
-    AccountService.prototype.getUsersAndRoles = function (page, pageSize) {
-        return Observable_1.Observable.forkJoin(this.accountEndpoint.getUsersEndpoint(page, pageSize).map(function (response) { return response.json(); }), this.accountEndpoint.getRolesEndpoint().map(function (response) { return response.json(); }));
-    };
-    AccountService.prototype.updateUser = function (user) {
-        var _this = this;
-        if (user.id) {
-            return this.accountEndpoint.getUpdateUserEndpoint(user, user.id);
-        }
-        else {
-            return this.accountEndpoint.getUserByUserNameEndpoint(user.userName)
-                .map(function (response) { return response.json(); })
-                .mergeMap(function (foundUser) {
-                user.id = foundUser.id;
-                return _this.accountEndpoint.getUpdateUserEndpoint(user, user.id);
-            });
-        }
-    };
-    AccountService.prototype.newUser = function (user) {
-        return this.accountEndpoint.getNewUserEndpoint(user)
-            .map(function (response) { return response.json(); });
-    };
-    AccountService.prototype.getUserPreferences = function () {
-        return this.accountEndpoint.getUserPreferencesEndpoint()
-            .map(function (response) { return response.json(); });
-    };
-    AccountService.prototype.updateUserPreferences = function (configuration) {
-        return this.accountEndpoint.getUpdateUserPreferencesEndpoint(configuration);
-    };
-    AccountService.prototype.deleteUser = function (userOrUserId) {
-        var _this = this;
-        if (typeof userOrUserId === 'string' || userOrUserId instanceof String) {
-            return this.accountEndpoint.getDeleteUserEndpoint(userOrUserId)
-                .map(function (response) { return response.json(); })
-                .do(function (data) { return _this.onRolesUserCountChanged(data.roles); });
-        }
-        else {
-            if (userOrUserId.id) {
-                return this.deleteUser(userOrUserId.id);
-            }
-            else {
-                return this.accountEndpoint.getUserByUserNameEndpoint(userOrUserId.userName)
-                    .map(function (response) { return response.json(); })
-                    .mergeMap(function (user) { return _this.deleteUser(user.id); });
-            }
-        }
-    };
-    AccountService.prototype.unblockUser = function (userId) {
-        return this.accountEndpoint.getUnblockUserEndpoint(userId);
-    };
-    AccountService.prototype.userHasPermission = function (permissionValue) {
-        return this.permissions.some(function (p) { return p == permissionValue; });
-    };
-    AccountService.prototype.GetUsersPermissionValuesByRole = function (Role) {
-        for (var i = 0; i < this.permissions.length; i++) {
-            if (this.permissions[i] == Role) {
-                console.log(this.permissions[i]);
-                return this.permissions[i];
-            }
-        }
-        return null;
-    };
-    AccountService.prototype.refreshLoggedInUser = function () {
-        return this.authService.refreshLogin();
-    };
-    AccountService.prototype.getRoles = function (page, pageSize) {
-        return this.accountEndpoint.getRolesEndpoint(page, pageSize)
-            .map(function (response) { return response.json(); });
-    };
-    AccountService.prototype.getRolesAndPermissions = function (page, pageSize) {
-        return Observable_1.Observable.forkJoin(this.accountEndpoint.getRolesEndpoint(page, pageSize).map(function (response) { return response.json(); }), this.accountEndpoint.getPermissionsEndpoint().map(function (response) { return response.json(); }));
-    };
-    AccountService.prototype.updateRole = function (role) {
-        var _this = this;
-        if (role.id) {
-            return this.accountEndpoint.getUpdateRoleEndpoint(role, role.id)
-                .do(function (data) { return _this.onRolesChanged([role], AccountService_1.roleModifiedOperation); });
-        }
-        else {
-            return this.accountEndpoint.getRoleByRoleNameEndpoint(role.name)
-                .map(function (response) { return response.json(); })
-                .mergeMap(function (foundRole) {
-                role.id = foundRole.id;
-                return _this.accountEndpoint.getUpdateRoleEndpoint(role, role.id);
-            })
-                .do(function (data) { return _this.onRolesChanged([role], AccountService_1.roleModifiedOperation); });
-        }
-    };
-    AccountService.prototype.newRole = function (role) {
-        var _this = this;
-        return this.accountEndpoint.getNewRoleEndpoint(role)
-            .map(function (response) { return response.json(); })
-            .do(function (data) { return _this.onRolesChanged([role], AccountService_1.roleAddedOperation); });
-    };
-    AccountService.prototype.deleteRole = function (roleOrRoleId) {
-        var _this = this;
-        if (typeof roleOrRoleId === 'string' || roleOrRoleId instanceof String) {
-            return this.accountEndpoint.getDeleteRoleEndpoint(roleOrRoleId)
-                .map(function (response) { return response.json(); })
-                .do(function (data) { return _this.onRolesChanged([data], AccountService_1.roleDeletedOperation); });
-        }
-        else {
-            if (roleOrRoleId.id) {
-                return this.deleteRole(roleOrRoleId.id);
-            }
-            else {
-                return this.accountEndpoint.getRoleByRoleNameEndpoint(roleOrRoleId.name)
-                    .map(function (response) { return response.json(); })
-                    .mergeMap(function (role) { return _this.deleteRole(role.id); });
-            }
-        }
-    };
-    AccountService.prototype.getPermissions = function () {
-        return this.accountEndpoint.getPermissionsEndpoint()
-            .map(function (response) { return response.json(); });
-    };
-    AccountService.prototype.onRolesChanged = function (roles, op) {
-        this._rolesChanged.next({ roles: roles, operation: op });
-    };
-    AccountService.prototype.onRolesUserCountChanged = function (roles) {
-        return this.onRolesChanged(roles, AccountService_1.roleModifiedOperation);
-    };
-    AccountService.prototype.getRolesChangedEvent = function () {
-        return this._rolesChanged.asObservable();
-    };
-    Object.defineProperty(AccountService.prototype, "permissions", {
-        get: function () {
-            return this.authService.userPermissions;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(AccountService.prototype, "currentUser", {
-        get: function () {
-            return this.authService.currentUser;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    AccountService.roleAddedOperation = "add";
-    AccountService.roleDeletedOperation = "delete";
-    AccountService.roleModifiedOperation = "modify";
-    AccountService = AccountService_1 = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [router_1.Router, http_1.Http, auth_service_1.AuthService,
-            account_endpoint_service_1.AccountEndpoint])
-    ], AccountService);
-    return AccountService;
-    var AccountService_1;
+var Permission = (function () {
+    function Permission(name, value, groupName, description) {
+        this.name = name;
+        this.value = value;
+        this.groupName = groupName;
+        this.description = description;
+    }
+    Permission.viewUsersPermission = "users.view";
+    Permission.manageUsersPermission = "users.manage";
+    Permission.viewRolesPermission = "roles.view";
+    Permission.manageRolesPermission = "roles.manage";
+    Permission.assignRolesPermission = "roles.assign";
+    Permission.viewBuildingsPermission = "buildings.view";
+    Permission.ManageBuildingsPermission = "buildings.manage";
+    Permission.AssignBuildingsPermission = "buildings.assign";
+    Permission.viewApartamentsPermission = "apartaments.view";
+    Permission.ManageApartamentsPermission = "apartaments.manage";
+    Permission.AssignApartamentsPermission = "apartaments.assign";
+    return Permission;
 }());
-exports.AccountService = AccountService;
+exports.Permission = Permission;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1842,10 +1874,10 @@ var Subject_1 = __webpack_require__(17);
 __webpack_require__(5);
 var local_store_manager_service_1 = __webpack_require__(19);
 var endpoint_factory_service_1 = __webpack_require__(15);
-var configuration_service_1 = __webpack_require__(8);
+var configuration_service_1 = __webpack_require__(9);
 var db_Keys_1 = __webpack_require__(70);
 var jwt_helper_1 = __webpack_require__(123);
-var utilities_1 = __webpack_require__(9);
+var utilities_1 = __webpack_require__(10);
 var user_model_1 = __webpack_require__(16);
 var AuthService = (function () {
     function AuthService(router, configurations, endpointFactory, localStorage) {
@@ -2067,7 +2099,7 @@ exports.AuthService = AuthService;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2177,38 +2209,6 @@ exports.TranslateLanguageLoader = TranslateLanguageLoader;
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-//-------------------
-// authentication roles in Typescipt
-Object.defineProperty(exports, "__esModule", { value: true });
-var Permission = (function () {
-    function Permission(name, value, groupName, description) {
-        this.name = name;
-        this.value = value;
-        this.groupName = groupName;
-        this.description = description;
-    }
-    Permission.viewUsersPermission = "users.view";
-    Permission.manageUsersPermission = "users.manage";
-    Permission.viewRolesPermission = "roles.view";
-    Permission.manageRolesPermission = "roles.manage";
-    Permission.assignRolesPermission = "roles.assign";
-    Permission.viewBuildingsPermission = "buildings.view";
-    Permission.ManageBuildingsPermission = "buildings.manage";
-    Permission.AssignBuildingsPermission = "buildings.assign";
-    Permission.viewApartamentsPermission = "apartaments.view";
-    Permission.ManageApartamentsPermission = "apartaments.manage";
-    Permission.AssignApartamentsPermission = "apartaments.assign";
-    return Permission;
-}());
-exports.Permission = Permission;
-
-
-/***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2269,8 +2269,8 @@ __webpack_require__(187);
 __webpack_require__(5);
 __webpack_require__(73);
 __webpack_require__(188);
-var auth_service_1 = __webpack_require__(11);
-var configuration_service_1 = __webpack_require__(8);
+var auth_service_1 = __webpack_require__(12);
+var configuration_service_1 = __webpack_require__(9);
 var EndpointFactory = (function () {
     var EndpointFactory = EndpointFactory_1 = function EndpointFactory(http, configurations, injector) {
         this.http = http;
@@ -3021,7 +3021,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var Subject_1 = __webpack_require__(17);
-var utilities_1 = __webpack_require__(9);
+var utilities_1 = __webpack_require__(10);
 var LocalStoreManager = (function () {
     var LocalStoreManager = LocalStoreManager_1 = function LocalStoreManager() {
         var _this = this;
@@ -3609,10 +3609,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(7);
-var auth_service_1 = __webpack_require__(11);
-var configuration_service_1 = __webpack_require__(8);
-var utilities_1 = __webpack_require__(9);
+var alert_service_1 = __webpack_require__(8);
+var auth_service_1 = __webpack_require__(12);
+var configuration_service_1 = __webpack_require__(9);
+var utilities_1 = __webpack_require__(10);
 var user_login_model_1 = __webpack_require__(119);
 var LoginComponent = (function () {
     function LoginComponent(alertService, authService, configurations) {
@@ -3935,6 +3935,9 @@ var BuildingEntranceEndpoint = (function () {
     BuildingEntranceEndpoint.prototype.GetEntranceById = function (id) {
         return this.buildingEndpoint.GetEntranceById(id).map(function (response) { return response.json(); });
     };
+    BuildingEntranceEndpoint.prototype.GetEntrances = function (buildingId, userId) {
+        return this.buildingEndpoint.GetEntrancesByBuildingIdAndUserId(buildingId, userId).map(function (resp) { return resp.json(); });
+    };
     BuildingEntranceEndpoint = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [router_1.Router, http_1.Http, buildingEntrance_endpoint_service_1.BuildingEntranceEndpointService])
@@ -3972,7 +3975,7 @@ var Observable_1 = __webpack_require__(2);
 __webpack_require__(186);
 __webpack_require__(192);
 __webpack_require__(5);
-var auth_service_1 = __webpack_require__(11);
+var auth_service_1 = __webpack_require__(12);
 var notification_endpoint_service_1 = __webpack_require__(71);
 var notification_model_1 = __webpack_require__(117);
 var NotificationService = (function () {
@@ -4738,12 +4741,15 @@ var BuildingService_1 = __webpack_require__(32);
 var http_1 = __webpack_require__(4);
 var buildingEntrance_endpoint_1 = __webpack_require__(34);
 var buildingEntrance_1 = __webpack_require__(115);
+var account_service_1 = __webpack_require__(7);
+var permission_model_1 = __webpack_require__(11);
 var BuildingDetailsComponent = (function () {
-    function BuildingDetailsComponent(route, buildingsEndpoint, http, buildingEntranceEndpoint) {
+    function BuildingDetailsComponent(route, buildingsEndpoint, http, buildingEntranceEndpoint, accountService) {
         var _this = this;
         this.buildingsEndpoint = buildingsEndpoint;
         this.http = http;
         this.buildingEntranceEndpoint = buildingEntranceEndpoint;
+        this.accountService = accountService;
         this.newEntrance = new buildingEntrance_1.BuildingEntrance();
         var id = route.snapshot.params['id'];
         if (id === undefined) {
@@ -4751,7 +4757,12 @@ var BuildingDetailsComponent = (function () {
         else {
             this.selectedBuildingId = id;
             buildingsEndpoint.GetBuilding(id).subscribe(function (bld) { return _this.selectedBuilding = bld; });
-            buildingEntranceEndpoint.GetEntrancesByBuildingId(id).subscribe(function (entr) { return _this.buildingEntrances = entr; });
+            if (this.accountService.userHasPermission(permission_model_1.Permission.AssignBuildingsPermission)) {
+                buildingEntranceEndpoint.GetEntrancesByBuildingId(id).subscribe(function (entr) { return _this.buildingEntrances = entr; });
+            }
+            else {
+                buildingEntranceEndpoint.GetEntrances(id, this.accountService.currentUser.id).subscribe(function (entr) { return _this.buildingEntrances = entr; });
+            }
         }
     }
     BuildingDetailsComponent.prototype.Save = function () {
@@ -4775,7 +4786,7 @@ var BuildingDetailsComponent = (function () {
             template: __webpack_require__(160),
             styles: [__webpack_require__(216)]
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, BuildingService_1.BuildingService, http_1.Http, buildingEntrance_endpoint_1.BuildingEntranceEndpoint])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, BuildingService_1.BuildingService, http_1.Http, buildingEntrance_endpoint_1.BuildingEntranceEndpoint, account_service_1.AccountService])
     ], BuildingDetailsComponent);
     return BuildingDetailsComponent;
 }());
@@ -4915,9 +4926,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var building_1 = __webpack_require__(114);
 var BuildingService_1 = __webpack_require__(32);
-var alert_service_1 = __webpack_require__(7);
-var permission_model_1 = __webpack_require__(13);
-var account_service_1 = __webpack_require__(10);
+var alert_service_1 = __webpack_require__(8);
+var permission_model_1 = __webpack_require__(11);
+var account_service_1 = __webpack_require__(7);
 var BuildingsComponent = (function () {
     function BuildingsComponent(buildingService, alertService, accountService) {
         this.buildingService = buildingService;
@@ -4934,7 +4945,9 @@ var BuildingsComponent = (function () {
         this.buildingService.GetAllBuildings().subscribe(function (building) {
             _this.onBuildingLoadSuccessful(building);
             if (_this.buildings.length == 1) {
-                window.location.href = "building-details/" + _this.buildings[0].id;
+                if (_this.accountService.userHasPermission(permission_model_1.Permission.AssignBuildingsPermission) == false) {
+                    window.location.href = "building-details/" + _this.buildings[0].id;
+                }
             }
         }, function (error) { return _this.onBuildingLoadFailed(error); });
     };
@@ -4995,10 +5008,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(7);
-var account_service_1 = __webpack_require__(10);
+var alert_service_1 = __webpack_require__(8);
+var account_service_1 = __webpack_require__(7);
 var role_model_1 = __webpack_require__(30);
-var permission_model_1 = __webpack_require__(13);
+var permission_model_1 = __webpack_require__(11);
 var RoleEditorComponent = (function () {
     function RoleEditorComponent(alertService, accountService) {
         this.alertService = alertService;
@@ -5178,13 +5191,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(7);
-var account_service_1 = __webpack_require__(10);
-var utilities_1 = __webpack_require__(9);
+var alert_service_1 = __webpack_require__(8);
+var account_service_1 = __webpack_require__(7);
+var utilities_1 = __webpack_require__(10);
 var user_model_1 = __webpack_require__(16);
 var user_edit_model_1 = __webpack_require__(118);
 var role_model_1 = __webpack_require__(30);
-var permission_model_1 = __webpack_require__(13);
+var permission_model_1 = __webpack_require__(11);
 var UserInfoComponent = (function () {
     function UserInfoComponent(alertService, accountService) {
         this.alertService = alertService;
@@ -5552,8 +5565,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var animations_1 = __webpack_require__(14);
-var configuration_service_1 = __webpack_require__(8);
-var auth_service_1 = __webpack_require__(11);
+var configuration_service_1 = __webpack_require__(9);
+var auth_service_1 = __webpack_require__(12);
 var HomeComponent = (function () {
     function HomeComponent(configurations, authService) {
         this.configurations = configurations;
@@ -5716,9 +5729,9 @@ var router_1 = __webpack_require__(6);
 __webpack_require__(74);
 var animations_1 = __webpack_require__(14);
 var bootstrap_tab_directive_1 = __webpack_require__(60);
-var app_translation_service_1 = __webpack_require__(12);
-var account_service_1 = __webpack_require__(10);
-var permission_model_1 = __webpack_require__(13);
+var app_translation_service_1 = __webpack_require__(13);
+var account_service_1 = __webpack_require__(7);
+var permission_model_1 = __webpack_require__(11);
 var SettingsComponent = (function () {
     function SettingsComponent(route, translationService, accountService) {
         this.route = route;
@@ -6081,7 +6094,7 @@ var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(4);
 __webpack_require__(5);
 var endpoint_factory_service_1 = __webpack_require__(15);
-var configuration_service_1 = __webpack_require__(8);
+var configuration_service_1 = __webpack_require__(9);
 var AccountEndpoint = (function (_super) {
     __extends(AccountEndpoint, _super);
     function AccountEndpoint(http, configurations, injector) {
@@ -6367,7 +6380,7 @@ var platform_browser_1 = __webpack_require__(25);
 __webpack_require__(5);
 __webpack_require__(73);
 __webpack_require__(266);
-var utilities_1 = __webpack_require__(9);
+var utilities_1 = __webpack_require__(10);
 var AppTitleService = (function () {
     function AppTitleService(titleService, router) {
         var _this = this;
@@ -6435,7 +6448,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(4);
 __webpack_require__(5);
-var configuration_service_1 = __webpack_require__(8);
+var configuration_service_1 = __webpack_require__(9);
 var ServiceResources_1 = __webpack_require__(44);
 var endpoint_factory_service_1 = __webpack_require__(15);
 var BuildingEndpoint = (function (_super) {
@@ -6514,7 +6527,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(4);
 __webpack_require__(5);
-var configuration_service_1 = __webpack_require__(8);
+var configuration_service_1 = __webpack_require__(9);
 var endpoint_factory_service_1 = __webpack_require__(15);
 var BuildingApartamentEndpointService = (function (_super) {
     __extends(BuildingApartamentEndpointService, _super);
@@ -6573,13 +6586,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(4);
 __webpack_require__(5);
-var configuration_service_1 = __webpack_require__(8);
+var configuration_service_1 = __webpack_require__(9);
 var endpoint_factory_service_1 = __webpack_require__(15);
 var BuildingEntranceEndpointService = (function (_super) {
     __extends(BuildingEntranceEndpointService, _super);
     function BuildingEntranceEndpointService(http, configurations, injector) {
         var _this = _super.call(this, http, configurations, injector) || this;
         _this._buildingEntrancUrl = _this.configurations.baseUrl + "/api/BuildingEntrance/";
+        _this._BuildingEntranceByUserAndBuildingId = _this.configurations.baseUrl + "/api/BuildingEntrance/SelectEntrances/";
         _this._buildingEntranceByIdUrl = _this.configurations.baseUrl + "/api/BuildingEntrance/ById/";
         return _this;
     }
@@ -6588,6 +6602,9 @@ var BuildingEntranceEndpointService = (function (_super) {
     };
     BuildingEntranceEndpointService.prototype.GetEntranceById = function (id) {
         return this.http.get(this._buildingEntranceByIdUrl + id).map(function (response) { return response; });
+    };
+    BuildingEntranceEndpointService.prototype.GetEntrancesByBuildingIdAndUserId = function (buildngId, userId) {
+        return this.http.get(this._BuildingEntranceByUserAndBuildingId + buildngId + "/" + userId + "/").map(function (resp) { return resp; });
     };
     BuildingEntranceEndpointService = __decorate([
         core_1.Injectable(),
@@ -6628,7 +6645,7 @@ var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(4);
 __webpack_require__(5);
 var endpoint_factory_service_1 = __webpack_require__(15);
-var configuration_service_1 = __webpack_require__(8);
+var configuration_service_1 = __webpack_require__(9);
 var BuildingFloorEndpoint = (function (_super) {
     __extends(BuildingFloorEndpoint, _super);
     function BuildingFloorEndpoint(http, configurations, injector) {
@@ -24695,7 +24712,7 @@ var orders_component_1 = __webpack_require__(56);
 var settings_component_1 = __webpack_require__(58);
 var about_component_1 = __webpack_require__(45);
 var not_found_component_1 = __webpack_require__(55);
-var auth_service_1 = __webpack_require__(11);
+var auth_service_1 = __webpack_require__(12);
 var auth_guard_service_1 = __webpack_require__(122);
 var buildings_component_1 = __webpack_require__(50);
 var building_details_component_1 = __webpack_require__(47);
@@ -24777,14 +24794,14 @@ var ng2_charts_1 = __webpack_require__(258);
 var app_routing_module_1 = __webpack_require__(97);
 var app_error_handler_1 = __webpack_require__(96);
 var app_title_service_1 = __webpack_require__(64);
-var app_translation_service_1 = __webpack_require__(12);
-var configuration_service_1 = __webpack_require__(8);
-var alert_service_1 = __webpack_require__(7);
+var app_translation_service_1 = __webpack_require__(13);
+var configuration_service_1 = __webpack_require__(9);
+var alert_service_1 = __webpack_require__(8);
 var local_store_manager_service_1 = __webpack_require__(19);
 var endpoint_factory_service_1 = __webpack_require__(15);
 var notification_service_1 = __webpack_require__(35);
 var notification_endpoint_service_1 = __webpack_require__(71);
-var account_service_1 = __webpack_require__(10);
+var account_service_1 = __webpack_require__(7);
 var account_endpoint_service_1 = __webpack_require__(63);
 var equal_validator_directive_1 = __webpack_require__(112);
 var last_element_directive_1 = __webpack_require__(113);
@@ -24940,15 +24957,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var router_1 = __webpack_require__(6);
 var ng2_toasty_1 = __webpack_require__(79);
-var alert_service_1 = __webpack_require__(7);
+var alert_service_1 = __webpack_require__(8);
 var notification_service_1 = __webpack_require__(35);
-var app_translation_service_1 = __webpack_require__(12);
-var account_service_1 = __webpack_require__(10);
+var app_translation_service_1 = __webpack_require__(13);
+var account_service_1 = __webpack_require__(7);
 var local_store_manager_service_1 = __webpack_require__(19);
 var app_title_service_1 = __webpack_require__(64);
-var auth_service_1 = __webpack_require__(11);
-var configuration_service_1 = __webpack_require__(8);
-var permission_model_1 = __webpack_require__(13);
+var auth_service_1 = __webpack_require__(12);
+var configuration_service_1 = __webpack_require__(9);
+var permission_model_1 = __webpack_require__(11);
 var login_component_1 = __webpack_require__(29);
 var alertify = __webpack_require__(90);
 var AppComponent = (function () {
@@ -25311,12 +25328,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(7);
-var app_translation_service_1 = __webpack_require__(12);
+var alert_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(13);
 var notification_service_1 = __webpack_require__(35);
-var account_service_1 = __webpack_require__(10);
-var permission_model_1 = __webpack_require__(13);
-var utilities_1 = __webpack_require__(9);
+var account_service_1 = __webpack_require__(7);
+var permission_model_1 = __webpack_require__(11);
+var utilities_1 = __webpack_require__(10);
 var NotificationsViewerComponent = (function () {
     function NotificationsViewerComponent(alertService, translationService, accountService, notificationService) {
         this.alertService = alertService;
@@ -25504,12 +25521,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(24);
-var alert_service_1 = __webpack_require__(7);
-var app_translation_service_1 = __webpack_require__(12);
-var account_service_1 = __webpack_require__(10);
-var utilities_1 = __webpack_require__(9);
+var alert_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(13);
+var account_service_1 = __webpack_require__(7);
+var utilities_1 = __webpack_require__(10);
 var role_model_1 = __webpack_require__(30);
-var permission_model_1 = __webpack_require__(13);
+var permission_model_1 = __webpack_require__(11);
 var role_editor_component_1 = __webpack_require__(51);
 var RolesManagementComponent = (function () {
     function RolesManagementComponent(alertService, translationService, accountService) {
@@ -25760,7 +25777,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(7);
+var alert_service_1 = __webpack_require__(8);
 __webpack_require__(265);
 var StatisticsDemoComponent = (function () {
     function StatisticsDemoComponent(alertService) {
@@ -25893,9 +25910,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(24);
-var auth_service_1 = __webpack_require__(11);
-var alert_service_1 = __webpack_require__(7);
-var app_translation_service_1 = __webpack_require__(12);
+var auth_service_1 = __webpack_require__(12);
+var alert_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(13);
 var local_store_manager_service_1 = __webpack_require__(19);
 var TodoDemoComponent = (function () {
     var TodoDemoComponent = TodoDemoComponent_1 = function TodoDemoComponent(alertService, translationService, localStorage, authService) {
@@ -26105,13 +26122,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(7);
-var configuration_service_1 = __webpack_require__(8);
-var app_translation_service_1 = __webpack_require__(12);
+var alert_service_1 = __webpack_require__(8);
+var configuration_service_1 = __webpack_require__(9);
+var app_translation_service_1 = __webpack_require__(13);
 var bootstrap_select_directive_1 = __webpack_require__(59);
-var account_service_1 = __webpack_require__(10);
-var utilities_1 = __webpack_require__(9);
-var permission_model_1 = __webpack_require__(13);
+var account_service_1 = __webpack_require__(7);
+var utilities_1 = __webpack_require__(10);
+var permission_model_1 = __webpack_require__(11);
 var UserPreferencesComponent = (function () {
     function UserPreferencesComponent(alertService, configurations, translationService, accountService) {
         this.alertService = alertService;
@@ -26247,12 +26264,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(24);
-var alert_service_1 = __webpack_require__(7);
-var app_translation_service_1 = __webpack_require__(12);
-var account_service_1 = __webpack_require__(10);
-var utilities_1 = __webpack_require__(9);
+var alert_service_1 = __webpack_require__(8);
+var app_translation_service_1 = __webpack_require__(13);
+var account_service_1 = __webpack_require__(7);
+var utilities_1 = __webpack_require__(10);
 var user_model_1 = __webpack_require__(16);
-var permission_model_1 = __webpack_require__(13);
+var permission_model_1 = __webpack_require__(11);
 var user_info_component_1 = __webpack_require__(52);
 var UsersManagementComponent = (function () {
     function UsersManagementComponent(alertService, translationService, accountService) {
@@ -26462,9 +26479,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var auth_service_1 = __webpack_require__(11);
+var auth_service_1 = __webpack_require__(12);
 var router_1 = __webpack_require__(6);
-var account_service_1 = __webpack_require__(10);
+var account_service_1 = __webpack_require__(7);
 var NavigationComponent = (function () {
     function NavigationComponent(router, authService, accountService) {
         this.router = router;
@@ -27008,7 +27025,7 @@ exports.BuildingFloor = BuildingFloor;
 // ==> Gun4Hire: contact@ebenmonney.com
 // ======================================
 Object.defineProperty(exports, "__esModule", { value: true });
-var utilities_1 = __webpack_require__(9);
+var utilities_1 = __webpack_require__(10);
 var Notification = (function () {
     function Notification() {
     }
@@ -27175,7 +27192,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var router_1 = __webpack_require__(6);
-var auth_service_1 = __webpack_require__(11);
+var auth_service_1 = __webpack_require__(12);
 var AuthGuard = (function () {
     function AuthGuard(authService, router) {
         this.authService = authService;

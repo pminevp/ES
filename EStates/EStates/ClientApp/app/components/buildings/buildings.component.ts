@@ -32,7 +32,11 @@ export class BuildingsComponent implements OnInit {
             this.onBuildingLoadSuccessful(building)
 
             if (this.buildings.length == 1) {
-                window.location.href = "building-details/" + this.buildings[0].id
+
+                if (this.accountService.userHasPermission(Permission.AssignBuildingsPermission) == false)
+                {
+                    window.location.href = "building-details/" + this.buildings[0].id
+                }
             }     
 
         }, error => this.onBuildingLoadFailed(error));

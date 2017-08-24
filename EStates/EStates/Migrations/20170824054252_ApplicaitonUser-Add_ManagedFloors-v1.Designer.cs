@@ -9,9 +9,10 @@ using ES.Core.Commons.Enums;
 namespace EStates.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170824054252_ApplicaitonUser-Add_ManagedFloors-v1")]
+    partial class ApplicaitonUserAdd_ManagedFloorsv1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -161,15 +162,11 @@ namespace EStates.Migrations
 
                     b.Property<int?>("CurrentBuildingId");
 
-                    b.Property<string>("managerId");
-
                     b.Property<string>("name");
 
                     b.HasKey("id");
 
                     b.HasIndex("CurrentBuildingId");
-
-                    b.HasIndex("managerId");
 
                     b.ToTable("BuildingEntrance");
                 });
@@ -535,10 +532,6 @@ namespace EStates.Migrations
                     b.HasOne("ES.Data.Models.Building", "CurrentBuilding")
                         .WithMany()
                         .HasForeignKey("CurrentBuildingId");
-
-                    b.HasOne("ES.Data.Models.ApplicationUser", "manager")
-                        .WithMany("ManagedEntrances")
-                        .HasForeignKey("managerId");
                 });
 
             modelBuilder.Entity("ES.Data.Models.BuildingFloor", b =>

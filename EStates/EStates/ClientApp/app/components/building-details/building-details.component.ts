@@ -11,6 +11,8 @@ import { Observable } from "rxjs/Observable";
 import { Resources } from "../../../ServiceResources";
 import { BuildingEntranceEndpoint } from "../../services/buildingEntrance-endpoint";
 import { BuildingEntrance } from "../../models/buildingEntrance";
+import { AccountService } from "../../services/account.service";
+import { Permission } from "../../models/permission.model";
  
 @Component({
     selector: 'app-buildingDetails',
@@ -26,7 +28,7 @@ export class BuildingDetailsComponent {
     private newEntrance: BuildingEntrance;
     private buildingEntrances: BuildingEntrance[];
 
-    constructor(route: ActivatedRoute, private buildingsEndpoint: BuildingService, private http: Http, private buildingEntranceEndpoint: BuildingEntranceEndpoint)
+    constructor(route: ActivatedRoute, private buildingsEndpoint: BuildingService, private http: Http, private buildingEntranceEndpoint: BuildingEntranceEndpoint, private accountService: AccountService)
     {
         this.newEntrance = new BuildingEntrance();
         var id = route.snapshot.params['id'];
@@ -36,7 +38,14 @@ export class BuildingDetailsComponent {
             this.selectedBuildingId = id;
             buildingsEndpoint.GetBuilding(id).subscribe(bld => this.selectedBuilding = bld);
 
-            buildingEntranceEndpoint.GetEntrancesByBuildingId(id).subscribe(entr => this.buildingEntrances = entr);         
+      
+            if (this.accountService.userHasPermission(Permission.AssignBuildingsPermission)) {
+                buildingEntranceEndpoint.GetEntrancesByBuildingId(id).subscribe(entr => this.buildingEntrances = entr);  
+            }
+            else
+            {
+                buildingEntranceEndpoint.GetEntrances(id, this.accountService.currentUser.id).subscribe(entr => this.buildingEntrances = entr);
+            }
         }
     }
 
