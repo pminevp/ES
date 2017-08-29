@@ -35,11 +35,13 @@ namespace ES.Data
                 const string buildingManagerRoleName = "buildingManager";
                 const string adminRoleName = "administrator";
                 const string userRoleName = "user";
+                const string apartamentOwnerName = "ApartamentOwner";
 
                 await ensureRoleAsync(adminRoleName, "Default administrator", ApplicationPermissions.GetAllPermissionValues());
                 await ensureRoleAsync(userRoleName, "Default user", new string[] { });
                 await ensureRoleAsync(buildingManagerRoleName, "Building Manager", new string[] { ApplicationPermissions.ManageUsers, ApplicationPermissions.ViewUsers });
-
+                await ensureRoleAsync(apartamentOwnerName, "Apartament Owner", new string[] { ApplicationPermissions.ManageApartaments, ApplicationPermissions.ViewApartaments} );
+                
 
                 await createUserAsync("admin", "Admin@123", "Global Administrator", "admin@ebenmonney.com", "+1 (123) 000-0000", new string[] { adminRoleName });
                 await createUserAsync("user", "User@123", "Standard User", "user@ebenmonney.com", "+1 (123) 000-0001", new string[] { userRoleName });

@@ -81,6 +81,7 @@ import { BuildingEntrancesComponent } from "./components/buildingEntrances/build
 import { BuildingFloorComponent } from "./components/buildingFloor/building-floor-component";
 import { BuildingApartamentEndpoint } from "./services/buildingApartament-endpoint";
 import { BuildingApartamentEndpointService } from "./services/buildingApartament-endpoint.service";
+import { UserRegistrationComponent } from "./components/userregistration/user-registration.component";
 
 
 
@@ -136,7 +137,8 @@ import { BuildingApartamentEndpointService } from "./services/buildingApartament
         BuildingDetailsComponent,
         ApartamentComponent,
         BuildingEntrancesComponent,
-        BuildingFloorComponent
+        BuildingFloorComponent,
+        UserRegistrationComponent
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler },

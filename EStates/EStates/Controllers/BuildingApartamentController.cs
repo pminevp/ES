@@ -3,6 +3,7 @@ using ES.Data.Managers.Interfaces;
 using ES.Data.Models;
 using EStates.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,6 +33,12 @@ namespace EStates.Controllers
         public async Task<Apartament> Get(int id)
         {
           return await _unitOfWork.Apartaments.GetApartamentOwnerIncluded(id);
+        }
+
+        [HttpGet("apartaments/building/{id}")]
+        public async Task<IList<Apartament>> GetApartamentsByBuilding(int id)
+        {
+            return await _unitOfWork.Apartaments.GetApartamentsByBuilding(id);
         }
 
         [HttpPost]

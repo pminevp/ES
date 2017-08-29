@@ -18,6 +18,8 @@ import { Role } from '../../models/role.model';
 import { Permission } from '../../models/permission.model';
 import { UserEdit } from '../../models/user-edit.model';
 import { UserInfoComponent } from "./user-info.component";
+import { BuildingApartamentEndpoint } from "../../services/buildingApartament-endpoint";
+import { Apartament } from "../../models/apartament";
 
 
 @Component({
@@ -35,7 +37,7 @@ export class UsersManagementComponent implements OnInit, AfterViewInit {
     loadingIndicator: boolean;
 
     allRoles: Role[] = [];
-
+    availableApartaments: Apartament[]=[];
 
     @ViewChild('indexTemplate')
     indexTemplate: TemplateRef<any>;
@@ -55,7 +57,7 @@ export class UsersManagementComponent implements OnInit, AfterViewInit {
     @ViewChild('userEditor')
     userEditor: UserInfoComponent;
 
-    constructor(private alertService: AlertService, private translationService: AppTranslationService, private accountService: AccountService) {
+    constructor(private alertService: AlertService, private translationService: AppTranslationService, private accountService: AccountService, private apartamentEndpoint: BuildingApartamentEndpoint) {
     }
 
 
@@ -201,8 +203,14 @@ export class UsersManagementComponent implements OnInit, AfterViewInit {
     editUser(row: UserEdit) {
         this.editingUserName = { name: row.userName };
         this.sourceUser = row;
-        this.editedUser = this.userEditor.editUser(row, this.allRoles);
-        this.editorModal.show();
+        this.apartamentEndpoint.GetByBuildingId(row.buildingId).subscribe(aparts => {
+
+            this.availableApartaments = aparts
+            this.editedUser = this.userEditor.editUser(row, this.allRoles, aparts);
+            this.editorModal.show();
+
+            console.log(aparts);
+        });       
     }
 
     deleteUser(row: UserEdit) {

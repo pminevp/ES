@@ -92,6 +92,17 @@ export class AccountService {
             .map((response: Response) => <User>response.json());
     }
 
+    newAnonimusUserCreation(user: UserEdit) {
+        return this.accountEndpoint.getNewUserCreationEndpoint(user)
+            .map((response: Response) => response.json());
+    }
+
+
+    GetPublicUserRoles() {
+        return this.accountEndpoint.getPublicRolesList()
+            .map((resp: Response) => <Role[]>resp.json());
+    }
+
 
     getUserPreferences() {
 

@@ -22,6 +22,10 @@ export class BuildingApartamentEndpoint{
         return this.buildingEndpointService.GetApartamentById(id).map((resp: Response) => <Apartament>resp.json());
     }
 
+    GetByBuildingId(buildingId: number) {
+        return this.buildingEndpointService.GetApartamentsByBuildingId(buildingId).map((resp: Response) => <Apartament[]>resp.json());
+    }
+
     AddApartament(newApartament: Apartament) {
 
         return this.buildingEndpointService.AddApartament(newApartament).map((resp: Response) => <Apartament>resp.json());

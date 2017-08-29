@@ -70,7 +70,7 @@ namespace EStates
                 Port = int.Parse(Configuration["SmtpConfig:Port"]),
                 UseSSL = bool.Parse(Configuration["SmtpConfig:UseSSL"]),
                 Name = Configuration["SmtpConfig:Name"],
-                Username = Configuration["SmtpConfig:Username"],
+                Username = Configuration["SmtpConfig:Username"],    
                 EmailAddress = Configuration["SmtpConfig:EmailAddress"],
                 Password = Configuration["SmtpConfig:Password"]
             };

@@ -35,5 +35,12 @@ namespace ES.Data.Repositories
                                                         .ToListAsync();
             return apartament.First(x => x.Id == id);
         }
+
+        public  async Task<List<Apartament>> GetApartamentsByBuilding(int buildingId)
+        {
+           return await appContext.Apartament
+                                                         .Include(x => x.ParentFloor)
+                                                         .Include(x => x.Owners).ToListAsync();
+        }
     }
 }

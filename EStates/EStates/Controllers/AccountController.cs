@@ -274,8 +274,6 @@ namespace EStates.Controllers
             return BadRequest(ModelState);
         }
 
-
-
         [HttpDelete("users/{id}")]
         [Produces(typeof(UserViewModel))]
         [Authorize(AuthPolicies.ManageUsersPolicy)]
@@ -523,16 +521,7 @@ namespace EStates.Controllers
             return Ok(Mapper.Map<List<PermissionViewModel>>(ApplicationPermissions.AllPermissions));
         }
 
-
-
-
-
-
-
-
-
-
-
+        
 
         private async Task<UserViewModel> GetUserViewModelHelper(string userId)
         {
@@ -542,6 +531,7 @@ namespace EStates.Controllers
 
             var userVM = Mapper.Map<UserViewModel>(userAndRoles.Item1);
             userVM.Roles = userAndRoles.Item2;
+            userVM.OwnedApartaments = userAndRoles.Item3;
 
             return userVM;
         }

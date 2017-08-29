@@ -15,6 +15,9 @@ export class BuildingApartamentEndpointService extends EndpointFactory
 {
     private readonly _buildingApartamentUrl: string = this.configurations.baseUrl + "/api/BuildingApartament/"
 
+    private readonly _buildingApartamentByBuildingIdUrl: string = this.configurations.baseUrl + "/api/BuildingApartament/apartaments/building/";
+
+
     constructor(http: Http, configurations: ConfigurationService, injector: Injector) {
 
         super(http, configurations, injector);
@@ -34,6 +37,11 @@ export class BuildingApartamentEndpointService extends EndpointFactory
     public GetApartamentById(id: number): Observable<Response> {
 
         return this.http.get(this._buildingApartamentUrl + id).map((resp: Response) => { return resp; });
+    }
+
+
+    public GetApartamentsByBuildingId(buildingId: number): Observable<Response> {
+        return this.http.get(this._buildingApartamentByBuildingIdUrl + buildingId).map((response: Response) => { return response; });
     }
 
     public AddUserToApartament(newUser: UserToApartament): Observable<Response> {

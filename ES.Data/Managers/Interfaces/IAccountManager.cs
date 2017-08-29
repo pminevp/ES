@@ -19,7 +19,7 @@ namespace ES.Data.Managers.Interfaces
         Task<ApplicationRole> GetRoleByNameAsync(string roleName);
         Task<ApplicationRole> GetRoleLoadRelatedAsync(string roleName);
         Task<List<ApplicationRole>> GetRolesLoadRelatedAsync(int page, int pageSize);
-        Task<Tuple<ApplicationUser, string[]>> GetUserAndRolesAsync(string userId);
+        Task<Tuple<ApplicationUser, string[], string[]>> GetUserAndRolesAsync(string userId);
         Task<ApplicationUser> GetUserByEmailAsync(string email);
         Task<ApplicationUser> GetUserByIdAsync(string userId);
         Task<ApplicationUser> GetUserByUserNameAsync(string userName);
@@ -32,5 +32,6 @@ namespace ES.Data.Managers.Interfaces
         Task<Tuple<bool, string[]>> UpdateRoleAsync(ApplicationRole role, IEnumerable<string> claims);
         Task<Tuple<bool, string[]>> UpdateUserAsync(ApplicationUser user);
         Task<Tuple<bool, string[]>> UpdateUserAsync(ApplicationUser user, IEnumerable<string> roles);
+        Task<List<ApplicationRole>> GetPublicRoles();
     }
 }

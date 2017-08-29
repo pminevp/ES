@@ -15,6 +15,8 @@ import { User } from '../../models/user.model';
 import { UserEdit } from '../../models/user-edit.model';
 import { Role } from '../../models/role.model';
 import { Permission } from '../../models/permission.model';
+import { BuildingApartamentEndpoint } from "../../services/buildingApartament-endpoint";
+import { Apartament } from "../../models/apartament";
 
 
 @Component({
@@ -36,6 +38,7 @@ export class UserInfoComponent implements OnInit {
     private user: User = new User();
     private userEdit: UserEdit;
     private allRoles: Role[] = [];
+    private availableApartaments: Apartament[];
 
     public changesSavedCallback: () => void;
     public changesFailedCallback: () => void;
@@ -77,7 +80,7 @@ export class UserInfoComponent implements OnInit {
     private roles;
 
 
-    constructor(private alertService: AlertService, private accountService: AccountService) {
+    constructor(private alertService: AlertService, private accountService: AccountService, private apartamentEndpoint: BuildingApartamentEndpoint) {
     }
 
     ngOnInit() {
@@ -95,14 +98,12 @@ export class UserInfoComponent implements OnInit {
 
         this.alertService.startLoadingMessage();
 
-        if (this.canViewAllRoles) {
+        if (this.canViewAllRoles) {          
             this.accountService.getUserAndRoles().subscribe(results => this.onCurrentUserDataLoadSuccessful(results[0], results[1]), error => this.onCurrentUserDataLoadFailed(error));
         }
         else {
             this.accountService.getUser().subscribe(user => this.onCurrentUserDataLoadSuccessful(user, []), error => this.onCurrentUserDataLoadFailed(error));
-        }
-
-         
+        }           
             
     }
 
@@ -111,6 +112,8 @@ export class UserInfoComponent implements OnInit {
         this.alertService.stopLoadingMessage();
         this.user = user;
         this.allRoles = roles;
+        if (user.buildingId != 0)
+            this.apartamentEndpoint.GetByBuildingId(user.buildingId).subscribe(aparts => this.availableApartaments = aparts);
     }
 
     private onCurrentUserDataLoadFailed(error: any) {
@@ -336,11 +339,11 @@ export class UserInfoComponent implements OnInit {
         return this.userEdit;
     }
 
-    editUser(user: User, allRoles: Role[]) {
+    editUser(user: User, allRoles: Role[], apartaments: Apartament[]) {
         if (user) {
             this.isGeneralEditor = true;
             this.isNewUser = false;
-
+            this.availableApartaments = apartaments;
             this.setRoles(user, allRoles);
             this.editingUserName = user.userName;
             this.user = new User();
@@ -355,7 +358,7 @@ export class UserInfoComponent implements OnInit {
             return this.newUser(allRoles);
         }
     }
-
+ 
 
     displayUser(user: User, allRoles?: Role[]) {
 

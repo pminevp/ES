@@ -50,7 +50,7 @@ namespace ES.Data.Managers
         }
 
 
-        public async Task<Tuple<ApplicationUser, string[]>> GetUserAndRolesAsync(string userId)
+        public async Task<Tuple<ApplicationUser, string[], string[]>> GetUserAndRolesAsync(string userId)
         {
             var user = await _context.Users
                 .Include(u => u.Roles)
@@ -58,7 +58,10 @@ namespace ES.Data.Managers
                 .FirstOrDefaultAsync();
 
             if (user == null)
+            {
                 return null;
+            }
+
 
             var userRoleIds = user.Roles.Select(r => r.RoleId).ToList();
 
@@ -67,9 +70,12 @@ namespace ES.Data.Managers
                 .Select(r => r.Name)
                 .ToArrayAsync();
 
-            return Tuple.Create(user, roles);
-        }
+            var aparts = await _context.Apartament.Include(x => x.Owners).ToListAsync();
+                        var apartaments = aparts.Where(x => x.Owners.Exists(s => s.Id == userId) == true)
+                                                                            .Select(c => c.Name).ToArray();
 
+            return Tuple.Create(user, roles, apartaments);
+        }
 
         public async Task<List<Tuple<ApplicationUser, string[]>>> GetUsersAndRolesAsync(int page, int pageSize)
         {
@@ -274,6 +280,10 @@ namespace ES.Data.Managers
             return roles;
         }
 
+        public async Task<List<ApplicationRole>> GetPublicRoles()
+        {
+            return await _context.Roles.Where(x => !x.Name.Contains("Administrator")).ToListAsync();
+        }
 
         public async Task<Tuple<bool, string[]>> CreateRoleAsync(ApplicationRole role, IEnumerable<string> claims)
         {

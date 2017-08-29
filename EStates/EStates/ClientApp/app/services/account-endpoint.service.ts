@@ -27,6 +27,9 @@ export class AccountEndpoint extends EndpointFactory {
     private readonly _roleByRoleNameUrl: string = "/api/account/roles/name";
     private readonly _permissionsUrl: string = "/api/account/permissions";
 
+    private readonly _newAnonimusUser: string = "/api/publicactions/newuser/create/"
+    private readonly _publicRoleList: string ="/api/publicactions/publicroles/all"
+
     get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
     get userByUserNameUrl() { return this.configurations.baseUrl + this._userByUserNameUrl; }
     get currentUserUrl() { return this.configurations.baseUrl + this._currentUserUrl; }
@@ -36,7 +39,8 @@ export class AccountEndpoint extends EndpointFactory {
     get roleByRoleNameUrl() { return this.configurations.baseUrl + this._roleByRoleNameUrl; }
     get permissionsUrl() { return this.configurations.baseUrl + this._permissionsUrl; }
 
-
+    get newUserCreation() { return this.configurations.baseUrl + this._newAnonimusUser; }
+    get publicRolesList() { return this.configurations.baseUrl + this._publicRoleList; }
 
     constructor(http: Http, configurations: ConfigurationService, injector: Injector) {
 
@@ -94,6 +98,13 @@ export class AccountEndpoint extends EndpointFactory {
             .catch(error => {
                 return this.handleError(error, () => this.getNewUserEndpoint(userObject));
             });
+    }
+
+    getNewUserCreationEndpoint(userObject: any): Observable<Response> {
+        console.log(userObject);
+        return this.http.post(this.newUserCreation,userObject).map((resp: Response) => {
+            return resp;
+        });
     }
 
     getUpdateUserEndpoint(userObject: any, userId?: string): Observable<Response> {
@@ -268,5 +279,10 @@ export class AccountEndpoint extends EndpointFactory {
             .catch(error => {
                 return this.handleError(error, () => this.getPermissionsEndpoint());
             });
+    }
+
+
+    getPublicRolesList(): Observable<Response> {
+        return this.http.get(this.publicRolesList).map((resp: Response) => { return resp; } );
     }
 }

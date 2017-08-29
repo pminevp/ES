@@ -34,6 +34,11 @@ namespace EStates.ViewModels
         public string[] Roles { get; set; }
 
         public int BuildingId { get; set; }
+
+        public string[] OwnedApartaments { get; set; }
+
+        public string[] OwnedBuildings { get; set; }
+
     }
 
 

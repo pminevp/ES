@@ -9,5 +9,7 @@ namespace ES.Data.Repositories.Interfaces
         Task<List<Apartament>> GetApartamentsByFloorId(int id);
 
         Task<Apartament> GetApartamentOwnerIncluded(int id);
+
+        Task<List<Apartament>> GetApartamentsByBuilding(int buildingId);
     }
 }
