@@ -43,7 +43,7 @@
         <div class="form-group has-feedback" *ngIf="availableRoles != null">
             <label [class.col-md-2]="True" class="control-label" for="roles-user-info">Роля:</label>
             <div [class.col-md-10]="True">
-                <select id="building-user-info" name="roles-user-info" [(ngModel)]="newUserRegistragtion.roles" #ownedApartaments="ngModel" class="selectpicker form-control" bootstrapSelect required
+                <select id="building-user-info" name="roles-user-info" [(ngModel)]="newUserRegistragtion.roles" #ownedApartaments="ngModel" class="selectpicker form-control" bootstrapSelect required multiple
                         data-live-search="true" data-actions-box="false" data-live-search-placeholder="Search..." title="Избери роля" >
                     <option *ngFor="let role of availableRoles" attr.data-content="<span title='{{role.name}}' class='badge'>{{role.name}}</span>" attr.value="{{role.name}}">
                         {{role.name}}
@@ -54,7 +54,7 @@
         <div class="form-group has-feedback" *ngIf="availableBuildings != null">
             <label [class.col-md-2]="True" class="control-label" for="apartaments-user-info">Избери Сграда:</label>
             <div [class.col-md-10]="True">
-                <select id="building-user-info" name="building-user-info" [(ngModel)]="newUserRegistragtion.ownedBuildings" #ownedApartaments="ngModel"  class="selectpicker form-control" bootstrapSelect required
+                <select id="building-user-info" name="building-user-info" [(ngModel)]="newUserRegistragtion.ownedBuildings" #ownedApartaments="ngModel"  class="selectpicker form-control" bootstrapSelect required multiple
                         data-live-search="true" data-actions-box="false" data-live-search-placeholder="Search..." title="Избери апартамент" (change)="loadApartaments($event.target.value)" >
                     <option *ngFor="let bld of availableBuildings"   attr.data-content="<span title='{{bld.name}}' class='badge'>{{bld.name}}</span>" attr.value="{{bld.name}}">
                         {{bld.name}}

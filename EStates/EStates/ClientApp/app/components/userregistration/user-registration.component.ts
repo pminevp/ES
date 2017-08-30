@@ -41,6 +41,8 @@ export class UserRegistrationComponent {
         this.alertService.startLoadingMessage("User Creation");
 
         this.newUserRegistragtion.newPassword = this.newUserRegistragtion.confirmPassword;
+        this.newUserRegistragtion.buildingId = 1;
+
         this.accountService.newAnonimusUserCreation(this.newUserRegistragtion).subscribe(x => console.log(x),err=> console.log(err));
     }
 
@@ -54,10 +56,6 @@ export class UserRegistrationComponent {
 
     public LoadRoles() {
         this.accountService.GetPublicUserRoles().subscribe(rl => this.availableRoles = rl );
-    }
-
-    public loadRoles() {
-
     }
 
     private saveSuccessHelper() {       
