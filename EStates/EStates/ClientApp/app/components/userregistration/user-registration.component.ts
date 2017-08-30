@@ -27,11 +27,13 @@ export class UserRegistrationComponent {
     private availableRoles: Role[];
 
     private isSaving: boolean;
-    private newUserRegistragtion: UserEdit;
+    private isNewBuilding: boolean;
+
+    private newUserRegistragtion: UserRegistration;
 
 
     constructor(route: ActivatedRoute, private http: Http, private alertService: AlertService, private apartamentEndpoint: BuildingApartamentEndpoint, private buildingEndpoint: BuildingService, private accountService: AccountService) {
-        this.newUserRegistragtion = new UserEdit();
+        this.newUserRegistragtion = new UserRegistration();
         this.loadBuildings();
         this.LoadRoles();
     }
@@ -41,17 +43,36 @@ export class UserRegistrationComponent {
         this.alertService.startLoadingMessage("User Creation");
 
         this.newUserRegistragtion.newPassword = this.newUserRegistragtion.confirmPassword;
-        this.newUserRegistragtion.buildingId = 1;
 
         this.accountService.newAnonimusUserCreation(this.newUserRegistragtion).subscribe(x => console.log(x),err=> console.log(err));
     }
 
     public loadApartaments(buildingId: number) {
-        this.apartamentEndpoint.GetByBuildingId(buildingId).subscribe(aparts => this.availableApartaments = aparts);
+
+        console.log(buildingId)
+        if (buildingId.toString() != "Добави Сграда")
+        {
+            this.apartamentEndpoint.GetByBuildingId(buildingId).subscribe(aparts => this.availableApartaments = aparts);
+        }
+        else
+        {
+         
+            this.isNewBuilding = true;
+        }
+
     }
 
     public loadBuildings() {
-        this.buildingEndpoint.GetAllBuildings().subscribe(bld => this.availableBuildings = bld);
+        this.buildingEndpoint.GetAllBuildings().subscribe((bld) => {
+        this.availableBuildings = bld;
+
+        var newBuilding = new Building();
+        newBuilding.name = "Добави Сграда";
+        newBuilding.id = -1;
+
+        this.availableBuildings.push(newBuilding);
+
+        });
     }
 
     public LoadRoles() {

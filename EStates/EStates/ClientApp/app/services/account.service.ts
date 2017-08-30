@@ -21,6 +21,7 @@ import { User } from '../models/user.model';
 import { Role } from '../models/role.model';
 import { Permission, PermissionNames, PermissionValues } from '../models/permission.model';
 import { UserEdit } from '../models/user-edit.model';
+import { UserRegistration } from "../models/user-registration.model";
 
 
 
@@ -92,7 +93,7 @@ export class AccountService {
             .map((response: Response) => <User>response.json());
     }
 
-    newAnonimusUserCreation(user: UserEdit) {
+    newAnonimusUserCreation(user: UserRegistration) {
         return this.accountEndpoint.getNewUserCreationEndpoint(user)
             .map((response: Response) => response.json());
     }
