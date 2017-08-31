@@ -42,5 +42,22 @@ namespace ES.Data.Repositories
                                                          .Include(x => x.ParentFloor)
                                                          .Include(x => x.Owners).ToListAsync();
         }
+        
+        /// <summary>
+        /// Consturcts default apartament
+        /// </summary>
+        /// <returns></returns>
+        public Apartament CreateDefaultApartament()
+        {
+            var dApart = new Apartament {
+                Name ="Системен Апартамент",
+                Description= "Системен Апартамент За домоуправител или дргуи служители",                
+            };
+
+            appContext.Apartament.Add(dApart);
+            appContext.SaveChanges();
+
+            return dApart;
+        }
     }
 }

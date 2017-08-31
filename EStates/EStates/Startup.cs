@@ -183,6 +183,7 @@ namespace EStates
             // Repositories
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountManager, AccountManager>();
+            services.AddScoped<IBuildingManager, BuildingManager>();
 
             // Auth Policies
             services.AddSingleton<IAuthorizationHandler, ViewUserByIdHandler>();

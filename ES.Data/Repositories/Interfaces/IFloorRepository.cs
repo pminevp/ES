@@ -11,5 +11,7 @@ namespace ES.Data.Repositories.Interfaces
         Task<List<BuildingFloor>> GetFloorByEntranceIncluded(int id);
 
         Task<BuildingFloor> GetFloorWithEntrenceIncluded(int id);
+
+        BuildingFloor GetFloorByEntranceId(int buildingEntranceId);
     }
 }

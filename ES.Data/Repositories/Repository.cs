@@ -33,6 +33,7 @@ namespace ES.Data.Repositories
         public virtual void Update(TEntity entity)
         {
             _entities.Update(entity);
+            _context.SaveChanges();
         }
 
         public virtual void UpdateRange(IEnumerable<TEntity> entities)

@@ -34,5 +34,10 @@ namespace ES.Data.Repositories
 
             return floors;
         }
+
+        public BuildingFloor GetFloorByEntranceId(int buildingEntranceId)
+        {
+            return this.appContext.BuildingFloor.Include(x=>x.buildingEntrance).First(x => x.buildingEntrance.id == buildingEntranceId);
+        }
     }
 }
