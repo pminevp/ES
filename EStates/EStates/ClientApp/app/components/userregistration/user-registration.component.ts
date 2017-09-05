@@ -8,7 +8,7 @@ import { BuildingService } from "../../services/BuildingService";
 import { BuildingFloor } from "../../models/buildingFloor";
 import { Headers, Http, RequestOptionsArgs } from "@angular/http";
 import { UserRegistration } from "../../models/user-registration.model";
-import { AlertService } from "../../services/alert.service";
+import { AlertService, MessageSeverity } from "../../services/alert.service";
 import { BuildingApartamentEndpoint } from "../../services/buildingApartament-endpoint";
 import { AccountService } from "../../services/account.service";
 import { UserEdit } from "../../models/user-edit.model";
@@ -25,7 +25,10 @@ export class UserRegistrationComponent {
     private availableApartaments: Apartament[];
     private availableBuildings: Building[];
     private availableRoles: Role[];
+    public ErrorData: Array<string>;
+ 
 
+    public ValidationErrors: boolean;
     private isSaving: boolean;
     private isNewBuilding: boolean;
 
@@ -35,7 +38,8 @@ export class UserRegistrationComponent {
     constructor(route: ActivatedRoute, private http: Http, private alertService: AlertService, private apartamentEndpoint: BuildingApartamentEndpoint, private buildingEndpoint: BuildingService, private accountService: AccountService) {
         this.newUserRegistragtion = new UserRegistration();
         this.loadBuildings();
-        this.LoadRoles();
+        this.LoadRoles(); 
+        this.ValidationErrors = false;
     }
 
     public save() { 
@@ -44,7 +48,27 @@ export class UserRegistrationComponent {
 
         this.newUserRegistragtion.newPassword = this.newUserRegistragtion.confirmPassword;
 
-        this.accountService.newAnonimusUserCreation(this.newUserRegistragtion).subscribe(x => console.log(x),err=> console.log(err));
+        this.accountService.newAnonimusUserCreation(this.newUserRegistragtion).subscribe((x) => {
+
+            this.isSaving = false;
+            this.alertService.stopLoadingMessage();
+            if (x.item1 === false) {    
+                this.ValidationErrors = true;              
+
+                this.ErrorData = new Array<string>();
+                for (var i in x.item2) {
+                    this.ErrorData.push(x.item2[i]);
+                }              
+
+                this.alertService.showMessage("Проблем с регистрацията","Моля вижте грешките в началото на страницата",MessageSeverity.error);
+                console.log(this.ErrorData);
+            }
+            else
+            {
+                this.alertService.showMessage("Успешна Регистрация!", "Потребителя ви бе успешно създаден!", MessageSeverity.success);
+            }
+
+        }, err => console.log(err));
     }
 
     public loadApartaments(buildingId: number) {
@@ -52,6 +76,7 @@ export class UserRegistrationComponent {
         console.log(buildingId)
         if (buildingId.toString() != "Добави Сграда")
         {
+            console.log(buildingId);
             this.apartamentEndpoint.GetByBuildingId(buildingId).subscribe(aparts => this.availableApartaments = aparts);
         }
         else
@@ -60,6 +85,7 @@ export class UserRegistrationComponent {
             this.isNewBuilding = true;
         }
 
+        console.log(this.apartamentEndpoint)
     }
 
     public loadBuildings() {

@@ -28,15 +28,13 @@
             </ng-template>
             <div  class="app-component collapse navbar-collapse menuItemsContainer">
                 <ul class="app-component nav navbar-nav nav-pills navBarPadding navbar-right">
-                    <li routerLinkActive="active"><a routerLink="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
+                    <li *ngIf="isUserLoggedIn" routerLinkActive="active"><a routerLink="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
                     <li ><a routerLink="/about"><span class="glyphicon glyphicon-info-sign"></span></a></li>
                     <li *ngIf="isUserLoggedIn" (click)="logout()"><a href="javascript:;"><span class="glyphicon glyphicon-log-out"></span> {{'mainMenu.Logout' | translate}}</a></li>
                     <li *ngIf="!isUserLoggedIn" routerLinkActive="active"><a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span></a></li>
+                    <li *ngIf="!isUserLoggedIn" routerLinkActive="active"><a routerLink="/user-registration"><span class="glyphicon glyphicon-user"></span></a></li>
                 </ul>
             </div>
-
         </div>
-       
-     
     </nav>
 </nav>

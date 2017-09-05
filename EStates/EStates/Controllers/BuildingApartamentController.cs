@@ -35,10 +35,10 @@ namespace EStates.Controllers
           return await _unitOfWork.Apartaments.GetApartamentOwnerIncluded(id);
         }
 
-        [HttpGet("apartaments/building/{id}")]
-        public async Task<IList<Apartament>> GetApartamentsByBuilding(int id)
+        [HttpGet("apartaments/building/{buildingName}")]
+        public async Task<IList<Apartament>> GetApartamentsByBuilding(string buildingName)
         {
-            return await _unitOfWork.Apartaments.GetApartamentsByBuilding(id);
+            return await _unitOfWork.Apartaments.GetApartamentsByBuildingName(buildingName);
         }
 
         [HttpPost]

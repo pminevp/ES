@@ -16,7 +16,13 @@ namespace ES.Data.Repositories
         {
             return await appContext.Building.FirstOrDefaultAsync(x => x.Name == buildingName);
         }
-        
+
+        public Task<Building> GetBuildingByOwner(string ownerId)
+        {
+            var owner = appContext.Users.FirstOrDefaultAsync(x => x.Id == ownerId).Result;
+            return appContext.Building.FirstOrDefaultAsync(x => x.Id == owner.BuildingId);
+        }
+
         private ApplicationDbContext appContext
         {
             get { return (ApplicationDbContext)_context; }

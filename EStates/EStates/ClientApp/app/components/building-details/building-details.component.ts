@@ -13,6 +13,7 @@ import { BuildingEntranceEndpoint } from "../../services/buildingEntrance-endpoi
 import { BuildingEntrance } from "../../models/buildingEntrance";
 import { AccountService } from "../../services/account.service";
 import { Permission } from "../../models/permission.model";
+import { AlertService, MessageSeverity } from "../../services/alert.service";
  
 @Component({
     selector: 'app-buildingDetails',
@@ -28,7 +29,7 @@ export class BuildingDetailsComponent {
     private newEntrance: BuildingEntrance;
     private buildingEntrances: BuildingEntrance[];
 
-    constructor(route: ActivatedRoute, private buildingsEndpoint: BuildingService, private http: Http, private buildingEntranceEndpoint: BuildingEntranceEndpoint, private accountService: AccountService)
+    constructor(route: ActivatedRoute, private buildingsEndpoint: BuildingService, private http: Http, private buildingEntranceEndpoint: BuildingEntranceEndpoint, private accountService: AccountService, private alertService: AlertService)
     {
         this.newEntrance = new BuildingEntrance();
         var id = route.snapshot.params['id'];
@@ -52,8 +53,23 @@ export class BuildingDetailsComponent {
     Save() {
 
         var apartStat = new ApartamentStatuses(); 
-        this.buildingEntrances.push(this.newEntrance);
-        this.newEntrance = new BuildingEntrance();
+
+        this.newEntrance.buildingId = this.selectedBuildingId;
+        this.newEntrance.creatorId = this.accountService.currentUser.id;
+
+        this.buildingEntranceEndpoint.AddEntrance(this.newEntrance).subscribe((entr: BuildingEntrance) => {
+
+            if (entr.id == 0)
+            {
+
+            }
+            else
+            {
+                this.buildingEntrances.push(this.newEntrance);
+                this.alertService.showMessage("Входът беше добавен успешно", "", MessageSeverity.success);
+            }
+            this.newEntrance = new BuildingEntrance();
+        }); 
     }
 
     fileChange(event) {

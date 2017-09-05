@@ -34,6 +34,12 @@ export class BuildingEndpoint extends EndpointFactory {
         return this.http.get(properAddress).map((response: Response) => { return response; });
     }
 
+    GetBuildingByOwnerId(ownerId: string): Observable<Response>
+    {
+        var properAddress = this.currentBuildingUrl + 'Owner/' + ownerId;
+        return this.http.get(properAddress).map((resp: Response) => { return resp; });
+    }
+
     AddBuilding(building: Building): Observable<Response> 
     {
         var json = JSON.stringify(building); 

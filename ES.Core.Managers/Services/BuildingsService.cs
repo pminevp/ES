@@ -2,6 +2,7 @@
 using ES.Data.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ES.Core.Handlers.Services
 {
@@ -26,6 +27,7 @@ namespace ES.Core.Handlers.Services
 
         public Building GetById(int id) => _unitOfWork.Buildings.Get(id);
 
+        public async Task<Building> GetByOwnerId(string ownerId) => await _unitOfWork.Buildings.GetBuildingByOwner(ownerId);
 
         public void Add(Building building)
         {

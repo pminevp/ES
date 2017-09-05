@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "10c0e8511b0803d3487e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cbc1c09d052bd83e1232"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -851,6 +851,208 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var http_1 = __webpack_require__(4);
+var Subject_1 = __webpack_require__(18);
+var utilities_1 = __webpack_require__(10);
+var AlertService = (function () {
+    function AlertService() {
+        this.messages = new Subject_1.Subject();
+        this.stickyMessages = new Subject_1.Subject();
+        this.dialogs = new Subject_1.Subject();
+        this._isLoading = false;
+    }
+    AlertService.prototype.showDialog = function (message, type, okCallback, cancelCallback, okLabel, cancelLabel, defaultValue) {
+        if (!type)
+            type = DialogType.alert;
+        this.dialogs.next({ message: message, type: type, okCallback: okCallback, cancelCallback: cancelCallback, okLabel: okLabel, cancelLabel: cancelLabel, defaultValue: defaultValue });
+    };
+    AlertService.prototype.showMessage = function (data, separatorOrDetail, severity) {
+        if (!severity)
+            severity = MessageSeverity.default;
+        if (data instanceof http_1.Response) {
+            data = utilities_1.Utilities.getHttpResponseMessage(data);
+            separatorOrDetail = utilities_1.Utilities.captionAndMessageSeparator;
+        }
+        if (data instanceof Array) {
+            for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+                var message = data_1[_i];
+                var msgObject = utilities_1.Utilities.splitInTwo(message, separatorOrDetail);
+                this.showMessageHelper(msgObject.firstPart, msgObject.secondPart, severity, false);
+            }
+        }
+        else {
+            this.showMessageHelper(data, separatorOrDetail, severity, false);
+        }
+    };
+    AlertService.prototype.showStickyMessage = function (data, separatorOrDetail, severity, error) {
+        if (!severity)
+            severity = MessageSeverity.default;
+        if (data instanceof http_1.Response) {
+            data = utilities_1.Utilities.getHttpResponseMessage(data);
+            separatorOrDetail = utilities_1.Utilities.captionAndMessageSeparator;
+        }
+        if (data instanceof Array) {
+            for (var _i = 0, data_2 = data; _i < data_2.length; _i++) {
+                var message = data_2[_i];
+                var msgObject = utilities_1.Utilities.splitInTwo(message, separatorOrDetail);
+                this.showMessageHelper(msgObject.firstPart, msgObject.secondPart, severity, true);
+            }
+        }
+        else {
+            if (error) {
+                var msg = "Severity: \"" + MessageSeverity[severity] + "\", Summary: \"" + data + "\", Detail: \"" + separatorOrDetail + "\", Error: \"" + utilities_1.Utilities.safeStringify(error) + "\"";
+                switch (severity) {
+                    case MessageSeverity.default:
+                        this.logInfo(msg);
+                        break;
+                    case MessageSeverity.info:
+                        this.logInfo(msg);
+                        break;
+                    case MessageSeverity.success:
+                        this.logMessage(msg);
+                        break;
+                    case MessageSeverity.error:
+                        this.logError(msg);
+                        break;
+                    case MessageSeverity.warn:
+                        this.logWarning(msg);
+                        break;
+                    case MessageSeverity.wait:
+                        this.logTrace(msg);
+                        break;
+                }
+            }
+            this.showMessageHelper(data, separatorOrDetail, severity, true);
+        }
+    };
+    AlertService.prototype.showMessageHelper = function (summary, detail, severity, isSticky) {
+        if (isSticky)
+            this.stickyMessages.next({ severity: severity, summary: summary, detail: detail });
+        else
+            this.messages.next({ severity: severity, summary: summary, detail: detail });
+    };
+    AlertService.prototype.startLoadingMessage = function (message, caption) {
+        var _this = this;
+        if (message === void 0) { message = "Loading..."; }
+        if (caption === void 0) { caption = ""; }
+        this._isLoading = true;
+        clearTimeout(this.loadingMessageId);
+        this.loadingMessageId = setTimeout(function () {
+            _this.showStickyMessage(caption, message, MessageSeverity.wait);
+        }, 1000);
+    };
+    AlertService.prototype.stopLoadingMessage = function () {
+        this._isLoading = false;
+        clearTimeout(this.loadingMessageId);
+        this.resetStickyMessage();
+    };
+    AlertService.prototype.logDebug = function (msg) {
+        console.debug(msg);
+    };
+    AlertService.prototype.logError = function (msg) {
+        console.error(msg);
+    };
+    AlertService.prototype.logInfo = function (msg) {
+        console.info(msg);
+    };
+    AlertService.prototype.logMessage = function (msg) {
+        console.log(msg);
+    };
+    AlertService.prototype.logTrace = function (msg) {
+        console.trace(msg);
+    };
+    AlertService.prototype.logWarning = function (msg) {
+        console.warn(msg);
+    };
+    AlertService.prototype.resetStickyMessage = function () {
+        this.stickyMessages.next();
+    };
+    AlertService.prototype.getDialogEvent = function () {
+        return this.dialogs.asObservable();
+    };
+    AlertService.prototype.getMessageEvent = function () {
+        return this.messages.asObservable();
+    };
+    AlertService.prototype.getStickyMessageEvent = function () {
+        return this.stickyMessages.asObservable();
+    };
+    Object.defineProperty(AlertService.prototype, "isLoadingInProgress", {
+        get: function () {
+            return this._isLoading;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AlertService = __decorate([
+        core_1.Injectable()
+    ], AlertService);
+    return AlertService;
+}());
+exports.AlertService = AlertService;
+//******************** Dialog ********************//
+var AlertDialog = (function () {
+    function AlertDialog(message, type, okCallback, cancelCallback, defaultValue, okLabel, cancelLabel) {
+        this.message = message;
+        this.type = type;
+        this.okCallback = okCallback;
+        this.cancelCallback = cancelCallback;
+        this.defaultValue = defaultValue;
+        this.okLabel = okLabel;
+        this.cancelLabel = cancelLabel;
+    }
+    return AlertDialog;
+}());
+exports.AlertDialog = AlertDialog;
+var DialogType;
+(function (DialogType) {
+    DialogType[DialogType["alert"] = 0] = "alert";
+    DialogType[DialogType["confirm"] = 1] = "confirm";
+    DialogType[DialogType["prompt"] = 2] = "prompt";
+})(DialogType = exports.DialogType || (exports.DialogType = {}));
+//******************** End ********************//
+//******************** Growls ********************//
+var AlertMessage = (function () {
+    function AlertMessage(severity, summary, detail) {
+        this.severity = severity;
+        this.summary = summary;
+        this.detail = detail;
+    }
+    return AlertMessage;
+}());
+exports.AlertMessage = AlertMessage;
+var MessageSeverity;
+(function (MessageSeverity) {
+    MessageSeverity[MessageSeverity["default"] = 0] = "default";
+    MessageSeverity[MessageSeverity["info"] = 1] = "info";
+    MessageSeverity[MessageSeverity["success"] = 2] = "success";
+    MessageSeverity[MessageSeverity["error"] = 3] = "error";
+    MessageSeverity[MessageSeverity["warn"] = 4] = "warn";
+    MessageSeverity[MessageSeverity["wait"] = 5] = "wait";
+})(MessageSeverity = exports.MessageSeverity || (exports.MessageSeverity = {}));
+//******************** End ********************//
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// ======================================
+// Author: Ebenezer Monney
+// Email:  info@ebenmonney.com
+// Copyright (c) 2017 www.ebenmonney.com
+// 
+// ==> Gun4Hire: contact@ebenmonney.com
+// ======================================
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
@@ -1042,208 +1244,6 @@ var AccountService = (function () {
     var AccountService_1;
 }());
 exports.AccountService = AccountService;
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(4);
-var Subject_1 = __webpack_require__(18);
-var utilities_1 = __webpack_require__(10);
-var AlertService = (function () {
-    function AlertService() {
-        this.messages = new Subject_1.Subject();
-        this.stickyMessages = new Subject_1.Subject();
-        this.dialogs = new Subject_1.Subject();
-        this._isLoading = false;
-    }
-    AlertService.prototype.showDialog = function (message, type, okCallback, cancelCallback, okLabel, cancelLabel, defaultValue) {
-        if (!type)
-            type = DialogType.alert;
-        this.dialogs.next({ message: message, type: type, okCallback: okCallback, cancelCallback: cancelCallback, okLabel: okLabel, cancelLabel: cancelLabel, defaultValue: defaultValue });
-    };
-    AlertService.prototype.showMessage = function (data, separatorOrDetail, severity) {
-        if (!severity)
-            severity = MessageSeverity.default;
-        if (data instanceof http_1.Response) {
-            data = utilities_1.Utilities.getHttpResponseMessage(data);
-            separatorOrDetail = utilities_1.Utilities.captionAndMessageSeparator;
-        }
-        if (data instanceof Array) {
-            for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
-                var message = data_1[_i];
-                var msgObject = utilities_1.Utilities.splitInTwo(message, separatorOrDetail);
-                this.showMessageHelper(msgObject.firstPart, msgObject.secondPart, severity, false);
-            }
-        }
-        else {
-            this.showMessageHelper(data, separatorOrDetail, severity, false);
-        }
-    };
-    AlertService.prototype.showStickyMessage = function (data, separatorOrDetail, severity, error) {
-        if (!severity)
-            severity = MessageSeverity.default;
-        if (data instanceof http_1.Response) {
-            data = utilities_1.Utilities.getHttpResponseMessage(data);
-            separatorOrDetail = utilities_1.Utilities.captionAndMessageSeparator;
-        }
-        if (data instanceof Array) {
-            for (var _i = 0, data_2 = data; _i < data_2.length; _i++) {
-                var message = data_2[_i];
-                var msgObject = utilities_1.Utilities.splitInTwo(message, separatorOrDetail);
-                this.showMessageHelper(msgObject.firstPart, msgObject.secondPart, severity, true);
-            }
-        }
-        else {
-            if (error) {
-                var msg = "Severity: \"" + MessageSeverity[severity] + "\", Summary: \"" + data + "\", Detail: \"" + separatorOrDetail + "\", Error: \"" + utilities_1.Utilities.safeStringify(error) + "\"";
-                switch (severity) {
-                    case MessageSeverity.default:
-                        this.logInfo(msg);
-                        break;
-                    case MessageSeverity.info:
-                        this.logInfo(msg);
-                        break;
-                    case MessageSeverity.success:
-                        this.logMessage(msg);
-                        break;
-                    case MessageSeverity.error:
-                        this.logError(msg);
-                        break;
-                    case MessageSeverity.warn:
-                        this.logWarning(msg);
-                        break;
-                    case MessageSeverity.wait:
-                        this.logTrace(msg);
-                        break;
-                }
-            }
-            this.showMessageHelper(data, separatorOrDetail, severity, true);
-        }
-    };
-    AlertService.prototype.showMessageHelper = function (summary, detail, severity, isSticky) {
-        if (isSticky)
-            this.stickyMessages.next({ severity: severity, summary: summary, detail: detail });
-        else
-            this.messages.next({ severity: severity, summary: summary, detail: detail });
-    };
-    AlertService.prototype.startLoadingMessage = function (message, caption) {
-        var _this = this;
-        if (message === void 0) { message = "Loading..."; }
-        if (caption === void 0) { caption = ""; }
-        this._isLoading = true;
-        clearTimeout(this.loadingMessageId);
-        this.loadingMessageId = setTimeout(function () {
-            _this.showStickyMessage(caption, message, MessageSeverity.wait);
-        }, 1000);
-    };
-    AlertService.prototype.stopLoadingMessage = function () {
-        this._isLoading = false;
-        clearTimeout(this.loadingMessageId);
-        this.resetStickyMessage();
-    };
-    AlertService.prototype.logDebug = function (msg) {
-        console.debug(msg);
-    };
-    AlertService.prototype.logError = function (msg) {
-        console.error(msg);
-    };
-    AlertService.prototype.logInfo = function (msg) {
-        console.info(msg);
-    };
-    AlertService.prototype.logMessage = function (msg) {
-        console.log(msg);
-    };
-    AlertService.prototype.logTrace = function (msg) {
-        console.trace(msg);
-    };
-    AlertService.prototype.logWarning = function (msg) {
-        console.warn(msg);
-    };
-    AlertService.prototype.resetStickyMessage = function () {
-        this.stickyMessages.next();
-    };
-    AlertService.prototype.getDialogEvent = function () {
-        return this.dialogs.asObservable();
-    };
-    AlertService.prototype.getMessageEvent = function () {
-        return this.messages.asObservable();
-    };
-    AlertService.prototype.getStickyMessageEvent = function () {
-        return this.stickyMessages.asObservable();
-    };
-    Object.defineProperty(AlertService.prototype, "isLoadingInProgress", {
-        get: function () {
-            return this._isLoading;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    AlertService = __decorate([
-        core_1.Injectable()
-    ], AlertService);
-    return AlertService;
-}());
-exports.AlertService = AlertService;
-//******************** Dialog ********************//
-var AlertDialog = (function () {
-    function AlertDialog(message, type, okCallback, cancelCallback, defaultValue, okLabel, cancelLabel) {
-        this.message = message;
-        this.type = type;
-        this.okCallback = okCallback;
-        this.cancelCallback = cancelCallback;
-        this.defaultValue = defaultValue;
-        this.okLabel = okLabel;
-        this.cancelLabel = cancelLabel;
-    }
-    return AlertDialog;
-}());
-exports.AlertDialog = AlertDialog;
-var DialogType;
-(function (DialogType) {
-    DialogType[DialogType["alert"] = 0] = "alert";
-    DialogType[DialogType["confirm"] = 1] = "confirm";
-    DialogType[DialogType["prompt"] = 2] = "prompt";
-})(DialogType = exports.DialogType || (exports.DialogType = {}));
-//******************** End ********************//
-//******************** Growls ********************//
-var AlertMessage = (function () {
-    function AlertMessage(severity, summary, detail) {
-        this.severity = severity;
-        this.summary = summary;
-        this.detail = detail;
-    }
-    return AlertMessage;
-}());
-exports.AlertMessage = AlertMessage;
-var MessageSeverity;
-(function (MessageSeverity) {
-    MessageSeverity[MessageSeverity["default"] = 0] = "default";
-    MessageSeverity[MessageSeverity["info"] = 1] = "info";
-    MessageSeverity[MessageSeverity["success"] = 2] = "success";
-    MessageSeverity[MessageSeverity["error"] = 3] = "error";
-    MessageSeverity[MessageSeverity["warn"] = 4] = "warn";
-    MessageSeverity[MessageSeverity["wait"] = 5] = "wait";
-})(MessageSeverity = exports.MessageSeverity || (exports.MessageSeverity = {}));
-//******************** End ********************//
 
 
 /***/ }),
@@ -3515,6 +3515,9 @@ var BuildingService = (function () {
     BuildingService.prototype.GetBuilding = function (id) {
         return this.buildingEndpoint.GetBuilding(id).map(function (response) { return response.json(); });
     };
+    BuildingService.prototype.GetBuildingByOwner = function (ownerId) {
+        return this.buildingEndpoint.GetBuildingByOwnerId(ownerId).map(function (resp) { return resp.json(); });
+    };
     BuildingService.prototype.AddBuilding = function (building) {
         return this.buildingEndpoint.AddBuilding(building).map(function (response) { return response.json(); });
     };
@@ -3721,7 +3724,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var auth_service_1 = __webpack_require__(12);
 var configuration_service_1 = __webpack_require__(9);
 var utilities_1 = __webpack_require__(10);
@@ -3949,6 +3952,9 @@ var BuildingEntranceEndpoint = (function () {
     };
     BuildingEntranceEndpoint.prototype.GetEntrances = function (buildingId, userId) {
         return this.buildingEndpoint.GetEntrancesByBuildingIdAndUserId(buildingId, userId).map(function (resp) { return resp.json(); });
+    };
+    BuildingEntranceEndpoint.prototype.AddEntrance = function (newEntrance) {
+        return this.buildingEndpoint.AddEntrace(newEntrance).map(function (resp) { return resp.json(); });
     };
     BuildingEntranceEndpoint = __decorate([
         core_1.Injectable(),
@@ -4753,15 +4759,17 @@ var BuildingService_1 = __webpack_require__(25);
 var http_1 = __webpack_require__(4);
 var buildingEntrance_endpoint_1 = __webpack_require__(34);
 var buildingEntrance_1 = __webpack_require__(117);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var permission_model_1 = __webpack_require__(11);
+var alert_service_1 = __webpack_require__(7);
 var BuildingDetailsComponent = (function () {
-    function BuildingDetailsComponent(route, buildingsEndpoint, http, buildingEntranceEndpoint, accountService) {
+    function BuildingDetailsComponent(route, buildingsEndpoint, http, buildingEntranceEndpoint, accountService, alertService) {
         var _this = this;
         this.buildingsEndpoint = buildingsEndpoint;
         this.http = http;
         this.buildingEntranceEndpoint = buildingEntranceEndpoint;
         this.accountService = accountService;
+        this.alertService = alertService;
         this.newEntrance = new buildingEntrance_1.BuildingEntrance();
         var id = route.snapshot.params['id'];
         if (id === undefined) {
@@ -4778,9 +4786,19 @@ var BuildingDetailsComponent = (function () {
         }
     }
     BuildingDetailsComponent.prototype.Save = function () {
+        var _this = this;
         var apartStat = new apartamentStatuses_1.ApartamentStatuses();
-        this.buildingEntrances.push(this.newEntrance);
-        this.newEntrance = new buildingEntrance_1.BuildingEntrance();
+        this.newEntrance.buildingId = this.selectedBuildingId;
+        this.newEntrance.creatorId = this.accountService.currentUser.id;
+        this.buildingEntranceEndpoint.AddEntrance(this.newEntrance).subscribe(function (entr) {
+            if (entr.id == 0) {
+            }
+            else {
+                _this.buildingEntrances.push(_this.newEntrance);
+                _this.alertService.showMessage("Входът беше добавен успешно", "", alert_service_1.MessageSeverity.success);
+            }
+            _this.newEntrance = new buildingEntrance_1.BuildingEntrance();
+        });
     };
     BuildingDetailsComponent.prototype.fileChange = function (event) {
         var fileList = event.target.files;
@@ -4798,7 +4816,7 @@ var BuildingDetailsComponent = (function () {
             template: __webpack_require__(163),
             styles: [__webpack_require__(219)]
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, BuildingService_1.BuildingService, http_1.Http, buildingEntrance_endpoint_1.BuildingEntranceEndpoint, account_service_1.AccountService])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, BuildingService_1.BuildingService, http_1.Http, buildingEntrance_endpoint_1.BuildingEntranceEndpoint, account_service_1.AccountService, alert_service_1.AlertService])
     ], BuildingDetailsComponent);
     return BuildingDetailsComponent;
 }());
@@ -4938,9 +4956,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var building_1 = __webpack_require__(64);
 var BuildingService_1 = __webpack_require__(25);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var permission_model_1 = __webpack_require__(11);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var BuildingsComponent = (function () {
     function BuildingsComponent(buildingService, alertService, accountService) {
         this.buildingService = buildingService;
@@ -4954,7 +4972,8 @@ var BuildingsComponent = (function () {
     };
     BuildingsComponent.prototype.loadCurrentBuildingData = function () {
         var _this = this;
-        this.buildingService.GetAllBuildings().subscribe(function (building) {
+        var userId = this.accountService.currentUser.id;
+        this.buildingService.GetBuildingByOwner(userId).subscribe(function (building) {
             _this.onBuildingLoadSuccessful(building);
             if (_this.buildings.length == 1) {
                 if (_this.accountService.userHasPermission(permission_model_1.Permission.AssignBuildingsPermission) == false) {
@@ -4964,7 +4983,8 @@ var BuildingsComponent = (function () {
         }, function (error) { return _this.onBuildingLoadFailed(error); });
     };
     BuildingsComponent.prototype.onBuildingLoadSuccessful = function (_building) {
-        this.buildings = _building;
+        this.buildings = new Array();
+        this.buildings.push(_building);
     };
     BuildingsComponent.prototype.onBuildingLoadFailed = function (error) {
         console.log(error);
@@ -5020,8 +5040,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(8);
-var account_service_1 = __webpack_require__(7);
+var alert_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var role_model_1 = __webpack_require__(32);
 var permission_model_1 = __webpack_require__(11);
 var RoleEditorComponent = (function () {
@@ -5203,8 +5223,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(8);
-var account_service_1 = __webpack_require__(7);
+var alert_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var utilities_1 = __webpack_require__(10);
 var user_model_1 = __webpack_require__(16);
 var user_edit_model_1 = __webpack_require__(120);
@@ -5748,7 +5768,7 @@ __webpack_require__(77);
 var animations_1 = __webpack_require__(14);
 var bootstrap_tab_directive_1 = __webpack_require__(61);
 var app_translation_service_1 = __webpack_require__(13);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var permission_model_1 = __webpack_require__(11);
 var SettingsComponent = (function () {
     function SettingsComponent(route, translationService, accountService) {
@@ -5879,9 +5899,9 @@ var building_1 = __webpack_require__(64);
 var BuildingService_1 = __webpack_require__(25);
 var http_1 = __webpack_require__(4);
 var user_registration_model_1 = __webpack_require__(122);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var buildingApartament_endpoint_1 = __webpack_require__(17);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var UserRegistrationComponent = (function () {
     function UserRegistrationComponent(route, http, alertService, apartamentEndpoint, buildingEndpoint, accountService) {
         this.http = http;
@@ -5892,22 +5912,41 @@ var UserRegistrationComponent = (function () {
         this.newUserRegistragtion = new user_registration_model_1.UserRegistration();
         this.loadBuildings();
         this.LoadRoles();
+        this.ValidationErrors = false;
     }
     UserRegistrationComponent.prototype.save = function () {
+        var _this = this;
         this.isSaving = true;
         this.alertService.startLoadingMessage("User Creation");
         this.newUserRegistragtion.newPassword = this.newUserRegistragtion.confirmPassword;
-        this.accountService.newAnonimusUserCreation(this.newUserRegistragtion).subscribe(function (x) { return console.log(x); }, function (err) { return console.log(err); });
+        this.accountService.newAnonimusUserCreation(this.newUserRegistragtion).subscribe(function (x) {
+            _this.isSaving = false;
+            _this.alertService.stopLoadingMessage();
+            if (x.item1 === false) {
+                _this.ValidationErrors = true;
+                _this.ErrorData = new Array();
+                for (var i in x.item2) {
+                    _this.ErrorData.push(x.item2[i]);
+                }
+                _this.alertService.showMessage("Проблем с регистрацията", "Моля вижте грешките в началото на страницата", alert_service_1.MessageSeverity.error);
+                console.log(_this.ErrorData);
+            }
+            else {
+                _this.alertService.showMessage("Успешна Регистрация!", "Потребителя ви бе успешно създаден!", alert_service_1.MessageSeverity.success);
+            }
+        }, function (err) { return console.log(err); });
     };
     UserRegistrationComponent.prototype.loadApartaments = function (buildingId) {
         var _this = this;
         console.log(buildingId);
         if (buildingId.toString() != "Добави Сграда") {
+            console.log(buildingId);
             this.apartamentEndpoint.GetByBuildingId(buildingId).subscribe(function (aparts) { return _this.availableApartaments = aparts; });
         }
         else {
             this.isNewBuilding = true;
         }
+        console.log(this.apartamentEndpoint);
     };
     UserRegistrationComponent.prototype.loadBuildings = function () {
         var _this = this;
@@ -6608,6 +6647,10 @@ var BuildingEndpoint = (function (_super) {
         var properAddress = this.currentBuildingUrl + id;
         return this.http.get(properAddress).map(function (response) { return response; });
     };
+    BuildingEndpoint.prototype.GetBuildingByOwnerId = function (ownerId) {
+        var properAddress = this.currentBuildingUrl + 'Owner/' + ownerId;
+        return this.http.get(properAddress).map(function (resp) { return resp; });
+    };
     BuildingEndpoint.prototype.AddBuilding = function (building) {
         var json = JSON.stringify(building);
         return this.http.post(ServiceResources_1.Resources.BuildingPath, building).map(function (response) { return response; });
@@ -6746,6 +6789,9 @@ var BuildingEntranceEndpointService = (function (_super) {
     };
     BuildingEntranceEndpointService.prototype.GetEntrancesByBuildingIdAndUserId = function (buildngId, userId) {
         return this.http.get(this._BuildingEntranceByUserAndBuildingId + buildngId + "/" + userId + "/").map(function (resp) { return resp; });
+    };
+    BuildingEntranceEndpointService.prototype.AddEntrace = function (newEntrance) {
+        return this.http.post(this._buildingEntrancUrl, newEntrance).map(function (resp) { return resp; });
     };
     BuildingEntranceEndpointService = __decorate([
         core_1.Injectable(),
@@ -7395,7 +7441,7 @@ module.exports = Html5Entities;
 /* 75 */
 /***/ (function(module, exports) {
 
-module.exports = "<form>\r\n    <div class=\"row\">\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">User Name</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"text\" attr.id=\"userName\" name=\"userName\" placeholder=\"User name\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.userName\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">Full Name</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"text\" attr.id=\"fullName\" name=\"fullName\" placeholder=\"Full Name\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.fullName\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">E-mail</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"text\" attr.id=\"email\" name=\"email\" placeholder=\"E-mail\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.email\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">Password</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"password\" attr.id=\"Password\" name=\"Password\" placeholder=\"Password\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.newPassword\" #newPassword=\"ngModel\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">Confirm Password</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"password\" #confirmPassword=\"ngModel\" attr.id=\"confirmPassword\" name=\"confirmPassword\" placeholder=\"Confirm Password\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.confirmPassword\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group has-feedback\" *ngIf=\"availableRoles != null\">\r\n            <label [class.col-md-2]=\"True\" class=\"control-label\" for=\"roles-user-info\">Роля:</label>\r\n            <div [class.col-md-10]=\"True\">\r\n                <select id=\"building-user-info\" name=\"roles-user-info\" [(ngModel)]=\"newUserRegistragtion.roleName\" #ownedApartaments=\"ngModel\" class=\"selectpicker form-control\" bootstrapSelect required\r\n                        data-live-search=\"true\" data-actions-box=\"false\" data-live-search-placeholder=\"Search...\" title=\"Избери роля\" >\r\n                    <option *ngFor=\"let role of availableRoles\" attr.data-content=\"<span title='{{role.name}}' class='badge'>{{role.name}}</span>\" attr.value=\"{{role.name}}\">\r\n                        {{role.name}}\r\n                    </option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n        <div  class=\"form-group has-feedback\" *ngIf=\"availableBuildings != null && !isNewBuilding\">\r\n            <label [class.col-md-2]=\"True\" class=\"control-label\" for=\"apartaments-user-info\">Избери Сграда:</label>\r\n            <div [class.col-md-10]=\"True\">\r\n                <select id=\"building-user-info\" name=\"building-user-info\" [(ngModel)]=\"newUserRegistragtion.buildingName\" #ownedApartaments=\"ngModel\" class=\"selectpicker form-control\" bootstrapSelect required multiple\r\n                        data-live-search=\"true\" data-actions-box=\"false\" data-live-search-placeholder=\"Search...\" title=\"Избери апартамент\" (change)=\"loadApartaments($event.target.value)\">\r\n                    <option *ngFor=\"let bld of availableBuildings\" attr.data-content=\"<span title='{{bld.name}}' class='badge'>{{bld.name}}</span>\" attr.value=\"{{bld.name}}\">\r\n                        {{bld.name}}\r\n                    </option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group has-feedback\" *ngIf=\"availableApartaments != null && !isNewBuilding\">\r\n            <label [class.col-md-2]=\"True\" class=\"control-label\" for=\"apartaments-user-info\">Избери Апартамент:</label>\r\n            <div [class.col-md-10]=\"True\">\r\n                <select id=\"apartaments-user-info\" name=\"ownedApartaments\" [(ngModel)]=\"newUserRegistragtion.ownedApartaments\" #ownedApartaments=\"ngModel\" class=\"selectpicker form-control\" bootstrapSelect required multiple\r\n                        data-live-search=\"true\" data-actions-box=\"false\" data-live-search-placeholder=\"Search...\" title=\"Избери апартамент\">\r\n                    <option *ngFor=\"let apart of availableApartaments\" attr.data-content=\"<span title='{{apart.name}}' class='badge'  >{{apart.name}}</span>\" attr.value=\"{{apart.name}}\">\r\n                        {{apart.name}}\r\n                    </option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n        <div *ngIf=\"isNewBuilding\">\r\n            <div class=\"form-group\">\r\n                <div [class.col-md-10]=\"True\">\r\n                    <p class=\"form-control-static\">Име на сградата</p>\r\n                </div>\r\n                <div [class.col-md-10]=\"True\">\r\n                    <input autofocus type=\"text\" attr.id=\"buildingName\" name=\"buildingName\" placeholder=\"Име на сградата\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.buildingName\" #newPassword=\"ngModel\" />\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div [class.col-md-10]=\"True\">\r\n                    <p class=\"form-control-static\">Име на Входа</p>\r\n                </div>\r\n                <div [class.col-md-10]=\"True\">\r\n                    <input autofocus type=\"text\" attr.id=\"buildingEntranceName\" name=\"buildingEntranceName\" placeholder=\"Име на входа\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.buildingEntrance\" #newPassword=\"ngModel\" />\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div [class.col-md-10]=\"True\">\r\n                    <p class=\"form-control-static\">Име на Апартамента</p>\r\n                </div>\r\n                <div [class.col-md-10]=\"True\">\r\n                    <input autofocus type=\"text\" attr.id=\"apartName\" name=\"apartName\" placeholder=\"Име на апартамент\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.apartName\" #newPassword=\"ngModel\" />\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n\r\n        <!--<div class=\"form-group has-feedback\" *ngIf=\"availableBuildings != null\">\r\n            <label [class.col-md-2]=\"True\" class=\"control-label\" for=\"apartaments-user-info\">Избери Сграда:</label>\r\n            <div [class.col-md-10]=\"True\">\r\n                <select id=\"building-user-info\" name=\"building-user-info\" [(ngModel)]=\"newUserRegistragtion.buildingName\" #ownedApartaments=\"ngModel\"  class=\"selectpicker form-control\" bootstrapSelect required multiple\r\n                        data-live-search=\"true\" data-actions-box=\"false\" data-live-search-placeholder=\"Search...\" title=\"Избери апартамент\" (change)=\"loadApartaments($event.target.value)\" >\r\n                    <option *ngFor=\"let bld of availableBuildings\"   attr.data-content=\"<span title='{{bld.name}}' class='badge'>{{bld.name}}</span>\" attr.value=\"{{bld.name}}\">\r\n                        {{bld.name}}\r\n                    </option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group has-feedback\" *ngIf=\"availableApartaments != null\">\r\n            <label [class.col-md-2]=\"True\" class=\"control-label\" for=\"apartaments-user-info\">Избери Апартамент:</label>\r\n            <div [class.col-md-10]=\"True\">\r\n                <select id=\"apartaments-user-info\" name=\"ownedApartaments\" [(ngModel)]=\"newUserRegistragtion.ownedApartaments\" #ownedApartaments=\"ngModel\" class=\"selectpicker form-control\" bootstrapSelect required multiple\r\n                        data-live-search=\"true\" data-actions-box=\"false\" data-live-search-placeholder=\"Search...\" title=\"Избери апартамент\">\r\n                    <option *ngFor=\"let apart of availableApartaments\" attr.data-content=\"<span title='{{apart.name}}' class='badge'  >{{apart.name}}</span>\" attr.value=\"{{apart.name}}\">\r\n                        {{apart.name}}\r\n                    </option>\r\n                </select>\r\n            </div>\r\n        </div>-->\r\n    </div>\r\n    <button type=\"button\" (click)=\"save()\" class=\"btn btn-warning unblock-user\" [disabled]=\"isSaving\"><i class='fa fa-unlock-alt'></i> Създай</button>\r\n</form>\r\n";
+module.exports = "<div class=\"row\">\r\n    <div class=\"col\">\r\n    </div>\r\n    <div class=\"col-5\">\r\n        <h3>Регистрация</h3>\r\n    </div>\r\n    <div class=\"col\">\r\n    </div>\r\n</div>\r\n<form>\r\n    <div class=\"row\" *ngIf=\"ValidationErrors\" >\r\n        <div class=\"alert alert-danger\" role=\"alert\" >\r\n            <ul>\r\n                <li *ngFor=\"let err  of ErrorData\" >{{err}} </li>\r\n            </ul>         \r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">User Name</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"text\" attr.id=\"userName\" name=\"userName\" placeholder=\"User name\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.userName\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">Full Name</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"text\" attr.id=\"fullName\" name=\"fullName\" placeholder=\"Full Name\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.fullName\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">E-mail</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"text\" attr.id=\"email\" name=\"email\" placeholder=\"E-mail\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.email\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">Password</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"password\" attr.id=\"Password\" name=\"Password\" placeholder=\"Password\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.newPassword\" #newPassword=\"ngModel\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div [class.col-md-10]=\"True\">\r\n                <p class=\"form-control-static\">Confirm Password</p>\r\n            </div>\r\n            <div [class.col-md-10]=\"True\">\r\n                <input autofocus type=\"password\" #confirmPassword=\"ngModel\" attr.id=\"confirmPassword\" name=\"confirmPassword\" placeholder=\"Confirm Password\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.confirmPassword\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group has-feedback\" *ngIf=\"availableRoles != null\">\r\n            <label [class.col-md-2]=\"True\" class=\"control-label\" for=\"roles-user-info\">Роля:</label>\r\n            <div [class.col-md-10]=\"True\">\r\n                <select id=\"building-user-info\" name=\"roles-user-info\" [(ngModel)]=\"newUserRegistragtion.roleName\" #ownedApartaments=\"ngModel\" class=\"selectpicker form-control\" bootstrapSelect required\r\n                        data-live-search=\"true\" data-actions-box=\"false\" data-live-search-placeholder=\"Search...\" title=\"Избери роля\" >\r\n                    <option *ngFor=\"let role of availableRoles\" attr.data-content=\"<span title='{{role.name}}' class='badge'>{{role.name}}</span>\" attr.value=\"{{role.name}}\">\r\n                        {{role.name}}\r\n                    </option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n        <div  class=\"form-group has-feedback\" *ngIf=\"availableBuildings != null && !isNewBuilding\">\r\n            <label [class.col-md-2]=\"True\" class=\"control-label\" for=\"apartaments-user-info\">Избери Сграда:</label>\r\n            <div [class.col-md-10]=\"True\">\r\n                <select id=\"building-user-info\" name=\"building-user-info\" [(ngModel)]=\"newUserRegistragtion.buildingName\" #ownedApartaments=\"ngModel\" class=\"selectpicker form-control\" bootstrapSelect required multiple\r\n                        data-live-search=\"true\" data-actions-box=\"false\" data-live-search-placeholder=\"Search...\" title=\"Избери апартамент\" (change)=\"loadApartaments($event.target.value)\">\r\n                    <option *ngFor=\"let bld of availableBuildings\" attr.data-content=\"<span title='{{bld.name}}' class='badge'>{{bld.name}}</span>\" attr.value=\"{{bld.name}}\">\r\n                        {{bld.name}}\r\n                    </option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group has-feedback\" *ngIf=\"availableApartaments != null && !isNewBuilding\">\r\n            <label [class.col-md-2]=\"True\" class=\"control-label\" for=\"apartaments-user-info\">Избери Апартамент:</label>\r\n            <div [class.col-md-10]=\"True\">\r\n                <select id=\"apartaments-user-info\" name=\"ownedApartaments\" [(ngModel)]=\"newUserRegistragtion.ownedApartaments\" #ownedApartaments=\"ngModel\" class=\"selectpicker form-control\" bootstrapSelect required multiple\r\n                        data-live-search=\"true\" data-actions-box=\"false\" data-live-search-placeholder=\"Search...\" title=\"Избери апартамент\">\r\n                    <option *ngFor=\"let apart of availableApartaments\" attr.data-content=\"<span title='{{apart.name}}' class='badge'  >{{apart.name}}</span>\" attr.value=\"{{apart.name}}\">\r\n                        {{apart.name}}\r\n                    </option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n        <div *ngIf=\"isNewBuilding\">\r\n            <div class=\"form-group\">\r\n                <div [class.col-md-10]=\"True\">\r\n                    <p class=\"form-control-static\">Име на сградата</p>\r\n                </div>\r\n                <div [class.col-md-10]=\"True\">\r\n                    <input autofocus type=\"text\" attr.id=\"buildingName\" name=\"buildingName\" placeholder=\"Име на сградата\" class=\"form-control\" [(ngModel)]=\"newUserRegistragtion.buildingName\" #newPassword=\"ngModel\" />\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <button type=\"button\" (click)=\"save()\" class=\"btn btn-warning unblock-user\" [disabled]=\"isSaving\"><i class='fa fa-unlock-alt'></i> Създай</button>\r\n</form>\r\n";
 
 /***/ }),
 /* 76 */
@@ -24945,12 +24991,12 @@ var app_error_handler_1 = __webpack_require__(99);
 var app_title_service_1 = __webpack_require__(66);
 var app_translation_service_1 = __webpack_require__(13);
 var configuration_service_1 = __webpack_require__(9);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var local_store_manager_service_1 = __webpack_require__(20);
 var endpoint_factory_service_1 = __webpack_require__(15);
 var notification_service_1 = __webpack_require__(35);
 var notification_endpoint_service_1 = __webpack_require__(73);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var account_endpoint_service_1 = __webpack_require__(65);
 var equal_validator_directive_1 = __webpack_require__(115);
 var last_element_directive_1 = __webpack_require__(116);
@@ -25108,10 +25154,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var router_1 = __webpack_require__(5);
 var ng2_toasty_1 = __webpack_require__(82);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var notification_service_1 = __webpack_require__(35);
 var app_translation_service_1 = __webpack_require__(13);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var local_store_manager_service_1 = __webpack_require__(20);
 var app_title_service_1 = __webpack_require__(66);
 var auth_service_1 = __webpack_require__(12);
@@ -25479,10 +25525,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var app_translation_service_1 = __webpack_require__(13);
 var notification_service_1 = __webpack_require__(35);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var permission_model_1 = __webpack_require__(11);
 var utilities_1 = __webpack_require__(10);
 var NotificationsViewerComponent = (function () {
@@ -25672,9 +25718,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(26);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var app_translation_service_1 = __webpack_require__(13);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var utilities_1 = __webpack_require__(10);
 var role_model_1 = __webpack_require__(32);
 var permission_model_1 = __webpack_require__(11);
@@ -25928,7 +25974,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 __webpack_require__(268);
 var StatisticsDemoComponent = (function () {
     function StatisticsDemoComponent(alertService) {
@@ -26062,7 +26108,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(26);
 var auth_service_1 = __webpack_require__(12);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var app_translation_service_1 = __webpack_require__(13);
 var local_store_manager_service_1 = __webpack_require__(20);
 var TodoDemoComponent = (function () {
@@ -26273,11 +26319,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var configuration_service_1 = __webpack_require__(9);
 var app_translation_service_1 = __webpack_require__(13);
 var bootstrap_select_directive_1 = __webpack_require__(60);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var utilities_1 = __webpack_require__(10);
 var permission_model_1 = __webpack_require__(11);
 var UserPreferencesComponent = (function () {
@@ -26415,9 +26461,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var modal_1 = __webpack_require__(26);
-var alert_service_1 = __webpack_require__(8);
+var alert_service_1 = __webpack_require__(7);
 var app_translation_service_1 = __webpack_require__(13);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var utilities_1 = __webpack_require__(10);
 var user_model_1 = __webpack_require__(16);
 var permission_model_1 = __webpack_require__(11);
@@ -26640,7 +26686,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var auth_service_1 = __webpack_require__(12);
 var router_1 = __webpack_require__(5);
-var account_service_1 = __webpack_require__(7);
+var account_service_1 = __webpack_require__(8);
 var NavigationComponent = (function () {
     function NavigationComponent(router, authService, accountService) {
         this.router = router;
@@ -30374,7 +30420,7 @@ module.exports = "<div class=\"container\">\r\n    <header class=\"pageHeader\">
 /* 178 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div [@fadeInOut]>\r\n        <div *ngIf=\"!configurations.showDashboardStatistics && !configurations.showDashboardNotifications && !configurations.showDashboardTodo && !configurations.showDashboardBanner\" class=\"well well-lg\">\r\n            <h4 class=\"text-muted text-center\">\r\n                {{'home.NoWidgets1' | translate}} <a routerLink=\"/settings\" fragment=\"preferences\"><i class=\"fa fa-sliders\"></i> {{'settings.tab.Preferences' | translate}}</a>\r\n                {{'home.NoWidgets2' | translate}}\r\n            </h4>\r\n        </div>\r\n        <div id=\"carousel-example-generic\" class=\"carousel slide\" data-ride=\"carousel\">\r\n            <!-- Indicators -->\r\n            <ol class=\"carousel-indicators\">\r\n                <li data-target=\"#carousel-example-generic\" data-slide-to=\"0\" class=\"active\"></li>\r\n                <li data-target=\"#carousel-example-generic\" data-slide-to=\"1\"></li>\r\n                <li data-target=\"#carousel-example-generic\" data-slide-to=\"2\"></li>\r\n            </ol>\r\n            <!-- Wrapper for slides -->\r\n            <div class=\"carousel-inner\"  role=\"listbox\">\r\n                <div class=\"item active\">\r\n                    <img style=\"width:900px; height:500px;\" src=\"https://www.startpackingidaho.com/images/house_double_story43_500_01.jpg\" alt=\"\">\r\n                    <div class=\"carousel-caption\">\r\n                        <h1>Управление на Сгради</h1>\r\n                        <h3>Чрез нашата система Вашите Домоуправители  могат да управялват една или повече сгради.</h3>\r\n                    </div>\r\n                </div>\r\n                <div class=\"item\">\r\n                    <img style=\"width:900px; height:500px;\" src=\"http://www.goodtherapy.org/blog/blog/wp-content/uploads/2013/05/mother-daughter-with-therapist.jpg\" alt=\"\">\r\n                    <div class=\"carousel-caption\">\r\n                        <h1>Прозрачност към собствениците</h1>\r\n                        <h3>Пълна прозрачност, към всички сметки, събрания и други за вас като собственик елемента.</h3>\r\n                    </div>\r\n                </div>\r\n                <div class=\"item\">\r\n                    <img style=\"width:900px; height:500px;\" src=\"https://07f138315bb5e97f9e43-31068357019044cca7c8e84d92de0d99.ssl.cf3.rackcdn.com/220x165/56587_11491_001.jpg\" alt=\"\">\r\n                    <div class=\"carousel-caption\">\r\n                        <h1>Управление на апартаменти</h1>\r\n                        <h3>Като собственик ще имате достъп до всички ваши апартаменти от едно централизирано място! Менежирайте ги без излишно загубено време.</h3>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <!-- Controls -->\r\n            <a class=\"left carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"prev\">\r\n                <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Previous</span>\r\n            </a>\r\n            <a class=\"right carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"next\">\r\n                <span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Next</span>\r\n            </a>\r\n        </div>\r\n        <br />\r\n        <div *ngIf=\"isUserLoggedIn\" class=\"panel panel-default\">\r\n            <div class=\"panel-heading\">Събития</div>\r\n            <div class=\"panel-body\">\r\n                <div *ngIf=\"configurations.showDashboardNotifications\" class=\"row bottom-space\">\r\n                    <button type=\"button\" class=\"close pull-right todo-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardNotifications = false\">\r\n                        <span aria-hidden=\"true\">&times;</span>\r\n                    </button>\r\n                    <div class=\"clearfix\"></div>\r\n                    <notifications-viewer></notifications-viewer>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div id=\"MediaContent\" class=\"well\">\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Навигация</h4>\r\n                    Системата вече предлага на своите клиенти добра навигация, която да навигира лесно между менютата\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n        </div>\r\n      \r\n\r\n\r\n        <div *ngIf=\"configurations.showDashboardTodo\" class=\"row bottom-space\">\r\n            <button type=\"button\" class=\"close pull-right todo-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardTodo = false\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n            <div class=\"clearfix\"></div>\r\n            <todo-demo></todo-demo>\r\n        </div>\r\n\r\n    </div>\r\n</div>\r\n";
+module.exports = "<div class=\"container\">\r\n    <div [@fadeInOut]>\r\n        <div *ngIf=\"!configurations.showDashboardStatistics && !configurations.showDashboardNotifications && !configurations.showDashboardTodo && !configurations.showDashboardBanner\" class=\"well well-lg\">\r\n            <h4 class=\"text-muted text-center\">\r\n                {{'home.NoWidgets1' | translate}} <a routerLink=\"/settings\" fragment=\"preferences\"><i class=\"fa fa-sliders\"></i> {{'settings.tab.Preferences' | translate}}</a>\r\n                {{'home.NoWidgets2' | translate}}\r\n            </h4>\r\n        </div>\r\n        <div id=\"carousel-example-generic\" class=\"carousel slide\" data-ride=\"carousel\">\r\n            <!-- Indicators -->\r\n            <ol class=\"carousel-indicators\">\r\n                <li data-target=\"#carousel-example-generic\" data-slide-to=\"0\" class=\"active\"></li>\r\n                <li data-target=\"#carousel-example-generic\" data-slide-to=\"1\"></li>\r\n                <li data-target=\"#carousel-example-generic\" data-slide-to=\"2\"></li>\r\n            </ol>\r\n            <!-- Wrapper for slides -->\r\n            <div class=\"carousel-inner\"  role=\"listbox\">\r\n                <div class=\"item active\">\r\n                    <img style=\"width:900px; height:500px;\" src=\"https://www.startpackingidaho.com/images/house_double_story43_500_01.jpg\" alt=\"\">\r\n                    <div class=\"carousel-caption\">\r\n                        <h1>Управление на Сгради</h1>\r\n                        <h3>Чрез нашата система Вашите Домоуправители  могат да управялват една или повече сгради.</h3>\r\n                    </div>\r\n                </div>\r\n                <div class=\"item\">\r\n                    <img style=\"width:900px; height:500px;\" src=\"http://www.goodtherapy.org/blog/blog/wp-content/uploads/2013/05/mother-daughter-with-therapist.jpg\" alt=\"\">\r\n                    <div class=\"carousel-caption\">\r\n                        <h1>Прозрачност към собствениците</h1>\r\n                        <h3>Пълна прозрачност, към всички сметки, събрания и други за вас като собственик елемента.</h3>\r\n                    </div>\r\n                </div>\r\n                <div class=\"item\">\r\n                    <img style=\"width:900px; height:500px;\" src=\"https://07f138315bb5e97f9e43-31068357019044cca7c8e84d92de0d99.ssl.cf3.rackcdn.com/220x165/56587_11491_001.jpg\" alt=\"\">\r\n                    <div class=\"carousel-caption\">\r\n                        <h1>Управление на апартаменти</h1>\r\n                        <h3>Като собственик ще имате достъп до всички ваши апартаменти от едно централизирано място! Менежирайте ги без излишно загубено време.</h3>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <!-- Controls -->\r\n            <a class=\"left carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"prev\">\r\n                <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Previous</span>\r\n            </a>\r\n            <a class=\"right carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"next\">\r\n                <span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Next</span>\r\n            </a>\r\n        </div>\r\n        \r\n        <br />\r\n        <div *ngIf=\"isUserLoggedIn\" class=\"panel panel-default\">\r\n            <div class=\"panel-heading\">Събития</div>\r\n            <div class=\"panel-body\">\r\n                <div *ngIf=\"configurations.showDashboardNotifications\" class=\"row bottom-space\">\r\n                    <button type=\"button\" class=\"close pull-right todo-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardNotifications = false\">\r\n                        <span aria-hidden=\"true\">&times;</span>\r\n                    </button>\r\n                    <div class=\"clearfix\"></div>\r\n                    <notifications-viewer></notifications-viewer>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div id=\"MediaContent\" class=\"well\">\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Навигация</h4>\r\n                    Системата вече предлага на своите клиенти добра навигация, която да навигира лесно между менютата\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n            <div class=\"media\">\r\n                <div class=\"media-left\">\r\n                    <a href=\"#\">\r\n                        <img class=\"media-object\" src=\"#.\" alt=\"\">\r\n                    </a>\r\n                </div>\r\n                <div class=\"media-body\">\r\n                    <h4 class=\"media-heading\">2017-01-01 Нова Функционалност! Права</h4>\r\n                    Системата вече предлага 2 нива на правомощия, те ще бъдат разширени в бъдеще!\r\n                </div>\r\n            </div>\r\n        </div>\r\n      \r\n\r\n\r\n        <div *ngIf=\"configurations.showDashboardTodo\" class=\"row bottom-space\">\r\n            <button type=\"button\" class=\"close pull-right todo-close-btn\" aria-label=\"Close\" title=\"Close\" (click)=\"configurations.showDashboardTodo = false\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n            <div class=\"clearfix\"></div>\r\n            <todo-demo></todo-demo>\r\n        </div>\r\n\r\n    </div>\r\n</div>\r\n";
 
 /***/ }),
 /* 179 */
@@ -30386,7 +30432,7 @@ module.exports = "<div class=\"vertical-center-flex\">\r\n    <div class=\"login
 /* 180 */
 /***/ (function(module, exports) {
 
-module.exports = "<nav id=\"header\" class=\"app-component navbar navbar-inner navbar-fixed-top\">\r\n    <nav class=\"container\">\r\n        <div class=\"navbar-header\">\r\n            <button type=\"button\" class=\"app-component navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\".menuItemsContainer.app-component\" aria-expanded=\"false\">\r\n                <span class=\"sr-only\">Toggle navigation</span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n            </button>\r\n            <a class=\"app-component navbar-brand\" routerLink=\"/\">\r\n                <img [src]=\"appLogo\" alt=\"logo\">\r\n                <span class=\"app-component appTitle\">{{appTitle}}</span>\r\n            </a>\r\n        </div> \r\n        <div  class=\"app-component collapse navbar-collapse menuItemsContainer\">\r\n            <ul class=\"app-component nav navbar-nav nav-pills navBarPadding\" *ngFor=\"let nav of navigations\">        \r\n                <li><a routerLink=\"{{nav.route}}\">{{nav.text}}</a></li>                    \r\n            </ul>\r\n            <p *ngIf=\"isUserLoggedIn\" class=\"app-component navbar-text navbar-right notifications-popup\">\r\n                {{'app.Welcome' | translate}}\r\n                <a class=\"app-component navbar-link user-name\" [popover]=\"popTemplate\" (onHidden)=\"markNotificationsAsRead()\" placement=\"bottom\" [popoverTitle]=\"notificationsTitle\" href=\"javascript:;\" triggers=\"focus\">\r\n                    {{userName}}\r\n                    <span *ngIf=\"newNotificationCount > 0\" class=\"badge\">{{newNotificationCount}}</span>\r\n                </a>,\r\n            </p>\r\n            <ng-template #popTemplate>\r\n                <notifications-viewer [isViewOnly]=\"true\"></notifications-viewer>\r\n            </ng-template>\r\n            <div  class=\"app-component collapse navbar-collapse menuItemsContainer\">\r\n                <ul class=\"app-component nav navbar-nav nav-pills navBarPadding navbar-right\">\r\n                    <li routerLinkActive=\"active\"><a routerLink=\"/settings\"><span class=\"glyphicon glyphicon-cog\"></span></a></li>\r\n                    <li ><a routerLink=\"/about\"><span class=\"glyphicon glyphicon-info-sign\"></span></a></li>\r\n                    <li *ngIf=\"isUserLoggedIn\" (click)=\"logout()\"><a href=\"javascript:;\"><span class=\"glyphicon glyphicon-log-out\"></span> {{'mainMenu.Logout' | translate}}</a></li>\r\n                    <li *ngIf=\"!isUserLoggedIn\" routerLinkActive=\"active\"><a routerLink=\"/login\"><span class=\"glyphicon glyphicon-log-in\"></span></a></li>\r\n                </ul>\r\n            </div>\r\n\r\n        </div>\r\n       \r\n     \r\n    </nav>\r\n</nav>";
+module.exports = "<nav id=\"header\" class=\"app-component navbar navbar-inner navbar-fixed-top\">\r\n    <nav class=\"container\">\r\n        <div class=\"navbar-header\">\r\n            <button type=\"button\" class=\"app-component navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\".menuItemsContainer.app-component\" aria-expanded=\"false\">\r\n                <span class=\"sr-only\">Toggle navigation</span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n            </button>\r\n            <a class=\"app-component navbar-brand\" routerLink=\"/\">\r\n                <img [src]=\"appLogo\" alt=\"logo\">\r\n                <span class=\"app-component appTitle\">{{appTitle}}</span>\r\n            </a>\r\n        </div> \r\n        <div  class=\"app-component collapse navbar-collapse menuItemsContainer\">\r\n            <ul class=\"app-component nav navbar-nav nav-pills navBarPadding\" *ngFor=\"let nav of navigations\">        \r\n                <li><a routerLink=\"{{nav.route}}\">{{nav.text}}</a></li>                    \r\n            </ul>\r\n            <p *ngIf=\"isUserLoggedIn\" class=\"app-component navbar-text navbar-right notifications-popup\">\r\n                {{'app.Welcome' | translate}}\r\n                <a class=\"app-component navbar-link user-name\" [popover]=\"popTemplate\" (onHidden)=\"markNotificationsAsRead()\" placement=\"bottom\" [popoverTitle]=\"notificationsTitle\" href=\"javascript:;\" triggers=\"focus\">\r\n                    {{userName}}\r\n                    <span *ngIf=\"newNotificationCount > 0\" class=\"badge\">{{newNotificationCount}}</span>\r\n                </a>,\r\n            </p>\r\n            <ng-template #popTemplate>\r\n                <notifications-viewer [isViewOnly]=\"true\"></notifications-viewer>\r\n            </ng-template>\r\n            <div  class=\"app-component collapse navbar-collapse menuItemsContainer\">\r\n                <ul class=\"app-component nav navbar-nav nav-pills navBarPadding navbar-right\">\r\n                    <li *ngIf=\"isUserLoggedIn\" routerLinkActive=\"active\"><a routerLink=\"/settings\"><span class=\"glyphicon glyphicon-cog\"></span></a></li>\r\n                    <li ><a routerLink=\"/about\"><span class=\"glyphicon glyphicon-info-sign\"></span></a></li>\r\n                    <li *ngIf=\"isUserLoggedIn\" (click)=\"logout()\"><a href=\"javascript:;\"><span class=\"glyphicon glyphicon-log-out\"></span> {{'mainMenu.Logout' | translate}}</a></li>\r\n                    <li *ngIf=\"!isUserLoggedIn\" routerLinkActive=\"active\"><a routerLink=\"/login\"><span class=\"glyphicon glyphicon-log-in\"></span></a></li>\r\n                    <li *ngIf=\"!isUserLoggedIn\" routerLinkActive=\"active\"><a routerLink=\"/user-registration\"><span class=\"glyphicon glyphicon-user\"></span></a></li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n    </nav>\r\n</nav>";
 
 /***/ }),
 /* 181 */

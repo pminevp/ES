@@ -6,6 +6,7 @@ import { ConfigurationService } from './configuration.service';
 import { Resources } from "../../ServiceResources";
 import { Building } from "../models/building";
 import { EndpointFactory } from "./endpoint-factory.service"; 
+import { BuildingEntrance } from "../models/buildingEntrance";
 
 @Injectable()
 export class BuildingEntranceEndpointService extends EndpointFactory
@@ -34,5 +35,9 @@ export class BuildingEntranceEndpointService extends EndpointFactory
     public GetEntrancesByBuildingIdAndUserId(buildngId: number, userId: string): Observable<Response> {
 
         return this.http.get(this._BuildingEntranceByUserAndBuildingId + buildngId+"/"+ userId + "/").map((resp: Response) => { return resp; });
+    }
+
+    public AddEntrace(newEntrance: BuildingEntrance): Observable<Response> {
+        return this.http.post(this._buildingEntrancUrl, newEntrance).map((resp: Response) => { return resp; });
     }
 }

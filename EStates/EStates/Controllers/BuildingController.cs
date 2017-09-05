@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ES.Core.Handlers.Services;
 using ES.Core.Handlers;
 using ES.Data.Models;
+using System.Threading.Tasks;
 
 namespace EStates.Controllers
 {
@@ -27,6 +28,10 @@ namespace EStates.Controllers
         [HttpGet("{id}")]
         public Building Get(int id) => _buildingServices.GetById(id);
 
+
+        [HttpGet("Owner/{ownerId}")]
+        public async Task<Building> GetBuildingByOwner(string ownerId) => await _buildingServices.GetByOwnerId(ownerId);
+ 
         // POST api/values
         [HttpPost]
         public Building Post([FromBody] Building building)

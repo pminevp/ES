@@ -30,4 +30,8 @@ export class BuildingEntranceEndpoint {
     GetEntrances(buildingId: number, userId: string) {
         return this.buildingEndpoint.GetEntrancesByBuildingIdAndUserId(buildingId, userId).map((resp: Response) => <BuildingEntrance[]>resp.json());
     }
+
+    AddEntrance(newEntrance: BuildingEntrance) {
+        return this.buildingEndpoint.AddEntrace(newEntrance).map((resp: Response) => <BuildingEntrance>resp.json());
+    }
 }

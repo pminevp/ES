@@ -5,6 +5,8 @@ using ES.Core.Handlers;
 using ES.Data.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using EStates.ViewModels;
+using ES.Data.Managers.Interfaces;
 
 namespace EStates.Controllers
 {
@@ -13,9 +15,12 @@ namespace EStates.Controllers
     {
         private IUnitOfWork _unitOfWork;
 
-        public BuildingEntranceController(IUnitOfWork unitOfWork)
+        public IAccountManager _accountManager { get; }
+
+        public BuildingEntranceController(IUnitOfWork unitOfWork, IAccountManager accountManager)
         {
             _unitOfWork = unitOfWork;
+            _accountManager = accountManager;
         }
 
         [HttpGet]
@@ -52,10 +57,27 @@ namespace EStates.Controllers
 
 
         [HttpPost]
-        public void Post([FromBody]BuildingEntrance buildingEntrance)
+        public async Task<BuildingEntranceAddViewModel> Post([FromBody]BuildingEntranceAddViewModel buildingEntrance)
         {
-            _unitOfWork.BuildingEntrance.Add(buildingEntrance);
+            var building = _unitOfWork.Buildings.Get(buildingEntrance.BuildingId);
+            var owner = await _accountManager.GetUserByIdAsync(buildingEntrance.CreatorId);
+
+            if (building == null || owner == null)
+                return buildingEntrance;
+
+            var newEntrance = new BuildingEntrance
+            {
+                name = buildingEntrance.Name,
+                CurrentBuilding = building,
+                Apartaments = new List<Apartament>(),
+                manager = owner
+            };
+            _unitOfWork.BuildingEntrance.Add(newEntrance);
             _unitOfWork.SaveChanges();
+
+            buildingEntrance.Id = newEntrance.id;
+
+            return buildingEntrance;
         }
 
         [HttpPut("{id}")]

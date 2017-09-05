@@ -30,6 +30,10 @@ export class BuildingService
         return this.buildingEndpoint.GetBuilding(id).map((response: Response) => <Building>response.json());
     }
 
+    public GetBuildingByOwner(ownerId: string) {
+        return this.buildingEndpoint.GetBuildingByOwnerId(ownerId).map((resp: Response) => <Building>resp.json());
+    }
+
     public AddBuilding(building: Building)
     {
       return  this.buildingEndpoint.AddBuilding(building).map((response: Response) => <Building[]>response.json());

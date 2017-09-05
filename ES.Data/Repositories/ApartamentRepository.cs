@@ -38,11 +38,16 @@ namespace ES.Data.Repositories
 
         public  async Task<List<Apartament>> GetApartamentsByBuilding(int buildingId)
         {
-           return await appContext.Apartament
-                                                         .Include(x => x.ParentFloor)
-                                                         .Include(x => x.Owners).ToListAsync();
+            var buildings = await appContext.Building.Include(x => x.Apartaments).FirstOrDefaultAsync(x => x.Id == buildingId);
+            return buildings.Apartaments;
         }
-        
+
+        public async Task<List<Apartament>> GetApartamentsByBuildingName(string buildingName)
+        {
+            var buildings = await appContext.Building.Include(x => x.Apartaments).FirstOrDefaultAsync(x => x.Name == buildingName);
+            return buildings.Apartaments;
+        }
+
         /// <summary>
         /// Consturcts default apartament
         /// </summary>

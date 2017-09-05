@@ -12,6 +12,8 @@ namespace ES.Data.Repositories.Interfaces
 
         Task<List<Apartament>> GetApartamentsByBuilding(int buildingId);
 
+        Task<List<Apartament>> GetApartamentsByBuildingName(string buildingName);
+
         Apartament CreateDefaultApartament();
     }
 }
