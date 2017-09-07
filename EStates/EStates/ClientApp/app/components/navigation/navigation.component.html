@@ -18,7 +18,7 @@
             </ul>
             <p *ngIf="isUserLoggedIn" class="app-component navbar-text navbar-right notifications-popup">
                 {{'app.Welcome' | translate}}
-                <a class="app-component navbar-link user-name" [popover]="popTemplate" (onHidden)="markNotificationsAsRead()" placement="bottom" [popoverTitle]="notificationsTitle" href="javascript:;" triggers="focus">
+                <a class="app-component navbar-link user-name" [popover]="popTemplate" placement="bottom" [popoverTitle]="notificationsTitle" href="javascript:;" triggers="focus">
                     {{userName}}
                     <span *ngIf="newNotificationCount > 0" class="badge">{{newNotificationCount}}</span>
                 </a>,

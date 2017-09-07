@@ -1,5 +1,5 @@
 ﻿<div>
-    <div class="row control-box">
+    <div class="row control-box" *ngIf="!isViewOnly">
         <div class="col-sm-9">
             <div class="form-group search-box">
                 <search-box (searchChange)="onSearchChanged($event)" placeholder="{{'todoDemo.management.Search' | translate}}"></search-box>
