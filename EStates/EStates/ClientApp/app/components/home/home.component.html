@@ -50,13 +50,41 @@
         </div>
 
         <br />
-        <div *ngIf="configurations.showDashboardNotifications && isUserLoggedIn" class="row bottom-space">
-            <button type="button" class="close pull-right todo-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardNotifications = false">
-                <span aria-hidden="true">&times;</span>
+        
+        <nav class="navbar navbar-dark bg-dark">
+            <button class="navbar-toggler btn btn-info" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">Съобщения</span>
             </button>
-            <div class="clearfix"></div>
-            <notifications-viewer></notifications-viewer>
+            <button class="navbar-toggler btn btn-default" type="button" data-toggle="collapse" data-target="#sss" aria-controls="sss" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">Суми заплащания</span>
+            </button>
+        </nav>
+        <div class="pos-f-t">
+            <div class="collapsed" id="navbarToggleExternalContent">
+                <div class="bg-dark p-4">
+                    <div *ngIf="configurations.showDashboardNotifications && isUserLoggedIn" class="row bottom-space">
+                        <button type="button" class="close pull-right todo-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardNotifications = false">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="clearfix"></div>
+                        <notifications-viewer></notifications-viewer>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse" id="sss">
+                <div class="bg-dark p-4">
+                    <div *ngIf="configurations.showDashboardTodo" class="row bottom-space">
+                        <button type="button" class="close pull-right todo-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardTodo = false">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="clearfix"></div>
+                        <todo-demo></todo-demo>
+                    </div>
+                </div>
+            </div>
+
         </div>
+     
         <div id="MediaContent" class="well">
             <div class="media">
                 <div class="media-left">
@@ -115,16 +143,5 @@
                 </div>
             </div>
         </div>
-
-
-
-        <div *ngIf="configurations.showDashboardTodo" class="row bottom-space">
-            <button type="button" class="close pull-right todo-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardTodo = false">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="clearfix"></div>
-            <todo-demo></todo-demo>
-        </div>
-
     </div>
 </div>
