@@ -40,7 +40,7 @@ export class BuildingApartamentEndpointService extends EndpointFactory
     }
 
 
-    public GetApartamentsByBuildingId(buildingId: number): Observable<Response> {
+    public GetApartamentsByBuildingId(buildingId: any): Observable<Response> {
         return this.http.get(this._buildingApartamentByBuildingIdUrl + buildingId).map((response: Response) => { return response; });
     }
 

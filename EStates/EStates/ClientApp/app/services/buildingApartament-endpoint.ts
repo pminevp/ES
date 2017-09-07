@@ -22,7 +22,7 @@ export class BuildingApartamentEndpoint{
         return this.buildingEndpointService.GetApartamentById(id).map((resp: Response) => <Apartament>resp.json());
     }
 
-    GetByBuildingId(buildingId: number) {
+    GetByBuildingId(buildingId: any) {
         return this.buildingEndpointService.GetApartamentsByBuildingId(buildingId).map((resp: Response) => <Apartament[]>resp.json());
     }
 

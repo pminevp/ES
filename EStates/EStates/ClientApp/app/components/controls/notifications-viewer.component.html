@@ -1,19 +1,16 @@
 ﻿<div>
     <div class="row control-box">
-        <div class="col-sm-8">
+        <div class="col-sm-9">
             <div class="form-group search-box">
                 <search-box (searchChange)="onSearchChanged($event)" placeholder="{{'todoDemo.management.Search' | translate}}"></search-box>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="navbar action-box">
-                <ul class="nav navbar-nav">
-                    <li [class.active]="hideCompletedTasks" class="toolbaritem"><a href="javascript:;" (click)="hideCompletedTasks = !hideCompletedTasks"><i class="fa fa-eye-slash"></i> {{'todoDemo.management.HideCompleted' | translate}}</a></li>
-                    <li class="toolbaritem"><a href="javascript:;" (click)="addTask()"><i class="fa fa-plus"></i>Добави съобщение</a></li>
-                </ul>
-            </div>
+        <div class="col-sm-2">
+            <ul class="nav navbar-nav">
+                <li class="toolbaritem"><a href="javascript:;" (click)="addTask()"><i class="fa fa-plus"></i>Добави съобщение</a></li>
+            </ul>
         </div>
-    </div>                   
+    </div>
     <ngx-datatable class="material colored-header sm table-hover"
                    [loadingIndicator]="loadingIndicator"
                    [rows]="rows"
@@ -41,13 +38,13 @@
     </ng-template>
 
     <ng-template #contentHeaderTemplate let-row="row" let-value="value">
-        <span [class.unread]="!row.isRead" attr.title="{{row.body}}">
+        <span [class.unread]="!row.isRead" attr.title="{{row.header}}">
             {{value}}
         </span>
     </ng-template>
 
     <ng-template #contenBodytTemplate let-row="row" let-value="value">
-        <span [class.unread]="!row.isRead" attr.title="{{row.header}}">
+        <span [class.unread]="!row.isRead" attr.title="{{row.body}}">
             {{value}}
         </span>
     </ng-template>
@@ -59,13 +56,15 @@
             <i *ngIf="row.isPinned" class="fa fa-thumb-tack"></i>
             <i *ngIf="!row.isPinned" class="fa fa-thumb-tack fa-rotate-90"></i>
         </a>
+        <a class="btn btn-link btn-xs" href="javascript:;" co container="body" (click)="onShowNotification(row.id)">
+            <i class="glyphicon glyphicon-list-alt"></i>
+        </a>
     </ng-template>
 </div>
 
-
 <!-- Modalaaa  -->
 <div class="modal fade" bsModal #editorModal="bs-modal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title pull-left"><i class="fa fa-tasks"></i> Добавяне на съобщение</h4>
@@ -75,13 +74,11 @@
             </div>
             <div class="modal-body">
                 <form *ngIf="formResetToggle" class="form-horizontal" name="taskEditorForm" #f="ngForm" novalidate
-                      (ngSubmit)="f.form.valid ? save() :
+                      (ngSubmit)="f.form.valid? ( !isEditMode? save() : update() ) :
                       (!taskName.valid && showErrorAlert('Task name is required', 'Please enter a name for the task'));">
-
-
                     <div class="form-group has-feedback">
-                        <label class="control-label col-md-2" for="taskName">Заглавие</label>
-                        <div class="col-md-10" [ngClass]="{'has-success': f.submitted && taskName.valid, 'has-error' : f.submitted && !taskName.valid}">
+                        <label class="control-label col-md-3" for="taskName">Заглавие</label>
+                        <div class="col-md-9" [ngClass]="{'has-success': f.submitted && taskName.valid, 'has-error' : f.submitted && !taskName.valid}">
                             <input autofocus type="text" id="taskName" name="taskName" placeholder="Enter task name" class="form-control" [(ngModel)]="newNotification.header" #taskName="ngModel" required />
                             <span *ngIf="f.submitted" class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok ':taskName.valid, 'glyphicon-remove' : !taskName.valid}"></span>
                             <span *ngIf="f.submitted && !taskName.valid" class="errorMessage">
@@ -91,29 +88,62 @@
                     </div>
 
                     <div class="form-group description-form-group">
-                        <label class="control-label col-md-2" for="taskDescription">Описание на таска:</label>
-                        <div class="col-md-10">
-                            <input type="text" id="taskDescription" name="taskDescription" placeholder="Enter task description" class="form-control" [(ngModel)]="newNotification.body" />
+                        <label class="control-label col-md-3" for="taskDescription">Описание на таска:</label>
+                        <div class="col-md-9">
+                            <textarea id="taskDescription" name="taskDescription" class="form-control" [(ngModel)]="newNotification.body" [ngModelOptions]="{standalone: true}"></textarea>
                         </div>
-                    </div>
-                    <label class="control-label col-md-2"> </label>
-                    <div class="col-md-7">
-                        <div class="checkbox">
-                            <label>
-                                <input name="isImportant" type="checkbox" [(ngModel)]="taskEdit.important">
-                                Важен ли е таска
-                            </label>
+                    </div>  
+                    <div class="form-group has-feedback" *ngIf="buildings != null">
+                        <label class="control-label col-md-3" for="apartaments-user-info">Избери Сграда:</label>
+                        <div class="col-md-9">
+                            <select id="building-user-info" name="building-user-info" [(ngModel)]="newNotification.buildingId" #ownedApartaments="ngModel" class="selectpicker form-control" bootstrapSelect required
+                                    data-live-search="true" data-actions-box="false" data-live-search-placeholder="Search..." title="Избери апартамент" (change)="loadEntrances($event.target.value)" >
+                                <option *ngFor="let bld of buildings" attr.data-content="<span title='{{bld.name}}' class='badge'>{{bld.name}}</span>" attr.bldname="{{bld.name}}" attr.value="{{bld.id}}">
+                                    {{bld.name}}
+                                </option>
+                            </select>
+                            <span *ngIf="f.submitted" class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok ':taskName.valid, 'glyphicon-remove' : !taskName.valid}"></span>
+                            <span *ngIf="f.submitted && !taskName.valid" class="errorMessage">
+                               Моля изберете съответния блок
+                            </span>
                         </div>
-                    </div>
-
+                    </div>  
+                    <div class="form-group has-feedback" *ngIf="buildingEntrances != null">
+                        <label class="control-label col-md-3" for="buildingEntrance-user-info">Избери Вход:</label>
+                        <div class="col-md-9">
+                            <select id="buildingEntrance-user-info" name="buildingEntrance-user-info" [(ngModel)]="newNotification.buildingEntranceId" #ownedApartaments="ngModel" class="selectpicker form-control" bootstrapSelect required
+                                    data-live-search="true" data-actions-box="false" data-live-search-placeholder="Search..." title="Избери Вход" (change)="loadFloors($event.target.value)">
+                                <option *ngFor="let entr of buildingEntrances" attr.data-content="<span title='{{entr.name}}' class='badge'>{{entr.name}}</span>" attr.value="{{entr.id}}">
+                                    {{entr.name}}
+                                </option>
+                            </select>
+                            <span *ngIf="f.submitted" class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok ':taskName.valid, 'glyphicon-remove' : !taskName.valid}"></span>
+                            <span *ngIf="f.submitted && !taskName.valid" class="errorMessage">
+                                Моля изберете съответния вход
+                            </span>
+                        </div>
+                    </div>   
+                    <div class="form-group has-feedback" *ngIf="buildingFloors != null">
+                        <label class="control-label col-md-3" for="buildingFloors-user-info">Избери Етаж:</label>
+                        <div class="col-md-9">
+                            <select id="buildingFloors-user-info" name="buildingFloors-user-info" [(ngModel)]="newNotification.buildingFloorId" #ownedApartaments="ngModel" class="selectpicker form-control" bootstrapSelect required
+                                    data-live-search="true" data-actions-box="false" data-live-search-placeholder="Search..." title="Избери Етаж" >
+                                <option *ngFor="let fl of buildingFloors" attr.data-content="<span title='{{fl.name}}' class='badge'>{{fl.name}}</span>" attr.value="{{fl.id}}">
+                                    {{fl.name}}
+                                </option>
+                            </select>
+                            <span *ngIf="f.submitted" class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok ':taskName.valid, 'glyphicon-remove' : !taskName.valid}"></span>
+                            <span *ngIf="f.submitted && !taskName.valid" class="errorMessage">
+                                Моля изберете съответния етаж
+                            </span>
+                        </div>
+                    </div>  
                     <div class="col-md-12">
                         <hr class="edit-last-separator-hr" />
                     </div>
-
-
                     <div class="form-group actionBtn-form-group">
                         <div class="pull-right">
-                            <button type="submit" class="btn btn-primary">Добави Задача</button>
+                            <button type="submit" class="btn btn-primary">{{isEditMode? "Промени" : "Добави"}}</button>
                         </div>
                     </div>
                     <div class="clearfix"></div>

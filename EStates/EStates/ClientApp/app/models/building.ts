@@ -2,7 +2,7 @@
 
 export class Building {
     id: number;
-    image: any;
+    //image: any;
     name: string;
     description: string;
     entrances?: number;

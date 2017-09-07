@@ -8,7 +8,7 @@ namespace ES.Core.Handlers.Services
     public class NotificationService : BaseServices
     {
         public NotificationService(ApplicationDbContext context) : base(context)
-        {           
+        {
         }
 
         public NotificationService(IUnitOfWork unitOfWork) : base(unitOfWork)
@@ -30,6 +30,8 @@ namespace ES.Core.Handlers.Services
         }
 
         public Notification Get(int Id) => _unitOfWork.Notifications.Get(Id);
+
+        public List<Notification> GetAllNotificaitons() => _unitOfWork.Notifications.GetAll().ToList();
 
         public List<Notification> GetGlobalNotifications() => GetAll().Where(x => x.BuildingId == 0).ToList();
 
@@ -75,6 +77,19 @@ namespace ES.Core.Handlers.Services
             return notificaiton;
         }
 
+        public void DeleteNotification(Notification notifiation)
+        {
+            _unitOfWork.Notifications.Remove(notifiation);
+            _unitOfWork.SaveChanges();
+        }
+
+        public void UpdateNotification(Notification Updatednotification)
+        {
+            _unitOfWork.Notifications.Update(Updatednotification);
+        }
+
         private List<Notification> GetAll() => _unitOfWork.Notifications.GetAll().ToList();
+
+       
     }
 }

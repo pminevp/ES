@@ -52,7 +52,7 @@ namespace EStates.Controllers
         [HttpGet]
         public IEnumerable<Notification> Get()
         {
-            return _notificationService.GetGlobalNotifications();
+            return _notificationService.GetAllNotificaitons();
         }
 
         // GET api/values/5
@@ -84,9 +84,11 @@ namespace EStates.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut()]
+        public Notification Put([FromBody]Notification updatedNotification)
         {
+            _notificationService.UpdateNotification(updatedNotification);
+            return updatedNotification;
         }
 
         [HttpPut("{id}/readable/{isReadable}/")]
@@ -111,8 +113,12 @@ namespace EStates.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public Notification Delete(int id)
         {
+            var notif = _notificationService.Get(id);
+            _notificationService.DeleteNotification(notif);
+
+            return notif;
         }
     }
 }

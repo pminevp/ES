@@ -30,16 +30,24 @@ export class BuildingsComponent implements OnInit {
 
         var userId = this.accountService.currentUser.id;
 
-        this.buildingService.GetBuildingByOwner(userId).subscribe(building => {
-            this.onBuildingLoadSuccessful(building);
-            if (this.buildings.length == 1) {
-
-                if (this.accountService.userHasPermission(Permission.AssignBuildingsPermission) == false) {
-                    window.location.href = "building-details/" + this.buildings[0].id
-                }
-            }
+        if (this.accountService.userHasPermission(Permission.AssignBuildingsPermission))
+        {
+            this.buildingService.GetAllBuildings().subscribe(bld => {
+                this.buildings = bld;
+            });
         }
-            , error => this.onBuildingLoadFailed(error));
+        else
+        {
+            this.buildingService.GetBuildingByOwner(userId).subscribe(building => {
+                this.onBuildingLoadSuccessful(building);
+                if (this.buildings.length == 1) {
+
+                    if (this.accountService.userHasPermission(Permission.AssignBuildingsPermission) == false) {
+                        window.location.href = "building-details/" + this.buildings[0].id
+                    }
+                }
+            }                , error => this.onBuildingLoadFailed(error));
+        }    
     }
 
     private onBuildingLoadSuccessful(_building: Building) {

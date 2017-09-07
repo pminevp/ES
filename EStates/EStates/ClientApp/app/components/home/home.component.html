@@ -14,7 +14,7 @@
                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
             </ol>
             <!-- Wrapper for slides -->
-            <div class="carousel-inner"  role="listbox">
+            <div class="carousel-inner" role="listbox">
                 <div class="item active">
                     <img style="width:900px; height:500px;" src="https://www.startpackingidaho.com/images/house_double_story43_500_01.jpg" alt="">
                     <div class="carousel-caption">
@@ -48,21 +48,15 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        
-        <br />
-        <div *ngIf="isUserLoggedIn" class="panel panel-default">
-            <div class="panel-heading">Събития</div>
-            <div class="panel-body">
-                <div *ngIf="configurations.showDashboardNotifications" class="row bottom-space">
-                    <button type="button" class="close pull-right todo-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardNotifications = false">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <div class="clearfix"></div>
-                    <notifications-viewer></notifications-viewer>
-                </div>
-            </div>
-        </div>
 
+        <br />
+        <div *ngIf="configurations.showDashboardNotifications && isUserLoggedIn" class="row bottom-space">
+            <button type="button" class="close pull-right todo-close-btn" aria-label="Close" title="Close" (click)="configurations.showDashboardNotifications = false">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="clearfix"></div>
+            <notifications-viewer></notifications-viewer>
+        </div>
         <div id="MediaContent" class="well">
             <div class="media">
                 <div class="media-left">
@@ -121,7 +115,7 @@
                 </div>
             </div>
         </div>
-      
+
 
 
         <div *ngIf="configurations.showDashboardTodo" class="row bottom-space">

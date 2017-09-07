@@ -31,5 +31,6 @@ export class Notification {
     public buildingId: number;
     public buildingEntranceId: number;
     public buildingFloorId: number;
+    public ownerId: string;
 
 }

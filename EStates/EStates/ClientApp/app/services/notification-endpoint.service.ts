@@ -13,7 +13,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import { EndpointFactory } from "./endpoint-factory.service";
 import { ConfigurationService } from "./configuration.service";
-
+import { Notification } from '../models/notification.model';
 
 @Injectable()
 export class NotificationEndpoint extends EndpointFactory {
@@ -155,21 +155,31 @@ export class NotificationEndpoint extends EndpointFactory {
 
     getDeleteNotificationEndpoint(notificationId: number): Observable<Response> {
 
-        let notification = this.demoNotifications.find(val => val.id == notificationId);
-        let response: Response;
+        //let notification = this.demoNotifications.find(val => val.id == notificationId);
+        //let response: Response;
 
-        if (notification) {
-            this.demoNotifications = this.demoNotifications.filter(val => val.id != notificationId)
-            response = this.createResponse(notification, 200);
-        }
-        else {
-            response = this.createResponse(null, 404);
-        }
+        //if (notification) {
+        //    this.demoNotifications = this.demoNotifications.filter(val => val.id != notificationId)
+        //    response = this.createResponse(notification, 200);
+        //}
+        //else {
+        //    response = this.createResponse(null, 404);
+        //}
 
-        return Observable.of(response);
+        //return Observable.of(response);
+
+        return this.http.delete(this._notificationUrl + notificationId).map((resp: Response) => { return resp; } );
     }
 
 
+    AddNotification(notification: Notification): Observable<Response> {
+        return this.http.post(this._notificationUrl, notification).map((resp: Response) => { return resp; });
+    }
+
+    UpdateNotification(notification: Notification): Observable<Response> {
+        console.log(notification);
+        return this.http.put(this._notificationUrl, notification).map((resp: Response) => { return resp; });
+    }
 
     private createResponse(body, status: number) {
         return new Response(new ResponseOptions({ body: body, status: status }));

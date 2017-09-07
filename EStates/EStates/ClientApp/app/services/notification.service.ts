@@ -115,22 +115,38 @@ export class NotificationService {
 
 
 
-    deleteNotification(notificationOrNotificationId: number | Notification): Observable<Notification> {
+    deleteNotification(notificationId: number): Observable<Notification> {
 
-        if (typeof notificationOrNotificationId === 'number' || notificationOrNotificationId instanceof Number) { //Todo: Test me if its check is valid
-            return this.notificationEndpoint.getDeleteNotificationEndpoint(<number>notificationOrNotificationId)
-                .map((response: Response) => {
-                    this.recentNotifications = this.recentNotifications.filter(n => n.id != notificationOrNotificationId);
-                    return Notification.Create(response.json());
-                });
-        }
-        else {
-            return this.deleteNotification(notificationOrNotificationId.id);
-        }
+        return this.notificationEndpoint.getDeleteNotificationEndpoint(notificationId)
+                                        .map((resp: Response) => <Notification>resp.json());
+        //if (typeof notificationOrNotificationId === 'number' || notificationOrNotificationId instanceof Number) { //Todo: Test me if its check is valid
+        //    return this.notificationEndpoint.getDeleteNotificationEndpoint(<number>notificationOrNotificationId)
+        //        .map((response: Response) => {
+        //            this.recentNotifications = this.recentNotifications.filter(n => n.id != notificationOrNotificationId);
+        //            return Notification.Create(response.json());
+        //        });
+        //}
+        //else {
+        //    return this.deleteNotification(notificationOrNotificationId.id);
+        //}
     }
 
 
+    AddNotification(notification: Notification) {
 
+        return this.notificationEndpoint.AddNotification(notification)
+                                        .map((resp: Response) => <Notification>resp.json());
+    }
+
+    DeleteNotification(notificaiton: Notification) {
+        return this.notificationEndpoint.getDeleteNotificationEndpoint(notificaiton.id)
+                                        .map((resp: Response) => <Notification>resp.json());
+    }
+
+    UpdateNotificaiton(notification: Notification) {
+        return this.notificationEndpoint.UpdateNotification(notification)
+                                        .map((resp: Response) => <Notification>resp.json());
+    }
 
     private processNewNotificationsFromResponse(response: Response) {
         let notifications = this.getNotificationsFromResponse(response);

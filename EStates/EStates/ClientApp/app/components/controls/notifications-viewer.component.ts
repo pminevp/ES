@@ -16,7 +16,14 @@ import { Permission } from '../../models/permission.model';
 import { Utilities } from "../../services/utilities";
 import { Notification } from '../../models/notification.model';
 import { ModalDirective } from "ngx-bootstrap/modal";
-
+import { Building } from "../../models/building";
+import { BuildingService } from "../../services/BuildingService";
+import { BuildingApartamentEndpoint } from "../../services/buildingApartament-endpoint";
+import { Apartament } from "../../models/apartament";
+import { BuildingEntrance } from "../../models/buildingEntrance";
+import { BuildingEntranceEndpoint } from "../../services/buildingEntrance-endpoint";
+import { BuildingFloorService } from "../../services/BuildingFloor.service";
+import { BuildingFloor } from "../../models/buildingFloor";
 
 @Component({
     selector: 'notifications-viewer',
@@ -25,11 +32,19 @@ import { ModalDirective } from "ngx-bootstrap/modal";
 })
 export class NotificationsViewerComponent implements OnInit, OnDestroy {
     columns: any[] = [];
+    rowsChached: Notification[];
     rows: Notification[];
     loadingIndicator: boolean;
     formResetToggle: boolean = true;
     newNotification: Notification;
-    
+    buildings: Building[];
+    buildingEntrances: BuildingEntrance[];
+    buildingFloors: BuildingFloor[];
+
+    selectedBuilding: Building;
+    selectedFloor: BuildingFloor;
+
+    availableApartaments: Apartament[];
 
     dataLoadingConsecutiveFailurs = 0;
     dataLoadingSubscription: any;
@@ -63,9 +78,9 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
     @ViewChild('editorModal')
     editorModal: ModalDirective;
 
-    constructor(private alertService: AlertService, private translationService: AppTranslationService, private accountService: AccountService, private notificationService: NotificationService) {
+    constructor(private alertService: AlertService, private translationService: AppTranslationService, private accountService: AccountService, private notificationService: NotificationService, private buildingService: BuildingService, private apartamentEndpoint: BuildingApartamentEndpoint, private buildingEntranceEndpoint: BuildingEntranceEndpoint, private buildingFloorEndpoint: BuildingFloorService) {
 
-        this.newNotification = new Notification();  
+        this.newNotification = new Notification();
     }
 
 
@@ -74,7 +89,7 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
         if (this.isViewOnly) {
             this.columns = [
                 { prop: 'date', cellTemplate: this.dateTemplate, width: 100, resizeable: false, canAutoResize: false, sortable: false, draggable: false },
-                { prop: 'header', cellTemplate: this.contentHeaderTemplate, width: 200, resizeable: false, sortable: false, draggable: false },
+                { prop: 'body', cellTemplate: this.contentHeaderTemplate, width: 200, resizeable: false, sortable: false, draggable: false },
             ];
         }
         else {
@@ -83,7 +98,7 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
             this.columns = [
                 { prop: "", name: '', width: 10, headerTemplate: this.statusHeaderTemplate, cellTemplate: this.statusTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false },
                 { prop: 'date', name: 'Дата', cellTemplate: this.dateTemplate, width: 30 },
-                { prop: 'body', name: 'Съобщение', cellTemplate: this.contenBodytTemplate, width: 500 },
+                { prop: 'header', name: 'Съобщение', cellTemplate: this.contenBodytTemplate, width: 500 },
                 { name: '', width: 80, cellTemplate: this.actionsTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false }
             ];
         }
@@ -120,6 +135,7 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
                 this.dataLoadingConsecutiveFailurs = 0;
 
                 this.rows = this.processResults(notifications);
+                this.rowsChached = this.rows;
             },
             error => {
                 this.alertService.stopLoadingMessage();
@@ -138,6 +154,69 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
 
         if (this.isViewOnly)
             this.dataLoadingSubscription = null;
+
+        if (this.accountService.userHasPermission(Permission.AssignBuildingsPermission)) {
+
+            this.buildingService.GetAllBuildings().subscribe(
+                blds => {
+
+                    var systemBuilding = new Building();
+                    systemBuilding.id = 0;
+                    systemBuilding.name="За Всички блокове"
+
+                    this.buildings = blds;
+                    this.buildings.push(systemBuilding);              
+                },
+                wrr => { console.log(wrr); });
+        }
+        else
+        {            
+            this.buildingService.GetBuildingByOwner(this.accountService.currentUser.id).subscribe(
+                bld => {
+                    this.selectedBuilding = bld;
+                }
+            );
+        }
+    }
+
+
+    public loadEntrances(buildingId: number) {
+
+        var selectedBuilding = this.buildings.find(x => x.id == buildingId);
+        console.log(selectedBuilding)
+
+        if (selectedBuilding.id != 0) {
+            //this.apartamentEndpoint.GetByBuildingId(selectedBuilding.name).subscribe(aparts => this.availableApartaments = aparts);
+
+            this.buildingEntranceEndpoint.GetEntrancesByBuildingId(buildingId).subscribe(
+                entrances => {
+
+                    var systemEntrance = new BuildingEntrance();
+                    systemEntrance.id = 0;
+                    systemEntrance.name = "Всички входове";
+
+                    this.buildingEntrances = entrances;
+                    this.buildingEntrances.push(systemEntrance);
+                },
+                err => console.log(err)
+            );
+        }
+    }
+
+    public loadFloors(entranceId: number) {
+        console.log(entranceId);
+        if (entranceId != 0) {
+            this.buildingFloorEndpoint.GetFloorsByEntranceId(entranceId).subscribe(
+                floors => {
+
+                    this.buildingFloors = floors;
+                    var sysFloor = new BuildingFloor();
+                    sysFloor.id = 0;
+                    sysFloor.name = "Всички Етажи";
+                    this.buildingFloors.push(sysFloor);
+                }
+            );
+        }
     }
 
 
@@ -161,16 +240,16 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
 
 
     deleteNotification(row: Notification) {
-        this.alertService.showDialog('Are you sure you want to delete the notification \"' + row.header + '\"?', DialogType.confirm, () => this.deleteNotificationHelper(row));
+        this.alertService.showDialog('Желаете ли да изтриете \"' + row.header + '\"?', DialogType.confirm, () => this.deleteNotificationHelper(row));
     }
 
 
     deleteNotificationHelper(row: Notification) {
 
-        this.alertService.startLoadingMessage("Deleting...");
+        this.alertService.startLoadingMessage("Изтриване на съобщение...");
         this.loadingIndicator = true;
 
-        this.notificationService.deleteNotification(row)
+        this.notificationService.deleteNotification(row.id)
             .subscribe(results => {
                 this.alertService.stopLoadingMessage();
                 this.loadingIndicator = false;
@@ -181,7 +260,7 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
                 this.alertService.stopLoadingMessage();
                 this.loadingIndicator = false;
 
-                this.alertService.showStickyMessage("Delete Error", `An error occured whilst deleting the notification.\r\nError: "${Utilities.getHttpResponseMessage(error)}"`,
+                this.alertService.showStickyMessage("Грешка!", `Съобщението неможе да бъде изтрито.`,
                     MessageSeverity.error, error);
             });
     }
@@ -216,19 +295,60 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
         return this.accountService.userHasPermission(Permission.manageRolesPermission); //Todo: Consider creating separate permission for notifications
     }
 
+
+    isEditMode: Boolean;
     taskEdit = {};
 
 
     save() {
 
+        var currentDate = new Date();
+        this.newNotification.date = currentDate;
+        this.newNotification.ownerId = this.accountService.currentUser.id;
 
-        this.rows.push(this.newNotification);
+        if (this.selectedBuilding != null) {
+            this.newNotification.buildingId = this.selectedBuilding.id;
+        }
+
+        this.notificationService.AddNotification(this.newNotification).subscribe(
+
+            obj => {
+
+                if (obj.id != 0) {
+                    this.rowsChached.push(obj);
+                    this.newNotification = new Notification();
+                    this.buildingFloors = null;
+                    this.buildingEntrances = null;
+                }
+            },
+            err => {
+                this.alertService.showMessage("Проблем при записване!", "Проблем при записването на ново съобщение.", MessageSeverity.error);
+                console.log(err);
+            }
+        );
+
         this.editorModal.hide();
-        this.newNotification = new Notification();
-        
+    }
+
+    update() {
+
+        this.notificationService.UpdateNotificaiton(this.newNotification).subscribe(
+
+            obj => {
+
+                this.alertService.showMessage("Успешна редкация!", "Промените бяха успешно запазени.", MessageSeverity.success);
+                this.editorModal.hide();
+                this.newNotification = new Notification();
+            },
+            err => {
+                this.alertService.showMessage("Проблем при записване!", "Проблем при записването на ново съобщение.", MessageSeverity.error);
+                console.log(err);
+            }
+        );
     }
 
     addTask() {
+        this.isEditMode = false;
         this.formResetToggle = false;
 
         setTimeout(() => {
@@ -242,4 +362,44 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
     showErrorAlert(caption: string, message: string) {
         this.alertService.showMessage(caption, message, MessageSeverity.error);
     }
+
+    onSearchChanged(value: string) {
+        if (value) {
+            value = value.toLowerCase();
+
+            console.log(this.rows);
+            let filteredRows = this.rowsChached.filter(r => {
+                let isChosen = !value
+                    || r.header.toLowerCase().indexOf(value) !== -1
+
+                return isChosen;
+            });
+
+            this.rows = filteredRows;
+        }
+        else {
+            this.rows = [...this.rowsChached];
+        }
+    }
+
+
+    onShowNotification(id: number) {
+
+        this.isEditMode = true;
+        var notification = this.rowsChached.find(x => x.id == id);
+
+        if (notification.buildingId != 0 && notification.buildingEntranceId != 0)
+            this.loadEntrances(notification.buildingId);
+        else
+            this.buildingEntrances = null;
+
+        if (notification.buildingEntranceId != 0 && notification.buildingFloorId != 0)
+            this.loadFloors(notification.buildingEntranceId);
+        else
+            this.buildingFloors = null;
+
+        this.newNotification = notification;
+        this.editorModal.show();
+    }
+
 }
