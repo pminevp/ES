@@ -28,4 +28,8 @@ export class BuildingFloorService {
     GetApartamentsByFloorId(id: number) {
         return this.BuildingFloorEndpoint.GetApartamentsByFloorId(id).map((response: Response) => { return <Apartament[]>response.json(); });
     }
+
+    AddBuildingFloor(buildingFloor: BuildingFloor) {
+        return this.BuildingFloorEndpoint.AddBuildingFloor(buildingFloor).map((response: Response) => { return <BuildingFloor>response.json(); });
+    }
 }

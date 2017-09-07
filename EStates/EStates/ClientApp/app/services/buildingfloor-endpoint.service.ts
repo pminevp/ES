@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { EndpointFactory } from './endpoint-factory.service';
 import { ConfigurationService } from './configuration.service';
+import { BuildingFloor } from "../models/buildingFloor";
 
 @Injectable()
 export class BuildingFloorEndpoint extends EndpointFactory {
@@ -40,6 +41,10 @@ export class BuildingFloorEndpoint extends EndpointFactory {
     public GetApartamentsByFloorId(id: number): Observable<Response> {
 
         return this.http.get(this.getApartamentsByFloorIdUrl() + id).map((response: Response) => { return response; });
+    }
+
+    public AddBuildingFloor(buildFloor: BuildingFloor): Observable<Response> {
+        return this.http.post(this.getFloorsByEntranceUrl(), buildFloor).map((resp: Response) => { return resp; });
     }
 
 }

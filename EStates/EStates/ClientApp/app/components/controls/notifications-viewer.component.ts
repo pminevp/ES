@@ -170,23 +170,35 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
                 wrr => { console.log(wrr); });
         }
         else
-        {            
+        {               
+                      
             this.buildingService.GetBuildingByOwner(this.accountService.currentUser.id).subscribe(
                 bld => {
                     this.selectedBuilding = bld;
+                    this.loadEntrances(bld.id);
                 }
             );
+          
         }
     }
 
 
     public loadEntrances(buildingId: number) {
 
-        var selectedBuilding = this.buildings.find(x => x.id == buildingId);
-        console.log(selectedBuilding)
+        this.buildingEntrances = null;
+        var selectedBuilding: Building;
+
+        if (this.buildings != null) {
+            selectedBuilding = this.buildings.find(x => x.id == buildingId);
+        }
+        else {
+            if (this.selectedBuilding != null) {
+                selectedBuilding = this.selectedBuilding;
+            }
+        }        
 
         if (selectedBuilding.id != 0) {
-            //this.apartamentEndpoint.GetByBuildingId(selectedBuilding.name).subscribe(aparts => this.availableApartaments = aparts);
+            
 
             this.buildingEntranceEndpoint.GetEntrancesByBuildingId(buildingId).subscribe(
                 entrances => {
@@ -204,8 +216,10 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
     }
 
     public loadFloors(entranceId: number) {
+        this.buildingFloors = null;
         console.log(entranceId);
         if (entranceId != 0) {
+            console.log(entranceId);
             this.buildingFloorEndpoint.GetFloorsByEntranceId(entranceId).subscribe(
                 floors => {
 
@@ -388,12 +402,12 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
         this.isEditMode = true;
         var notification = this.rowsChached.find(x => x.id == id);
 
-        if (notification.buildingId != 0 && notification.buildingEntranceId != 0)
+        if (notification.buildingId != 0 )
             this.loadEntrances(notification.buildingId);
         else
             this.buildingEntrances = null;
 
-        if (notification.buildingEntranceId != 0 && notification.buildingFloorId != 0)
+        if (notification.buildingEntranceId != 0 )
             this.loadFloors(notification.buildingEntranceId);
         else
             this.buildingFloors = null;

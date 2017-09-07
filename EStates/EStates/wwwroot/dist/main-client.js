@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "47c80cfbc5283d035ff9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "268e93ea4f87e8f7138d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -3577,6 +3577,9 @@ var BuildingFloorService = (function () {
     BuildingFloorService.prototype.GetApartamentsByFloorId = function (id) {
         return this.BuildingFloorEndpoint.GetApartamentsByFloorId(id).map(function (response) { return response.json(); });
     };
+    BuildingFloorService.prototype.AddBuildingFloor = function (buildingFloor) {
+        return this.BuildingFloorEndpoint.AddBuildingFloor(buildingFloor).map(function (response) { return response.json(); });
+    };
     BuildingFloorService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [router_1.Router, http_1.Http, buildingfloor_endpoint_service_1.BuildingFloorEndpoint])
@@ -4877,9 +4880,11 @@ var buildingFloor_1 = __webpack_require__(66);
 var http_1 = __webpack_require__(4);
 var buildingEntrance_endpoint_1 = __webpack_require__(28);
 var BuildingFloor_service_1 = __webpack_require__(27);
+var alert_service_1 = __webpack_require__(7);
 var BuildingEntrancesComponent = (function () {
-    function BuildingEntrancesComponent(route, http, buildingEntranceEndpoint, buildingFloorService) {
+    function BuildingEntrancesComponent(route, alertService, http, buildingEntranceEndpoint, buildingFloorService) {
         var _this = this;
+        this.alertService = alertService;
         this.http = http;
         this.buildingEntranceEndpoint = buildingEntranceEndpoint;
         this.buildingFloorService = buildingFloorService;
@@ -4894,8 +4899,18 @@ var BuildingEntrancesComponent = (function () {
         }
     }
     BuildingEntrancesComponent.prototype.Save = function () {
-        this.selectedFloors.push(this.newFloors);
-        this.newFloors = new buildingFloor_1.BuildingFloor();
+        var _this = this;
+        if (this.selectedEntrance != null) {
+            this.newFloors.buildingId = this.selectedEntrance.buildingId;
+            this.newFloors.buildingEntranceId = this.selectedEntrance.id;
+            this.buildingFloorService.AddBuildingFloor(this.newFloors).subscribe(function (bldFloor) {
+                _this.selectedFloors.push(bldFloor);
+            });
+            this.newFloors = new buildingFloor_1.BuildingFloor();
+        }
+        else {
+            this.alertService.showMessage("проблем с данните", "Има проблем при избиране на вход-а моля обърнете се към администратор.", alert_service_1.MessageSeverity.error);
+        }
     };
     BuildingEntrancesComponent = __decorate([
         core_1.Component({
@@ -4903,7 +4918,7 @@ var BuildingEntrancesComponent = (function () {
             template: __webpack_require__(164),
             styles: [__webpack_require__(220)]
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, http_1.Http, buildingEntrance_endpoint_1.BuildingEntranceEndpoint, BuildingFloor_service_1.BuildingFloorService])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, alert_service_1.AlertService, http_1.Http, buildingEntrance_endpoint_1.BuildingEntranceEndpoint, BuildingFloor_service_1.BuildingFloorService])
     ], BuildingEntrancesComponent);
     return BuildingEntrancesComponent;
 }());
@@ -5011,6 +5026,7 @@ var BuildingsComponent = (function () {
             });
         }
         else {
+            console.log(userId);
             this.buildingService.GetBuildingByOwner(userId).subscribe(function (building) {
                 _this.onBuildingLoadSuccessful(building);
                 if (_this.buildings.length == 1) {
@@ -6940,6 +6956,9 @@ var BuildingFloorEndpoint = (function (_super) {
     };
     BuildingFloorEndpoint.prototype.GetApartamentsByFloorId = function (id) {
         return this.http.get(this.getApartamentsByFloorIdUrl() + id).map(function (response) { return response; });
+    };
+    BuildingFloorEndpoint.prototype.AddBuildingFloor = function (buildFloor) {
+        return this.http.post(this.getFloorsByEntranceUrl(), buildFloor).map(function (resp) { return resp; });
     };
     BuildingFloorEndpoint = __decorate([
         core_1.Injectable(),
@@ -25736,15 +25755,23 @@ var NotificationsViewerComponent = (function () {
         else {
             this.buildingService.GetBuildingByOwner(this.accountService.currentUser.id).subscribe(function (bld) {
                 _this.selectedBuilding = bld;
+                _this.loadEntrances(bld.id);
             });
         }
     };
     NotificationsViewerComponent.prototype.loadEntrances = function (buildingId) {
         var _this = this;
-        var selectedBuilding = this.buildings.find(function (x) { return x.id == buildingId; });
-        console.log(selectedBuilding);
+        this.buildingEntrances = null;
+        var selectedBuilding;
+        if (this.buildings != null) {
+            selectedBuilding = this.buildings.find(function (x) { return x.id == buildingId; });
+        }
+        else {
+            if (this.selectedBuilding != null) {
+                selectedBuilding = this.selectedBuilding;
+            }
+        }
         if (selectedBuilding.id != 0) {
-            //this.apartamentEndpoint.GetByBuildingId(selectedBuilding.name).subscribe(aparts => this.availableApartaments = aparts);
             this.buildingEntranceEndpoint.GetEntrancesByBuildingId(buildingId).subscribe(function (entrances) {
                 var systemEntrance = new buildingEntrance_1.BuildingEntrance();
                 systemEntrance.id = 0;
@@ -25756,8 +25783,10 @@ var NotificationsViewerComponent = (function () {
     };
     NotificationsViewerComponent.prototype.loadFloors = function (entranceId) {
         var _this = this;
+        this.buildingFloors = null;
         console.log(entranceId);
         if (entranceId != 0) {
+            console.log(entranceId);
             this.buildingFloorEndpoint.GetFloorsByEntranceId(entranceId).subscribe(function (floors) {
                 _this.buildingFloors = floors;
                 var sysFloor = new buildingFloor_1.BuildingFloor();
@@ -25885,11 +25914,11 @@ var NotificationsViewerComponent = (function () {
     NotificationsViewerComponent.prototype.onShowNotification = function (id) {
         this.isEditMode = true;
         var notification = this.rowsChached.find(function (x) { return x.id == id; });
-        if (notification.buildingId != 0 && notification.buildingEntranceId != 0)
+        if (notification.buildingId != 0)
             this.loadEntrances(notification.buildingId);
         else
             this.buildingEntrances = null;
-        if (notification.buildingEntranceId != 0 && notification.buildingFloorId != 0)
+        if (notification.buildingEntranceId != 0)
             this.loadFloors(notification.buildingEntranceId);
         else
             this.buildingFloors = null;

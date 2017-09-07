@@ -30,8 +30,12 @@ namespace EStates.Controllers
 
 
         [HttpGet("Owner/{ownerId}")]
-        public async Task<Building> GetBuildingByOwner(string ownerId) => await _buildingServices.GetByOwnerId(ownerId);
- 
+        public async Task<Building> GetBuildingByOwner(string ownerId)   // => await _buildingServices.GetByOwnerId(ownerId);
+        {
+            var reuslt =  await _buildingServices.GetByOwnerId(ownerId);
+
+            return reuslt;
+        }
         // POST api/values
         [HttpPost]
         public Building Post([FromBody] Building building)

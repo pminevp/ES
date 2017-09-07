@@ -12,6 +12,7 @@ import { Resources } from "../../../ServiceResources";
 import { BuildingEntranceEndpoint } from "../../services/buildingEntrance-endpoint";
 import { BuildingEntrance } from "../../models/buildingEntrance";
 import { BuildingFloorService } from "../../services/BuildingFloor.service";
+import { AlertService, MessageSeverity } from "../../services/alert.service";
 
 @Component({
     selector: 'app-buildingEntrancesComponent',
@@ -27,7 +28,7 @@ export class BuildingEntrancesComponent {
     private selectedFloors: BuildingFloor[];
     newFloors: BuildingFloor;
 
-    constructor(route: ActivatedRoute, private http: Http, private buildingEntranceEndpoint: BuildingEntranceEndpoint, private buildingFloorService: BuildingFloorService) {
+    constructor(route: ActivatedRoute, private alertService: AlertService, private http: Http, private buildingEntranceEndpoint: BuildingEntranceEndpoint, private buildingFloorService: BuildingFloorService) {
 
         this.newFloors = new BuildingFloor();
 
@@ -42,8 +43,23 @@ export class BuildingEntrancesComponent {
     }
 
     Save() {
-      
-        this.selectedFloors.push(this.newFloors);
-        this.newFloors = new BuildingFloor();
+
+
+        if (this.selectedEntrance != null) {
+
+            this.newFloors.buildingId = this.selectedEntrance.buildingId;
+            this.newFloors.buildingEntranceId = this.selectedEntrance.id;
+
+            this.buildingFloorService.AddBuildingFloor(this.newFloors).subscribe(
+                bldFloor => {
+                    this.selectedFloors.push(bldFloor);                    
+                }
+            );
+
+            this.newFloors = new BuildingFloor();
+        }
+        else {
+            this.alertService.showMessage("проблем с данните", "Има проблем при избиране на вход-а моля обърнете се към администратор.", MessageSeverity.error);
+        }
     }
 }

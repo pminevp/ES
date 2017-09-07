@@ -38,6 +38,7 @@ export class BuildingsComponent implements OnInit {
         }
         else
         {
+            console.log(userId);
             this.buildingService.GetBuildingByOwner(userId).subscribe(building => {
                 this.onBuildingLoadSuccessful(building);
                 if (this.buildings.length == 1) {
