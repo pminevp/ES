@@ -48,6 +48,8 @@ export class UserRegistrationComponent {
 
         this.newUserRegistragtion.newPassword = this.newUserRegistragtion.confirmPassword;
 
+        console.log(this.newUserRegistragtion);
+
         this.accountService.newAnonimusUserCreation(this.newUserRegistragtion).subscribe((x) => {
 
             this.isSaving = false;
