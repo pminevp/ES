@@ -6,15 +6,22 @@
 // ==> Gun4Hire: contact@ebenmonney.com
 // ======================================
 
-import { Injectable } from '@angular/core';
-import { Response, ResponseOptions } from '@angular/http';
+import { Injectable, Injector } from '@angular/core';
+import { Response, ResponseOptions, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
+import { EndpointFactory } from "./endpoint-factory.service";
+import { ConfigurationService } from "./configuration.service";
 
 
 @Injectable()
-export class NotificationEndpoint {
+export class NotificationEndpoint extends EndpointFactory {
+
+    private readonly _notificationUrl: string = this.configurations.baseUrl + "/api/Notifications/"
+
+    private readonly _notificationUnreaded: string = this._notificationUrl +"ByBuilding/{buildingId}/ByFloor/{floorId}/unread"
+
 
     private demoNotifications = [
         {
@@ -44,91 +51,104 @@ export class NotificationEndpoint {
     ];
 
 
+    constructor(http: Http, configurations: ConfigurationService, injector: Injector) {
+        super(http, configurations, injector);
+    }
 
     getNotificationEndpoint(notificationId: number): Observable<Response> {
 
-        let notification = this.demoNotifications.find(val => val.id == notificationId);
-        let response: Response;
+        //let notification = this.demoNotifications.find(val => val.id == notificationId);
+        //let response: Response;
 
-        if (notification) {
-            response = this.createResponse(notification, 200);
-        }
-        else {
-            response = this.createResponse(null, 404);
-        }
+        //if (notification) {
+        //    response = this.createResponse(notification, 200);
+        //}
+        //else {
+        //    response = this.createResponse(null, 404);
+        //}
 
-        return Observable.of(response);
+        //return Observable.of(response);
+
+        return this.http.get(this._notificationUrl + notificationId).map((resp: Response) => { return resp; });
     }
 
 
 
     getNotificationsEndpoint(page: number, pageSize: number): Observable<Response> {
 
-        let notifications = this.demoNotifications;
-        let response = this.createResponse(this.demoNotifications, 200);
+        //let notifications = this.demoNotifications;
+        //let response = this.createResponse(this.demoNotifications, 200);
 
-        return Observable.of(response);
+        //return Observable.of(response);
+
+       return this.http.get(this._notificationUrl).map((resp: Response) => { return resp;})
     }
 
 
 
-    getUnreadNotificationsEndpoint(userId?: string): Observable<Response> {
+    getUnreadNotificationsEndpoint(buildingId:number, floorId: number): Observable<Response> {
 
-        let unreadNotifications = this.demoNotifications.filter(val => !val.isRead);
-        let response = this.createResponse(unreadNotifications, 200);
+        //let unreadNotifications = this.demoNotifications.filter(val => !val.isRead);
+        //let response = this.createResponse(unreadNotifications, 200);
 
-        return Observable.of(response);
+        //return Observable.of(response);
+
+        return this.http.get(this._notificationUrl + "ByBuilding/" + buildingId + "/ByFloor/" + floorId + "/unread").map((resp: Response) => { return resp; });
     }
 
 
 
     getNewNotificationsEndpoint(lastNotificationDate?: Date): Observable<Response> {
 
-        let unreadNotifications = this.demoNotifications;
-        let response = this.createResponse(unreadNotifications, 200);
+        //let unreadNotifications = this.demoNotifications;
+        //let response = this.createResponse(unreadNotifications, 200);
 
-        return Observable.of(response);
+        //return Observable.of(response);
+        return this.http.get(this._notificationUrl).map((resp: Response) => { return resp; })
     }
 
 
 
     getPinUnpinNotificationEndpoint(notificationId: number, isPinned?: boolean, ): Observable<Response> {
 
-        let notification = this.demoNotifications.find(val => val.id == notificationId);
-        let response: Response;
+        //let notification = this.demoNotifications.find(val => val.id == notificationId);
+        //let response: Response;
 
-        if (notification) {
-            response = this.createResponse(null, 204);
+        //if (notification) {
+        //    response = this.createResponse(null, 204);
 
-            if (isPinned == null)
-                isPinned = !notification.isPinned;
+        //    if (isPinned == null)
+        //        isPinned = !notification.isPinned;
 
-            notification.isPinned = isPinned;
-            notification.isRead = true;
-        }
-        else {
-            response = this.createResponse(null, 404);
-        }
+        //    notification.isPinned = isPinned;
+        //    notification.isRead = true;
+        //}
+        //else {
+        //    response = this.createResponse(null, 404);
+        //}
 
-
-        return Observable.of(response);
+        return this.http.get(this._notificationUrl + notificationId + "pinned/" + isPinned);    
     }
 
 
+    public notificationResults: Notification[];
 
     getReadUnreadNotificationEndpoint(notificationIds: number[], isRead: boolean, ): Observable<Response> {
 
-        for (let notificationId of notificationIds) {
+        //for (let notificationId of notificationIds) {
 
-            let notification = this.demoNotifications.find(val => val.id == notificationId);
+        //    let notification = this.demoNotifications.find(val => val.id == notificationId);
 
-            if (notification) {
-                notification.isRead = isRead;
-            }
-        }
+        //    if (notification) {
+        //        notification.isRead = isRead;
+        //    }
+        //}
 
-        let response = this.createResponse(null, 204);
-        return Observable.of(response);
+        //let response = this.createResponse(null, 204);
+        //return Observable.of(response);
+                
+
+        return this.http.get(this._notificationUrl + notificationIds.toString() + "readable/" + isRead);         
     }
 
 

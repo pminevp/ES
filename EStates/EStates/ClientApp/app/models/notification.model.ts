@@ -28,4 +28,8 @@ export class Notification {
     public isRead: boolean;
     public isPinned: boolean;
     public date: Date;
+    public buildingId: number;
+    public buildingEntranceId: number;
+    public buildingFloorId: number;
+
 }

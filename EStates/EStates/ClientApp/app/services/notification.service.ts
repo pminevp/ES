@@ -42,40 +42,55 @@ export class NotificationService {
 
     getNotification(notificationId?: number) {
 
-        return this.notificationEndpoint.getNotificationEndpoint(notificationId)
-            .map((response: Response) => Notification.Create(response.json()));
+        //return this.notificationEndpoint.getNotificationEndpoint(notificationId)
+        //    .map((response: Response) => Notification.Create(response.json()));
+
+        return this.notificationEndpoint.getNotificationEndpoint(notificationId).map((resp: Response) => <Notification>resp.json());
     }
 
 
     getNotifications(page: number, pageSize: number) {
 
+        //return this.notificationEndpoint.getNotificationsEndpoint(page, pageSize)
+        //    .map((response: Response) => {
+        //        return this.getNotificationsFromResponse(response);
+        //    });
+
         return this.notificationEndpoint.getNotificationsEndpoint(page, pageSize)
-            .map((response: Response) => {
-                return this.getNotificationsFromResponse(response);
-            });
+            .map((resp: Response) => <Notification[]>resp.json());
     }
 
 
-    getUnreadNotifications(userId?: string) {
+    getUnreadNotifications(buildingId: number, floorId: number) {
 
-        return this.notificationEndpoint.getUnreadNotificationsEndpoint(userId)
-            .map((response: Response) => this.getNotificationsFromResponse(response));
+        //return this.notificationEndpoint.getUnreadNotificationsEndpoint(buildingId, floorId)
+        //    .map((response: Response) => this.getNotificationsFromResponse(response));
+
+        return this.notificationEndpoint.getUnreadNotificationsEndpoint(buildingId, floorId)
+            .map((resp: Response) => <Notification[]>resp.json());
     }
 
 
     getNewNotifications() {
-        return this.notificationEndpoint.getNewNotificationsEndpoint(this.lastNotificationDate)
-            .map((response: Response) => this.processNewNotificationsFromResponse(response));
+        //return this.notificationEndpoint.getNewNotificationsEndpoint(this.lastNotificationDate)
+        //    .map((response: Response) => this.processNewNotificationsFromResponse(response));
+
+        return this.notificationEndpoint.getNotificationsEndpoint(0, 0)
+            .map((resp: Response) => <Notification[]>resp.json());
     }
 
 
     getNewNotificationsPeriodically() {
-        return Observable.interval(10000)
-            .startWith(0)
-            .flatMap(() => {
-                return this.notificationEndpoint.getNewNotificationsEndpoint(this.lastNotificationDate)
-                    .map((response: Response) => this.processNewNotificationsFromResponse(response));
-            });
+        //return Observable.interval(10000)
+        //    .startWith(0)
+        //    .flatMap(() => {
+        //        return this.notificationEndpoint.getNewNotificationsEndpoint(this.lastNotificationDate)
+        //            .map((response: Response) => this.processNewNotificationsFromResponse(response));
+        //    });
+
+        return this.notificationEndpoint.getNotificationsEndpoint(0, 0)
+            .map((resp: Response) => <Notification[]>resp.json());
+
     }
 
 

@@ -15,6 +15,7 @@ namespace ES.Data
         public DbSet<Building> Building { get; set; }
         public DbSet<BuildingFloor> BuildingFloor { get; set; }
         public DbSet<Apartament> Apartament { get; set; }
+        public DbSet<Notification> Notification { get; set; }
 
 
 
@@ -53,6 +54,8 @@ namespace ES.Data
             builder.Entity<Building>().ToTable($"App{nameof(this.Building)}");
             builder.Entity<BuildingFloor>().ToTable($"App{nameof(this.BuildingFloor)}");
             builder.Entity<Apartament>().ToTable($"App{nameof(this.Apartament)}");
+
+            builder.Entity<Notification>().ToTable($"App{nameof(this.Notification)}");
 
         }
     }

@@ -9,9 +9,10 @@ using ES.Core.Commons.Enums;
 namespace EStates.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170905125930_add_Notification_Service_V2")]
+    partial class add_Notification_Service_V2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -226,36 +227,6 @@ namespace EStates.Migrations
                     b.HasIndex("Name");
 
                     b.ToTable("AppCustomers");
-                });
-
-            modelBuilder.Entity("ES.Data.Models.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Body");
-
-                    b.Property<int>("BuildingEntranceId");
-
-                    b.Property<int>("BuildingFloorId");
-
-                    b.Property<int>("BuildingId");
-
-                    b.Property<string>("CreatorId");
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<string>("Header");
-
-                    b.Property<bool>("IsPinned");
-
-                    b.Property<bool>("IsRead");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.ToTable("AppNotification");
                 });
 
             modelBuilder.Entity("ES.Data.Models.Order", b =>
@@ -580,13 +551,6 @@ namespace EStates.Migrations
                     b.HasOne("ES.Data.Models.BuildingEntrance", "buildingEntrance")
                         .WithMany()
                         .HasForeignKey("buildingEntranceid");
-                });
-
-            modelBuilder.Entity("ES.Data.Models.Notification", b =>
-                {
-                    b.HasOne("ES.Data.Models.ApplicationUser", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
                 });
 
             modelBuilder.Entity("ES.Data.Models.Order", b =>

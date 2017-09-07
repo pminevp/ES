@@ -15,6 +15,7 @@ import { AccountService } from "../../services/account.service";
 import { Permission } from '../../models/permission.model';
 import { Utilities } from "../../services/utilities";
 import { Notification } from '../../models/notification.model';
+import { ModalDirective } from "ngx-bootstrap/modal";
 
 
 @Component({
@@ -24,8 +25,11 @@ import { Notification } from '../../models/notification.model';
 })
 export class NotificationsViewerComponent implements OnInit, OnDestroy {
     columns: any[] = [];
-    rows: Notification[] = [];
+    rows: Notification[];
     loadingIndicator: boolean;
+    formResetToggle: boolean = true;
+    newNotification: Notification;
+    
 
     dataLoadingConsecutiveFailurs = 0;
     dataLoadingSubscription: any;
@@ -56,7 +60,12 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
     @ViewChild('actionsTemplate')
     actionsTemplate: TemplateRef<any>;
 
+    @ViewChild('editorModal')
+    editorModal: ModalDirective;
+
     constructor(private alertService: AlertService, private translationService: AppTranslationService, private accountService: AccountService, private notificationService: NotificationService) {
+
+        this.newNotification = new Notification();  
     }
 
 
@@ -207,4 +216,30 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
         return this.accountService.userHasPermission(Permission.manageRolesPermission); //Todo: Consider creating separate permission for notifications
     }
 
+    taskEdit = {};
+
+
+    save() {
+
+
+        this.rows.push(this.newNotification);
+        this.editorModal.hide();
+        this.newNotification = new Notification();
+        
+    }
+
+    addTask() {
+        this.formResetToggle = false;
+
+        setTimeout(() => {
+            this.formResetToggle = true;
+
+            this.taskEdit = {};
+            this.editorModal.show();
+        });
+    }
+
+    showErrorAlert(caption: string, message: string) {
+        this.alertService.showMessage(caption, message, MessageSeverity.error);
+    }
 }

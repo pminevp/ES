@@ -19,6 +19,7 @@ namespace ES.Core.Handlers
         IApartamentRepository _apartament;
         IBuildingRepository _building;
         IBuildingEntranceRepository _buildingEntrance;
+        INotificationRepository _notifications;
 
 
         public UnitOfWork(ApplicationDbContext context)
@@ -106,6 +107,17 @@ namespace ES.Core.Handlers
                     _buildingEntrance = new BuildingEntranceRepository(_context);
 
                 return _buildingEntrance;
+            }
+        }
+
+        public INotificationRepository Notifications
+        {
+            get
+            {
+                if (_notifications == null)
+                    _notifications = new NotificationRepository(_context);
+
+                return _notifications;
             }
         }
 

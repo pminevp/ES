@@ -21,6 +21,8 @@ namespace ES.Core.Handlers
 
         IBuildingEntranceRepository BuildingEntrance { get; }
 
+        INotificationRepository Notifications { get;  }
+
         List<BuildingFloor> GetBuildingFloorByEntranceId(int id);
 
         int SaveChanges();
