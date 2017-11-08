@@ -1,12 +1,4 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Input } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Input } from '@angular/core';
 
 import { AlertService, DialogType, MessageSeverity } from '../../services/alert.service';
 import { AppTranslationService } from "../../services/app-translation.service";
@@ -399,6 +391,8 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
 
     onShowNotification(id: number) {
 
+    
+
         this.isEditMode = true;
         var notification = this.rowsChached.find(x => x.id == id);
 
@@ -411,6 +405,8 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
             this.loadFloors(notification.buildingEntranceId);
         else
             this.buildingFloors = null;
+
+        console.log(notification);
 
         this.newNotification = notification;
         this.editorModal.show();

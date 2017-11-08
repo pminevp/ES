@@ -2,7 +2,7 @@
 
 namespace ES.Data.Repositories.Interfaces
 {
-    public interface IOrdersRepository : IRepository<Order>
+    public interface IOrdersRepository : Repository<Order>
     {
 
     }

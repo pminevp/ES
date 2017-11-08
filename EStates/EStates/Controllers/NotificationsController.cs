@@ -73,7 +73,9 @@ namespace EStates.Controllers
                 BuildingId = newNotification.BuildingId,
                 Creator = user,
                 Date = DateTime.Now,
-                Header = newNotification.Header
+                Header = newNotification.Header,
+                HaveDeadline = newNotification.haveDeadline,
+                Deadline = newNotification.deadline
 
             };
 

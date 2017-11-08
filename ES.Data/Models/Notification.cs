@@ -23,5 +23,9 @@ namespace ES.Data.Models
         public int BuildingFloorId { get; set; }
 
         public ApplicationUser Creator { get; set; }
+
+        public DateTime? Deadline { get; set; }
+
+        public bool HaveDeadline { get; set; }
     }
 }

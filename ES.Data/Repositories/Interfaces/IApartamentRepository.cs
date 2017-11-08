@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ES.Data.Repositories.Interfaces
 {
-    public interface IApartamentRepository : IRepository<Apartament>
+    public interface IApartamentRepository : Repository<Apartament>
     {
         Task<List<Apartament>> GetApartamentsByFloorId(int id);
 

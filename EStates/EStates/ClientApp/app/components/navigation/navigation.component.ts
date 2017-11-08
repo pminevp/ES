@@ -96,6 +96,7 @@ export class NavigationComponent implements OnInit{
         localNavigation.push({ text: "Сгради", route: "/buildings", name: "buildings.view", id: 3 });
         localNavigation.push({ text: "Апартаменти", route: "/", name: "apartaments.view", id: 4 });
         localNavigation.push({ text: "За Нас", route: "/", name: "users.view", id: 5 });
+        localNavigation.push({ text: "Документи", route: "/docdrive", name: "users.view", id: 6 });
 
         return localNavigation;
     }

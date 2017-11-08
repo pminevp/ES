@@ -1,8 +1,6 @@
 ﻿using ES.Data.Models;
 using ES.Data.Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ES.Core.Handlers
 {
@@ -24,6 +22,10 @@ namespace ES.Core.Handlers
         INotificationRepository Notifications { get;  }
 
         List<BuildingFloor> GetBuildingFloorByEntranceId(int id);
+
+        IDocumentFileRepository Documentfiles { get; }
+
+        IDocumentDataTypeRepository DocumentDataType { get; }
 
         int SaveChanges();
     }

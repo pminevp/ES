@@ -23,5 +23,9 @@ namespace EStates.ViewModels
         public bool IsReaded { get; set; }
 
         public bool IsPinned { get; set; }
+
+        public DateTime deadline { get; set; }
+
+        public bool haveDeadline { get; set; }
     }
 }

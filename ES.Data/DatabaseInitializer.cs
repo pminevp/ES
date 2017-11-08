@@ -178,10 +178,21 @@ namespace ES.Data
                 _context.Orders.Add(ordr_1);
                 _context.Orders.Add(ordr_2);
 
+                _context.DocumentDataType.AddRange(GenerateDocumentTypes());
+
                 await _context.SaveChangesAsync();
             }
         }
 
+
+        private  List<DocumentDataType> GenerateDocumentTypes()
+        {
+            return new List<DocumentDataType> {
+                new DocumentDataType{DataTypeId=1,DataTypeName="Standart Document" },
+                new DocumentDataType{DataTypeId=2, DataTypeName="Meeting Document" },
+                new DocumentDataType{DataTypeId=3, DataTypeName="Factures"}
+            };
+        }
 
 
         private async Task ensureRoleAsync(string roleName, string description, string[] claims)

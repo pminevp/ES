@@ -2,7 +2,7 @@
 
 namespace ES.Data.Repositories.Interfaces
 {
-    public interface INotificationRepository : IRepository<Notification>
+    public interface INotificationRepository : Repository<Notification>
     {
     }
 }

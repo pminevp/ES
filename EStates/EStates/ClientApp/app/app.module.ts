@@ -82,6 +82,9 @@ import { BuildingFloorComponent } from "./components/buildingFloor/building-floo
 import { BuildingApartamentEndpoint } from "./services/buildingApartament-endpoint";
 import { BuildingApartamentEndpointService } from "./services/buildingApartament-endpoint.service";
 import { UserRegistrationComponent } from "./components/userregistration/user-registration.component";
+import { DocDriveComponent } from "./components/docDrive/docDrive.component";
+import { DockDriveEndpointService } from "./services/DockDrive-endpoint.service";
+import { DockDriveEndpoint } from "./services/DockDrive-endpoint";
 
 
 
@@ -138,7 +141,8 @@ import { UserRegistrationComponent } from "./components/userregistration/user-re
         ApartamentComponent,
         BuildingEntrancesComponent,
         BuildingFloorComponent,
-        UserRegistrationComponent
+        UserRegistrationComponent,
+        DocDriveComponent
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler },
@@ -160,7 +164,9 @@ import { UserRegistrationComponent } from "./components/userregistration/user-re
         BuildingFloorService,
         BuildingFloorEndpoint,
         BuildingApartamentEndpoint,
-        BuildingApartamentEndpointService
+        BuildingApartamentEndpointService,
+        DockDriveEndpointService,
+        DockDriveEndpoint
     ],
     bootstrap: [AppComponent]
 })

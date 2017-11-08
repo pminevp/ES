@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace ES.Data.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : Interfaces.Repository<TEntity> where TEntity : class
     {
         protected readonly DbContext _context;
         protected readonly DbSet<TEntity> _entities;

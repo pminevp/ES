@@ -42,6 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Files not to show in IDE -->
+    <None Remove="ClientApp\app\components\docDrive\docDrive.component.ts" />
+    <None Remove="ClientApp\app\models\cotnracts\baseResponse.ts" />
+    <None Remove="ClientApp\app\models\cotnracts\documentUploadResponse.ts" />
+    <None Remove="ClientApp\app\models\cotnracts\errorMessages.ts" />
+    <None Remove="ClientApp\app\models\documentFile.ts" />
+    <None Remove="ClientApp\app\models\documentResponse.ts" />
+    <None Remove="ClientApp\app\services\DockDrive-endpoint.service.ts" />
+    <None Remove="ClientApp\app\services\DockDrive-endpoint.ts" />
     <None Remove="yarn.lock" />
     <Compile Remove="wwwroot\dist\**" />
 
@@ -94,5 +102,16 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\components\docDrive\docDrive.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\cotnracts\baseResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\cotnracts\documentUploadResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\cotnracts\errorMessages.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\documentFile.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\documentResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\DockDrive-endpoint.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\DockDrive-endpoint.ts" />
   </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@ import { fadeInOut } from '../../services/animations';
     selector: 'about',
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.css'],
-    animations: [fadeInOut]
+    animations: [fadeInOut]   
 })
 export class AboutComponent {
 }

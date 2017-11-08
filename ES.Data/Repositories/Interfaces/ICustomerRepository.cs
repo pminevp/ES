@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ES.Data.Repositories.Interfaces
 {
-    public interface ICustomerRepository : IRepository<Customer>
+    public interface ICustomerRepository : Repository<Customer>
     {
         IEnumerable<Customer> GetTopActiveCustomers(int count);
         IEnumerable<Customer> GetAllCustomersData();

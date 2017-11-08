@@ -16,6 +16,8 @@ namespace ES.Data
         public DbSet<BuildingFloor> BuildingFloor { get; set; }
         public DbSet<Apartament> Apartament { get; set; }
         public DbSet<Notification> Notification { get; set; }
+        public DbSet<DocumentFile> DocumentFile { get; set; }
+        public DbSet<DocumentDataType> DocumentDataType { get; set; }
 
 
 
@@ -56,6 +58,11 @@ namespace ES.Data
             builder.Entity<Apartament>().ToTable($"App{nameof(this.Apartament)}");
 
             builder.Entity<Notification>().ToTable($"App{nameof(this.Notification)}");
+
+            builder.Entity<DocumentFile>().ToTable($"App{nameof(this.DocumentFile)}");
+
+            builder.Entity<DocumentDataType>().Property(s => s.DataTypeId).IsRequired();
+            builder.Entity<DocumentDataType>().ToTable($"App{nameof(this.DocumentDataType)}");
 
         }
     }

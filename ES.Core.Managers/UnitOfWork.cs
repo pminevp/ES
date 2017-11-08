@@ -20,7 +20,8 @@ namespace ES.Core.Handlers
         IBuildingRepository _building;
         IBuildingEntranceRepository _buildingEntrance;
         INotificationRepository _notifications;
-
+        IDocumentFileRepository _documentfiles;
+        IDocumentDataTypeRepository _documentDataType;
 
         public UnitOfWork(ApplicationDbContext context)
         {       
@@ -28,6 +29,16 @@ namespace ES.Core.Handlers
         }
 
 
+        public IDocumentDataTypeRepository DocumentDataType
+        {
+            get
+            {
+                if (_documentDataType == null)
+                    _documentDataType = new DocumentDataTypeRepository(_context);
+
+                return _documentDataType;
+            }
+        }
 
         public ICustomerRepository Customers
         {
@@ -126,6 +137,17 @@ namespace ES.Core.Handlers
             var floors = BuildingFloor.GetAll();
 
             return floors.Where(x => x.buildingEntrance.id == id).ToList();
+        }
+
+        public IDocumentFileRepository Documentfiles
+        {
+            get
+            {
+                if (_documentfiles == null)
+                    _documentfiles = new DocumentFileRepository(_context);
+
+                return _documentfiles;
+            }
         }
 
         public int SaveChanges()

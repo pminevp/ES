@@ -32,5 +32,7 @@ export class Notification {
     public buildingEntranceId: number;
     public buildingFloorId: number;
     public ownerId: string;
+    public deadline: Date;
+    public haveDeadline: boolean;
 
 }

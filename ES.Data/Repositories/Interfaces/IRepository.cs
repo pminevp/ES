@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ES.Data.Repositories.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface Repository<TEntity> where TEntity : class
     {
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);

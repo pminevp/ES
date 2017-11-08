@@ -228,6 +228,46 @@ namespace EStates.Migrations
                     b.ToTable("AppCustomers");
                 });
 
+            modelBuilder.Entity("ES.Data.Models.DocumentDataType", b =>
+                {
+                    b.Property<int>("DataTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DataTypeName");
+
+                    b.HasKey("DataTypeId");
+
+                    b.ToTable("AppDocumentDataType");
+                });
+
+            modelBuilder.Entity("ES.Data.Models.DocumentFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BuildingFloorId");
+
+                    b.Property<int>("BuildingId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("DocumentId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("TypeDataTypeId");
+
+                    b.Property<string>("creatorId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeDataTypeId");
+
+                    b.HasIndex("creatorId");
+
+                    b.ToTable("AppDocumentFile");
+                });
+
             modelBuilder.Entity("ES.Data.Models.Notification", b =>
                 {
                     b.Property<int>("Id")
@@ -244,6 +284,10 @@ namespace EStates.Migrations
                     b.Property<string>("CreatorId");
 
                     b.Property<DateTime>("Date");
+
+                    b.Property<DateTime?>("Deadline");
+
+                    b.Property<bool>("HaveDeadline");
 
                     b.Property<string>("Header");
 
@@ -580,6 +624,17 @@ namespace EStates.Migrations
                     b.HasOne("ES.Data.Models.BuildingEntrance", "buildingEntrance")
                         .WithMany()
                         .HasForeignKey("buildingEntranceid");
+                });
+
+            modelBuilder.Entity("ES.Data.Models.DocumentFile", b =>
+                {
+                    b.HasOne("ES.Data.Models.DocumentDataType", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeDataTypeId");
+
+                    b.HasOne("ES.Data.Models.ApplicationUser", "creator")
+                        .WithMany()
+                        .HasForeignKey("creatorId");
                 });
 
             modelBuilder.Entity("ES.Data.Models.Notification", b =>

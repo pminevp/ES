@@ -58,6 +58,9 @@ namespace EStates.ViewModels
 
             CreateMap<Order, OrderViewModel>()
                 .ReverseMap();
+
+            CreateMap<DocumentFileViewModel, DocumentFile>()             
+                .ReverseMap();
         }
     }
 }

@@ -25,6 +25,7 @@ import { ApartamentComponent } from "./components/apartament/apartament.componen
 import { BuildingEntrancesComponent } from "./components/buildingEntrances/building-entrances.component";
 import { BuildingFloorComponent } from "./components/buildingFloor/building-floor-component";
 import { UserRegistrationComponent } from "./components/userregistration/user-registration.component";
+import { DocDriveComponent } from "./components/docDrive/docDrive.component";
 
 
 
@@ -45,7 +46,8 @@ import { UserRegistrationComponent } from "./components/userregistration/user-re
             { path: 'building-apartaments/:id', component: ApartamentComponent },
             { path: 'building-entrance/:id', component: BuildingEntrancesComponent },
             { path: 'building-floor/:id', component: BuildingFloorComponent },
-            { path: 'user-registration', component: UserRegistrationComponent},
+            { path: 'user-registration', component: UserRegistrationComponent },
+            { path: 'docdrive', component: DocDriveComponent},
             { path: "**", component: NotFoundComponent, data: { title: "Page Not Found" } },
         ])
     ],

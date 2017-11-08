@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ES.Data.Repositories.Interfaces
 {
-    public interface IFloorRepository : IRepository<BuildingFloor>
+    public interface IFloorRepository : Repository<BuildingFloor>
     {
         Task<List<BuildingFloor>> GetFloorChildIncuded();
 
