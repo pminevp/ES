@@ -17,5 +17,7 @@
         public DocumentDataType Type { get; set; }
 
         public ApplicationUser creator { get; set; }
+
+        public string WebPath { get; set; }
     }
 }

@@ -69,7 +69,8 @@ namespace EStates.Controllers
                     Description = data.Description,
                     DocumentId = data.DocumentId,
                     Id = data.Id,
-                    Name = data.Name
+                    Name = data.Name,
+                    WebPath = data.WebPath
                 };
 
                 _unitOfWork.Documentfiles.Add(newitem);
