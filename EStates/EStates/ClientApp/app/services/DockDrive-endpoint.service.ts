@@ -28,4 +28,8 @@ export class DockDriveEndpointService extends EndpointFactory {
     AddDocument(data: documentFile): Observable<Response> {
         return this.http.post(this._documentUpload, data).map((response: Response) => { return response; })
     }
+
+    GetAllDocuments(): Observable<Response> {
+        return this.http.get(this._documentUpload).map((response: Response) => { return response; })
+    }
 }

@@ -5,6 +5,7 @@ using ES.Core.Handlers;
 using ES.Data.Repositories.Interfaces;
 using ES.Data.Models;
 using EStates.ViewModels.Contracts;
+using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,9 +24,17 @@ namespace EStates.Controllers
 
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<DocumentUploadResponse> Get()
         {
-            return new string[] { "value1", "value2" };
+            var docs = _unitOfWork.Documentfiles.GetAll();
+
+            var d = docs.Select<DocumentFile, DocumentUploadResponse>((s) => {
+                var t = new DocumentUploadResponse();
+                t.ParseToViewModel(s);
+                return t;
+            }).ToList();
+
+            return d;
         }
 
         // GET api/values/5

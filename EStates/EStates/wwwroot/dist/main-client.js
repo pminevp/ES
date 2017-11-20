@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ebf1af793e68e8b3fb09"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "91c52ee2425193e39b95"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -5658,6 +5658,7 @@ var DocDriveComponent = (function () {
         this.newUploadedDocument = new documentFile_1.documentFile();
     }
     DocDriveComponent.prototype.ngOnInit = function () {
+        this.LoadDocuments();
     };
     DocDriveComponent.prototype.fileChange = function (event) {
         var _this = this;
@@ -5677,12 +5678,24 @@ var DocDriveComponent = (function () {
         console.log(this.newUploadedDocument);
         this.dockDriveEndpoint.AddDocument(this.newUploadedDocument).subscribe(function (response) { return console.log(response); }, function (error) { return console.log(error); });
     };
+    DocDriveComponent.prototype.LoadDocuments = function () {
+        var _this = this;
+        this.dockDriveEndpoint.GetAllDocuments().subscribe(function (data) { return _this.onDocumentsLoaded(data); });
+    };
     DocDriveComponent.prototype.selectedDocument = function (typeId) {
         this.documentTypeId = typeId;
     };
     DocDriveComponent.prototype.onDocumentUpload = function (data) {
         this.newUploadedDocument.webPath = data.documentWebPath;
         this.newUploadedDocument.documentName = data.documentFileName;
+    };
+    DocDriveComponent.prototype.onDocumentsLoaded = function (responses) {
+        this.storedDocuments = new Array();
+        console.log("AddedDocuments");
+        for (var item in responses) {
+            this.storedDocuments.push(responses[item].selectedDocument);
+        }
+        console.log(this.storedDocuments);
     };
     DocDriveComponent = __decorate([
         core_1.Component({
@@ -6422,6 +6435,9 @@ var DockDriveEndpointService = (function (_super) {
     DockDriveEndpointService.prototype.AddDocument = function (data) {
         return this.http.post(this._documentUpload, data).map(function (response) { return response; });
     };
+    DockDriveEndpointService.prototype.GetAllDocuments = function () {
+        return this.http.get(this._documentUpload).map(function (response) { return response; });
+    };
     DockDriveEndpointService = __decorate([
         core_1.Injectable()
     ], DockDriveEndpointService);
@@ -6465,6 +6481,10 @@ var DockDriveEndpoint = (function () {
     // Add Document to the system
     DockDriveEndpoint.prototype.AddDocument = function (data) {
         return this.dockDriveService.AddDocument(data).map(function (response) { return response.json(); });
+    };
+    //Get all available documents
+    DockDriveEndpoint.prototype.GetAllDocuments = function () {
+        return this.dockDriveService.GetAllDocuments().map(function (response) { return response.json(); });
     };
     DockDriveEndpoint = __decorate([
         core_1.Injectable(),
@@ -30836,7 +30856,7 @@ module.exports = "<div class=\"container\">\r\n    <header class=\"pageHeader\">
 /* 183 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-sm-4\">\r\n            <div class=\"btn-group-vertical\">\r\n                <button type=\"button\" data-toggle=\"modal\" data-target=\".bs-example-modal-lg\" class=\"btn btn-primary\" (click)=\"selectedDocument(1)\" >Стандартен Документ</button>\r\n                <button type=\"button\" class=\"btn btn-warning\" (click)=\"selectedDocument(3)\" >Фактура</button>\r\n                <button type=\"button\" class=\"btn btn-danger\" (click)=\"selectedDocument(2)\" >Документ От Събрание</button>\r\n                <button type=\"button\" class=\"btn btn-info\">Домова Книга</button>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-sm-8\">\r\n            <table class=\"table table-hover\">\r\n                <thead>\r\n                    <tr>\r\n                        <th>Име на Документа</th>\r\n                        <th>Описание</th>\r\n                        <th>Път за сваляне</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <tr>\r\n                        <td>Тест Документ</td>\r\n                        <td>Това е Тестов документ</td>\r\n                        <td><a href=\"http://www.abv.bg\">Click</a></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>Тест Документ</td>\r\n                        <td>Това е Тестов документ</td>\r\n                        <td><a href=\"http://www.abv.bg\">Click</a></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>Тест Документ</td>\r\n                        <td>Това е Тестов документ</td>\r\n                        <td><a href=\"http://www.abv.bg\">Click</a></td>\r\n                    </tr>\r\n                </tbody>\r\n\r\n            </table>\r\n        </div>\r\n    </div>    \r\n</div>\r\n<div class=\"modal fade bs-example-modal-lg\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myLargeModalLabel\">\r\n    <div class=\"modal-dialog modal-lg\" role=\"document\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-header\">\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\r\n                <h4 class=\"modal-title\" id=\"gridSystemModalLabel\">Добавяне на Документ</h4>\r\n            </div>\r\n            <div class=\"modal-body\">\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-name\" class=\"control-label\">Наименование на Документа:</label>\r\n                    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newUploadedDocument.name\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-name\" class=\"control-label\">Описание:</label>\r\n                    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newUploadedDocument.description\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-name\" class=\"control-label\">Документ:</label>\r\n                    <input type=\"file\" (change)=\"fileChange($event)\" placeholder=\"Upload file\">\r\n                </div>\r\n                <div class=\"modal-footer\">\r\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Откажи</button>\r\n                    <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"Save()\">Запази</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n";
+module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-sm-4\">\r\n            <div class=\"btn-group-vertical\">\r\n                <button type=\"button\" data-toggle=\"modal\" data-target=\".bs-example-modal-lg\" class=\"btn btn-primary\" (click)=\"selectedDocument(1)\">Стандартен Документ</button>\r\n                <button type=\"button\" data-toggle=\"modal\" data-target=\".bs-example-modal-lg\" class=\"btn btn-warning\" (click)=\"selectedDocument(3)\">Фактура</button>\r\n                <button type=\"button\" data-toggle=\"modal\" data-target=\".bs-example-modal-lg\" class=\"btn btn-danger\" (click)=\"selectedDocument(2)\">Документ От Събрание</button>\r\n                <button type=\"button\" data-toggle=\"modal\" data-target=\".bs-example-modal-lg\" class=\"btn btn-info\">Домова Книга</button>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-sm-8\">\r\n            <table class=\"table table-hover\">\r\n                <thead>\r\n                    <tr>\r\n                        <th>Име на Документа</th>\r\n                        <th>Описание</th>\r\n                        <th>Път за сваляне</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody ng-If=\"storedDocuments != null\">\r\n                    <tr *ngFor=\"let item of storedDocuments\">\r\n                         <td >{{item.name}}</td>\r\n                         <td>Тест описание</td>\r\n                        <td><a href=\"{{item.webPath}}\">Click</a></td>\r\n                    </tr>\r\n                </tbody>\r\n\r\n \r\n\r\n            </table>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"modal fade bs-example-modal-lg\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myLargeModalLabel\">\r\n    <div class=\"modal-dialog modal-lg\" role=\"document\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-header\">\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\r\n                <h4 class=\"modal-title\" id=\"gridSystemModalLabel\">Добавяне на Документ</h4>\r\n            </div>\r\n            <div class=\"modal-body\">\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-name\" class=\"control-label\">Наименование на Документа:</label>\r\n                    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newUploadedDocument.name\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-name\" class=\"control-label\">Описание:</label>\r\n                    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newUploadedDocument.description\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"building-name\" class=\"control-label\">Документ:</label>\r\n                    <input type=\"file\" (change)=\"fileChange($event)\" placeholder=\"Upload file\">\r\n                </div>\r\n                <div class=\"modal-footer\">\r\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Откажи</button>\r\n                    <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"Save()\">Запази</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n";
 
 /***/ }),
 /* 184 */

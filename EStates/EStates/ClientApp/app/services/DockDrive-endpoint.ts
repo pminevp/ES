@@ -31,4 +31,9 @@ export class DockDriveEndpoint {
         return this.dockDriveService.AddDocument(data).map((response: Response) => <DocumentUploadResponse>response.json());
     }
 
+    //Get all available documents
+    public GetAllDocuments() {
+        return this.dockDriveService.GetAllDocuments().map((response: Response) => { return <DocumentResponse[]>response.json(); });
+    }
+
 }

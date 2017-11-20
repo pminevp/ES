@@ -19,14 +19,16 @@ export class DocDriveComponent implements OnInit {
     public newUploadedDocument: documentFile;
     private documentResponse: DocumentResponse;
     private documentTypeId: number;
+    public storedDocuments: Array<DocumentResponse>;
 
     ngOnInit(): void {
-
+        this.LoadDocuments();
     }
 
     constructor(private dockDriveEndpoint: DockDriveEndpoint) {
 
         this.newUploadedDocument = new documentFile();
+       
     }
 
 
@@ -56,6 +58,10 @@ export class DocDriveComponent implements OnInit {
         );
     }
 
+    LoadDocuments() {
+        this.dockDriveEndpoint.GetAllDocuments().subscribe(data => this.onDocumentsLoaded(data));
+    }
+
     selectedDocument(typeId: number) {
         this.documentTypeId = typeId;
     }
@@ -64,5 +70,19 @@ export class DocDriveComponent implements OnInit {
 
         this.newUploadedDocument.webPath = data.documentWebPath;
         this.newUploadedDocument.documentName = data.documentFileName;
+    }
+
+    onDocumentsLoaded(responses: any[]) {
+        
+        this.storedDocuments = new Array<DocumentResponse>();
+        console.log("AddedDocuments");
+
+        for (var item in responses) {
+
+            this.storedDocuments.push(responses[item].selectedDocument);
+        }
+
+        console.log(this.storedDocuments);
+
     }
 }
