@@ -183,14 +183,21 @@ namespace ES.Data
                 await _context.SaveChangesAsync();
             }
         }
-
+        //private List<DocumentDataType> GenerateDocumentTypes()
+        //{
+        //    return new List<DocumentDataType> {
+        //        new DocumentDataType{DataTypeId=1,DataTypeName="Standart Document" },
+        //        new DocumentDataType{DataTypeId=2, DataTypeName="Meeting Document" },
+        //        new DocumentDataType{DataTypeId=3, DataTypeName="Factures"}
+        //    };
+        //}
 
         private  List<DocumentDataType> GenerateDocumentTypes()
         {
             return new List<DocumentDataType> {
-                new DocumentDataType{DataTypeId=1,DataTypeName="Standart Document" },
-                new DocumentDataType{DataTypeId=2, DataTypeName="Meeting Document" },
-                new DocumentDataType{DataTypeId=3, DataTypeName="Factures"}
+                new DocumentDataType{DataTypeName="Standart Document" },
+                new DocumentDataType{DataTypeName="Meeting Document" },
+                new DocumentDataType{DataTypeName="Factures"}
             };
         }
 

@@ -1,0 +1,179 @@
+﻿{
+  "app": {
+    "Welcome": "Добре Дошли",
+    "Notifications": "Съобщения",
+    "New": "Ново"
+  },
+  "mainMenu": {
+    "Appointments": "Резервации",
+    "Customers": "Клиенти",
+    "Products": "Продукти",
+    "Orders": "Поръчки",
+    "About": "За Нас",
+    "Logout": "Излизане"
+  },
+  "pageHeader": {
+    "Dashboard": "Табло",
+    "Customers": "Клиенти",
+    "Products": "Продукти",
+    "Orders": "Поръчки",
+    "NotFound": "Не е намерено",
+    "About": "За нас",
+    "Settings": "Настройки"
+  },
+  "home": {
+    "NoWidgets1": "Нямате налични приложения, отидете на",
+    "NoWidgets2": "За да конфигурирате приложения.",
+    "StatisticsTitle": "Важни неща"
+  },
+  "notFound": {
+    "404": "404",
+    "pageNotFound": "Страницата която търисте не съществува",
+    "backToHome": "Върнете се в начало"
+  },
+  "settings": {
+    "tab": {
+      "Profile": "Профил",
+      "Preferences": "Преференции",
+      "Users": "Потребители",
+      "Roles": "Роли"
+    },
+    "header": {
+      "UserProfile": "Профил",
+      "UserPreferences": "Преференции на потребителя",
+      "UserDepartments": "Потребителски Отдели",
+      "UsersManagements": "Управление на потребители",
+      "RolesManagement": "Управление на Роли"
+    }
+  },
+  "preferences": {
+    "ReloadPreferences": "Презареди Преференциите:",
+    "ReloadPreferencesHint": "Зареди преференции по подразбиране (всички промени ще бъдат изтрити)",
+    "Language": "Езици:",
+    "English": "Английски",
+    "French": "Френски",
+    "Arabic": "Арабски",
+    "Korean": "Корейски",
+    "LanguageHint": "Избери преференциален език за твоя потребител",
+    "HomePage": "Начална страница:",
+    "Dashboard": "Табло",
+    "Customers": "Клиенти",
+    "Products": "Продукти",
+    "Orders": "Поръчки",
+    "About": "За Нас",
+    "Settings": "Настройки",
+    "HomePageHint": "Избери страница по подразбиране, към която да води при влизане в системата",
+    "Theme": "Тапети:",
+    "DefaultColor": "<span class='default-theme-option'>По Подразбиране</span>",
+    "RedColor": "<span class='red-theme-option'>Червен</span>",
+    "OrangeColor": "<span class='orange-theme-option'>Оранжев</span>",
+    "GreenColor": "<span class='green-theme-option'>Зелен</span>",
+    "GrayColor": "<span class='gray-theme-option'>Сив</span>",
+    "BlackColor": "<span class='black-theme-option'>Черен</span>",
+    "ThemeHint": "Избери тапет за твоя профил",
+    "DashboardStatistics": "Статистики на Таблото:",
+    "DashboardStatisticsHint": "Покажи демо статистическа апликация на таблото",
+    "DashboardNotifications": "Табло с съобщения:",
+    "DashboardNotificationsHint": "Покажи съобщенията на таблото",
+    "DashboardTodo": "Табло с Задачи:",
+    "DashboardTodoHint": "покажи апликация с задачи на таблото",
+    "DashboardBanner": "Банер на таблото:",
+    "DashboardBannerHint": "Покажи информационен банер на таблото",
+    "ResetDefault": "Ресетни настройките",
+    "SetDefault": "Задай по подразбиране"
+  },
+  "users": {
+    "management": {
+      "Search": "Търси потребител...",
+      "NewUser": "Нов Потребител",
+      "Edit": "Редактирай",
+      "Delete": "Изтрий",
+      "EditUser": "Редактирай Потребител \"{{name}}\"",
+      "Title": "Заглавие",
+      "UserName": "Потребителско име",
+      "FullName": "Трите имена",
+      "Email": "Електронна поща",
+      "Roles": "Потребителска Група",
+      "PhoneNumber": "Телефонен Номер"
+    },
+    "editor": {
+      "JobTitle": "Професия: ",
+      "UserName": "Поребителско име:",
+      "UserNameRequired": "Потребителското име е задължително(между 2 и 200 символа)",
+      "Password": "Парола:",
+      "PasswordHint": "Паролата е задължителна, при смяна на потребителското име",
+      "CurrentPasswordRequired": "Текущата парола е задължителна",
+      "Email": "Електронна поща:",
+      "EmailRequired": "Електронната поща е задължителнна (максимум 200 Символа)",
+      "InvalidEmail": "Зададения адрес е невалиден.",
+      "ChangePassword": "Смени Паролата",
+      "CurrentPassword": "Текуща Парола:",
+      "NewPassword": "Нова Парола:",
+      "NewPasswordRequired": "Нова Парола е задължителна (минимум 6 символа)",
+      "ConfirmPassword": "Потвърди Паролата:",
+      "ConfirmationPasswordRequired": "Потвърди Паролата е задължителна",
+      "PasswordMismatch": "Новата Парола и Потвърдителната Парола не съвпадат",
+      "Roles": "Потребителска Група::",
+      "FullName": " Трите Имена:",
+      "RoleRequired": " Потребителската Група е задължителна",
+      "PhoneNumber": "Телефон #:",
+      "Enabled": "Включи",
+      "Unblock": "Отблокирай",
+      "Close": "Затвори",
+      "Edit": "Редактирай",
+      "Cancel": "Откажи",
+      "Save": "Запази",
+      "Saving": "Запазване..."
+    }
+  },
+  "roles": {
+    "management": {
+      "Search": "Търсене на Потребителска група...",
+      "NewRole": "Нова Потребителска Група",
+      "Edit": "Редакция",
+      "Details": "Детайли",
+      "Delete": "Изтрий",
+      "RoleDetails": "Детайли на ГрупатА",
+      "EditRole": "Редактирай Групата \"{{name}}\"",
+      "Name": "Име",
+      "Description": "Описание",
+      "Users": "Потребителис"
+    },
+    "editor": {
+      "Name": "Име:",
+      "Description": "Описание:",
+      "RoleNameRequired": "Името на Потребителксата група е задължително (между 2 и 200 символа)",
+      "SelectAll": "Избери всички",
+      "SelectNone": "Неизбирай нищо",
+      "Close": "Затвори",
+      "Cancel": "Откажи",
+      "Save": "Запази",
+      "Saving": "Запазване..."
+    }
+  },
+  "notifications": {
+    "Delete": "Изтрий Съобщението",
+    "Pin": "Закачи Съобщението",
+    "Date": "Дата",
+    "Notification": "Съобщение"
+  },
+  "todoDemo": {
+    "management": {
+      "Search": "Търси Задача.",
+      "HideCompleted": "Скрий приключените",
+      "AddTask": "Добави Задача",
+      "Delete": "Изтрий Задача",
+      "Important": "Маркирай като Важна",
+      "Task": "Задача",
+      "Description": "Описание"
+    },
+    "editor": {
+      "NewTask": "Нова Задача",
+      "Name": "Име",
+      "TaskNameRequired": "Името на задачата е Задължително",
+      "Description": "Описание",
+      "Important": "Маркирай като важна",
+      "AddTask": "Добави Задача"
+    }
+  }
+}
